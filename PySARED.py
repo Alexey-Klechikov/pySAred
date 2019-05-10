@@ -25,6 +25,7 @@ class Ui_MainWindow(object):
         # ROI frame
         self.draw_roi = []
 
+        print("terst")
     ##--> define user interface elements
     def create_MW_Layout(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
