@@ -567,7 +567,7 @@ class Ui_MainWindow(object):
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
         self.menuMenu.setTitle(_translate("MainWindow", "Menu"))
         self.actionAlgorithm_info.setText(_translate("MainWindow", "Algorithm info"))
-        self.actionVersion.setText(_translate("MainWindow", "Version 2.21"))
+        self.actionVersion.setText(_translate("MainWindow", "Version 190511"))
         self.actionSingle_File_Mode.setText(_translate("MainWindow", "Single File Mode"))
 
         self.label_scan.setText(_translate("MainWindow", "Scan"))
@@ -944,7 +944,7 @@ class Ui_MainWindow(object):
     def menu_info(self):
         msgBox = QtWidgets.QMessageBox()
         msgBox.setWindowIcon(QtGui.QIcon(current_dir + "\icon.png"))
-        msgBox.setText("SuperADAM .h5 rapid data extractor V2.21\n\n"
+        msgBox.setText("SuperADAM .h5 rapid data extractor V.190511\n\n"
                        "Alexey.Klechikov@gmail.com\n\n"
                        "2019.05.08")
         msgBox.exec_()
