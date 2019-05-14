@@ -938,6 +938,48 @@ class Ui_MainWindow(object):
                         self.DB_already_analized.append(self.listWidget_DB.item(i).text())
 
                 if self.checkBox_DBatten.isChecked(): self.DB_already_analized.append(self.lineEdit_AttenCorrFactor.text())
+
+    def ponos(self, file, scan, required_roi):
+        # CHECK
+
+        file[list(file.keys())[0]].get("ponos")
+        scan_data_instr = file[list(file.keys())[0]].get("instrument")
+        scalers_data = numpy.array(scan_data_instr.get('scalers').get('data')).T
+
+        for index, scaler in enumerate(scan_data_instr.get('scalers').get('SPEC_counter_mnemonics')):
+            if "'roi'" in str(scaler): intens_scalers_data = scalers_data[index]
+            elif "'rmm'" in str(scaler): intens_dd_scalers_data = scalers_data[index]
+            elif "'rpp'" in str(scaler): intens_uu_scalers_data = scalers_data[index]
+            elif "'rpm'" in str(scaler): intens_ud_scalers_data = scalers_data[index]
+            elif "'rmp'" in str(scaler): intens_du_scalers_data = scalers_data[index]
+
+        # we use preintegrated I in roi if roi was not changed, otherwise use "ponos"
+        original_roi_coord_arr = numpy.array(scan_data_instr.get('scalers').get('roi').get("roi"))
+        original_roi_coord = [round(int(original_roi_coord_arr[2]) / 2), round(int(original_roi_coord_arr[3]) / 2)]
+
+        if required_roi == original_roi_coord:
+            if str(scan) == "data_uu":
+                if sum(intens_uu_scalers_data) > 0: scan_intens = intens_uu_scalers_data
+                else: scan_intens = intens_scalers_data
+                color = [0, 0, 0]
+            elif str(scan) == "data_dd":
+                if sum(intens_uu_scalers_data) > 0: scan_intens = intens_dd_scalers_data
+                else: scan_intens = ""
+                color = [0, 0, 255]
+            elif str(scan) == "data_ud":
+                scan_intens = intens_ud_scalers_data
+                color = [0, 255, 0]
+            elif str(scan) == "data_du":
+                scan_intens = intens_du_scalers_data
+                color = [255, 0, 0]
+        else:
+            scan_intens = numpy.array(scan_data_ponos.get('data').get(scan))
+            if str(scan) == "data_uu": color = [0, 0, 0]
+            elif str(scan) == "data_dd": color = [0, 0, 255]
+            elif str(scan) == "data_ud": color = [0, 255, 0]
+            elif str(scan) == "data_du": color = [255, 0, 0]
+
+        return scan_intens, color
     ##<--
 
     ##--> menu options
@@ -1096,13 +1138,13 @@ class Ui_MainWindow(object):
             if self.tableWidget_Scans.item(i, 0).text() == self.comboBox_scan.currentText():
                 self.SFM_file = self.tableWidget_Scans.item(i, 2).text()
 
-                # ROI region (for preintegrated intens, 700 numbers)
-                roi_coord = [round(int(self.tableWidget_Scans.item(i, 1).text().split()[0]) / 2),
-                             round(int(self.tableWidget_Scans.item(i, 1).text().split()[-1]) / 2)]
+                # ROI region (1400 numbers)
+                roi_coord = [round(int(self.tableWidget_Scans.item(i, 1).text().split()[0])),
+                             round(int(self.tableWidget_Scans.item(i, 1).text().split()[-1]))]
                 roi_width = roi_coord[1] - roi_coord[0]
 
         with h5py.File(self.SFM_file, 'r') as file:
-            scan_data_ponos = file[list(file.keys())[0]].get("ponos")
+
             scan_data_instr = file[list(file.keys())[0]].get("instrument")
             motors_data = numpy.array(scan_data_instr.get('motors').get('data')).T
             scalers_data = numpy.array(scan_data_instr.get('scalers').get('data')).T
@@ -1114,11 +1156,6 @@ class Ui_MainWindow(object):
 
             for index, scaler in enumerate(scan_data_instr.get('scalers').get('SPEC_counter_mnemonics')):
                 if "'mon0'" in str(scaler): monitor_scalers_data = scalers_data[index]
-                elif "'roi'" in str(scaler): intens_scalers_data = scalers_data[index]
-                elif "'rmm'" in str(scaler): intens_dd_scalers_data = scalers_data[index]
-                elif "'rpp'" in str(scaler): intens_uu_scalers_data = scalers_data[index]
-                elif "'rpm'" in str(scaler): intens_ud_scalers_data = scalers_data[index]
-                elif "'rmp'" in str(scaler): intens_du_scalers_data = scalers_data[index]
 
             if self.lineEdit_SkipSubstrBKG.text(): skip_BKG = float(self.lineEdit_SkipSubstrBKG.text())
             else: skip_BKG = 0.085
@@ -1127,32 +1164,8 @@ class Ui_MainWindow(object):
             for scan in scan_data_ponos.get('data'):
 
                 if str(scan) not in ("data_du", "data_uu", "data_dd", "data_ud"): continue
-
-                # we use preintegrated I in roi if roi was not changed, otherwice use "ponos"
-                original_roi_coord_arr = numpy.array(scan_data_instr.get('scalers').get('roi').get("roi"))
-                original_roi_coord = [round(int(original_roi_coord_arr[2]) / 2), round(int(original_roi_coord_arr[3]) / 2)]
-
-                if roi_coord == original_roi_coord:
-                    if str(scan) == "data_uu":
-                        if sum(intens_uu_scalers_data) > 0: scan_intens = intens_uu_scalers_data
-                        else: scan_intens = intens_scalers_data
-                        color = [0, 0, 0]
-                    elif str(scan) == "data_dd" :
-                        if sum(intens_uu_scalers_data) > 0: scan_intens = intens_dd_scalers_data
-                        else: scan_intens = ""
-                        color = [0, 0, 255]
-                    elif str(scan) == "data_ud":
-                        scan_intens = intens_ud_scalers_data
-                        color = [0, 255, 0]
-                    elif str(scan) == "data_du":
-                        scan_intens = intens_du_scalers_data
-                        color = [255, 0, 0]
-                else:
-                    scan_intens = numpy.array(scan_data_ponos.get('data').get(scan))
-                    if str(scan) == "data_uu": color = [0, 0, 0]
-                    elif str(scan) == "data_dd": color = [0, 0, 255]
-                    elif str(scan) == "data_ud": color = [0, 255, 0]
-                    elif str(scan) == "data_du": color = [255, 0, 0]
+                # CHECK
+                scan_data_ponos, color = self.ponos(file, scan, roi_coord)
 
                 plot_I = []
                 plot_angle = []
