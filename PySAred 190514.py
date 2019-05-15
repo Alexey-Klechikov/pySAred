@@ -940,14 +940,10 @@ class Ui_MainWindow(object):
                 if self.checkBox_DBatten.isChecked(): self.DB_already_analized.append(self.lineEdit_AttenCorrFactor.text())
 
     def ponos(self, file, scan, required_roi):
-        # CHECK
-        print("ponos 1")
         file[list(file.keys())[0]].get("ponos")
         scan_data_instr = file[list(file.keys())[0]].get("instrument")
         scan_data_ponos = file[list(file.keys())[0]].get("ponos")
         scalers_data = numpy.array(scan_data_instr.get('scalers').get('data')).T
-
-        print("ponos 2")
 
         for index, scaler in enumerate(scan_data_instr.get('scalers').get('SPEC_counter_mnemonics')):
             if "'roi'" in str(scaler): intens_scalers_data = scalers_data[index]
@@ -959,8 +955,6 @@ class Ui_MainWindow(object):
         # we use preintegrated I in roi if roi was not changed, otherwise use "ponos"
         original_roi_coord_arr = numpy.array(scan_data_instr.get('scalers').get('roi').get("roi"))
         original_roi_coord = [round(int(original_roi_coord_arr[2])), round(int(original_roi_coord_arr[3]))]
-
-        print("ponos 3" + str(required_roi) + "  " + str(original_roi_coord))
 
         if required_roi == original_roi_coord:
             if str(scan) == "data_uu":
@@ -983,9 +977,6 @@ class Ui_MainWindow(object):
             elif str(scan) == "data_dd": color = [0, 0, 255]
             elif str(scan) == "data_ud": color = [0, 255, 0]
             elif str(scan) == "data_du": color = [255, 0, 0]
-
-        print(scan_intens.ndim)
-        print(color)
 
         return scan_intens, color
     ##<--
@@ -1132,8 +1123,6 @@ class Ui_MainWindow(object):
         self.label_sample_len_missing.setVisible(False)
         self.label_DB_missing.setVisible(False)
 
-        print("preview 1")
-
         if self.checkBox_OverillCorr.isChecked() and self.lineEdit_SampleLength.text() == "":
             self.label_sample_len_missing.setVisible(True)
             return
@@ -1143,8 +1132,6 @@ class Ui_MainWindow(object):
             return
 
         self.analazeDB()
-
-        print("preview 2")
 
         for i in range(0, self.tableWidget_Scans.rowCount()):
             if self.tableWidget_Scans.item(i, 0).text() == self.comboBox_scan.currentText():
@@ -1156,8 +1143,6 @@ class Ui_MainWindow(object):
                 roi_width = roi_coord[1] - roi_coord[0]
 
         with h5py.File(self.SFM_file, 'r') as file:
-
-            print("preview 3")
 
             scan_data_instr = file[list(file.keys())[0]].get("instrument")
             scan_data_ponos = file[list(file.keys())[0]].get("ponos")
@@ -1175,19 +1160,12 @@ class Ui_MainWindow(object):
             if self.lineEdit_SkipSubstrBKG.text(): skip_BKG = float(self.lineEdit_SkipSubstrBKG.text())
             else: skip_BKG = 0.085
 
-            print("preview 4")
-
             # iterate through scans and th points
             for scan in scan_data_ponos.get('data'):
 
                 if str(scan) not in ("data_du", "data_uu", "data_dd", "data_ud"): continue
-                # CHECK
-
-                print("preview 4.5")
 
                 scan_intens, color = self.ponos(file, scan, roi_coord)
-
-                print("preview 4.6 " + str(scan_data_ponos) + "    " + str(color))
 
                 plot_I = []
                 plot_angle = []
@@ -1201,16 +1179,12 @@ class Ui_MainWindow(object):
                     s2hg = s2hg_motor_data[index]
                     monitor = monitor_scalers_data[index]
 
-                    #print("preview 5")
-
                     if not self.checkBox_OverillCorr.isChecked(): overill_corr = 1
                     else: overill_corr = self.overillumination_correct_coeff(s1hg, s2hg, round(th, 4), float(self.lineEdit_SampleLength.text()))[0]
 
                     # analize integrated intensity for ROI
                     if len(scan_intens.shape) == 1: Intens = scan_intens[index]
-                    elif len(scan_intens.shape) == 2: Intens = sum(scan_intens[index][roi_coord[0]: roi_coord[1]])
-
-                    #print("preview 6")
+                    elif len(scan_intens.shape) == 2: Intens = sum(scan_intens[index][round(roi_coord[0] / 2): round(roi_coord[1] / 2)])
 
                     # minus background, devide by monitor, overillumination correct + calculate errors
                     if Intens < 0: continue
