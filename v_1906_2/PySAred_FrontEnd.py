@@ -475,13 +475,13 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.label_sample_len_missing.setFont(font_ee)
         self.label_sample_len_missing.setObjectName("label_sample_len_missing")
         self.label_sample_len_missing.setVisible(False)
-        self.label_sample_len_missing.setText("Sample length is missing")
+        self.label_sample_len_missing.setText("Sample Length is missing")
         self.label_DB_missing = QtWidgets.QLabel(self.tab_refl_preview)
         self.label_DB_missing.setGeometry(QtCore.QRect(110, 160, 161, 31))
         self.label_DB_missing.setFont(font_ee)
         self.label_DB_missing.setObjectName("label_DB_missing")
         self.label_DB_missing.setVisible(False)
-        self.label_DB_missing.setText("Direct beam file is missing")
+        self.label_DB_missing.setText("Direct Beam file is missing")
 
         # StatusBar
         MainWindow.setCentralWidget(self.centralwidget)
@@ -504,7 +504,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.actionVersion.setObjectName("actionVersion")
         self.menuHelp.addAction(self.actionAlgorithm_info)
         self.menuHelp.addAction(self.actionVersion)
-        self.actionVersion.setText("Version 1906")
+        self.actionVersion.setText("Version 1906_2")
         self.menuBar.addAction(self.menuHelp.menuAction())
 
         self.tabWidget_red_instr.setCurrentIndex(0)

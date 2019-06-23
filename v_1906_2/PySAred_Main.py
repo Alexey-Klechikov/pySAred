@@ -138,11 +138,7 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
         if self.lineEdit_saveAt.text(): save_file_directory = self.lineEdit_saveAt.text()
 
         if self.lineEdit_SampleLength.text(): sample_len = self.lineEdit_SampleLength.text()
-        else: sample_len = 999
-
-        if self.checkBox_OverillCorr.isChecked() and sample_len == 999:
-            self.statusbar.showMessage("Sample length is missing")
-            return
+        else: return
 
         # iterate through table with scans
         for i in range(0, self.tableWidget_Scans.rowCount()):
@@ -453,7 +449,6 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
 
     ##--> SFM
     def load_detector_images(self):
-
         if self.comboBox_scan.currentText() == "": return
 
         self.comboBox_point_number.clear()
@@ -479,10 +474,11 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                 if sum(numpy.array(scan_data.get("ponos").get('data').get('data_uu'))[index]) == 0: continue
 
                 self.comboBox_point_number.addItem(str(round(th, 3)))
+
             for polarisation in scan_data.get("ponos").get('data'):
                 if polarisation not in ("data_du", "data_uu", "data_dd", "data_ud"): continue
-                if numpy.any(numpy.array(scan_data.get("ponos").get('data').get(polarisation))):
 
+                if numpy.any(numpy.array(scan_data.get("ponos").get('data').get(polarisation))):
                     self.comboBox_polarisation.addItem(str(polarisation)[-2:])
                     self.comboBox_polarisation.setCurrentIndex(0)
 
@@ -612,8 +608,6 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                 if str(scan) not in ("data_du", "data_uu", "data_dd", "data_ud"): continue
 
                 scan_intens, color = self.ponos(file, scan, roi_coord)
-
-                if scan_intens == "": continue
 
                 plot_I = []
                 plot_angle = []
