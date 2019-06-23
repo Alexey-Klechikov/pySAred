@@ -135,7 +135,7 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
         self.analazeDB()
 
         if self.lineEdit_SkipSubstrBKG.text(): skip_BKG = float(self.lineEdit_SkipSubstrBKG.text())
-        else: skip_BKG = 0.085
+        else: skip_BKG = 0
 
         save_file_directory = os.path.dirname(os.path.realpath(__file__)).replace("\\", "/") + '/'
         if self.lineEdit_saveAt.text(): save_file_directory = self.lineEdit_saveAt.text()
