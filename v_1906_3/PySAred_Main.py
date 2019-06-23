@@ -586,24 +586,30 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
 
                 # old files with no polarisation have no ponos
                 elif not self.checkBox_fast_calc.isChecked():
-                    if len(scan_data_ponos.get('data')) == 1:
+                    if "pnr" in list(file[list(file.keys())[0]]):
+                        if str(scan) == "data_du":
+                            self.scan_intens_sfm = scan_data_instr.get("detectors").get("psd_du").get('data')[:].sum(
+                                axis=1)
+                            color = [255, 0, 0]
+                        elif str(scan) == "data_uu":
+                            self.scan_intens_sfm = scan_data_instr.get("detectors").get("psd_uu").get('data')[:].sum(
+                                axis=1)
+                            color = [0, 0, 0]
+                        elif str(scan) == "data_ud":
+                            self.scan_intens_sfm = scan_data_instr.get("detectors").get("psd_ud").get('data')[:].sum(
+                                axis=1)
+                            color = [0, 255, 0]
+                        elif str(scan) == "data_dd":
+                            self.scan_intens_sfm = scan_data_instr.get("detectors").get("psd_dd").get('data')[:].sum(
+                                axis=1)
+                            color = [0, 0, 255]
+
+                    else:
                         # SUM of 1400 rows takes 2.5+ seconds, lets avoid useless reSUM each time
                         if not self.SFM_file == self.SFM_file_already_anilized:
                             self.scan_intens_sfm = scan_data_instr.get("detectors").get("psd").get('data')[:].sum(axis=1)
                             self.SFM_file_already_anilized = self.SFM_file
                         color = [0, 0, 0]
-                    elif str(scan) == "data_du":
-                        self.scan_intens_sfm = scan_data_instr.get("detectors").get("psd_du").get('data')[:].sum(axis=1)
-                        color = [255, 0, 0]
-                    elif str(scan) == "data_uu":
-                        self.scan_intens_sfm = scan_data_instr.get("detectors").get("psd_uu").get('data')[:].sum(axis=1)
-                        color = [0, 0, 0]
-                    elif str(scan) == "data_ud":
-                        self.scan_intens_sfm = scan_data_instr.get("detectors").get("psd_ud").get('data')[:].sum(axis=1)
-                        color = [0, 255, 0]
-                    elif str(scan) == "data_dd":
-                        self.scan_intens_sfm = scan_data_instr.get("detectors").get("psd_dd").get('data')[:].sum(axis=1)
-                        color = [0, 0, 255]
 
                 else: continue
 
