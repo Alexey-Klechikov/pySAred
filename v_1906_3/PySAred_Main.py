@@ -195,7 +195,7 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                             else: scan_intens = ""
                         elif str(detector) == "psd_ud": scan_intens = intens_ud_scalers_data
                         elif str(detector) == "psd_du": scan_intens = intens_du_scalers_data
-                    else: scan_intens = scan_data_instr.get("detectors").get(str(detector)).get('data')[:, original_roi_coord_arr[0]:original_roi_coord_arr[1], :].sum(axis=1)
+                    else: scan_intens = scan_data_instr.get("detectors").get(str(detector)).get('data')[:, int(original_roi_coord_arr[0]) : int(original_roi_coord_arr[1]), :].sum(axis=1)
 
                     new_file = open(save_file_directory + file_name + "_" + str(detector) + ".dat", "w")
 
@@ -255,7 +255,7 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                         # minus background, devide by monitor, overillumination correct + calculate errors
                         if self.checkBox_SubstrBKG.isChecked() and Qz > skip_BKG and Intens > 0:
                             Intens_bkg = sum(scan_intens[index][
-                                   roi_coord[0] - (roi_coord[1] - roi_coord[0]) - 1: roi_coord[0] - 1])
+                                   roi_coord[0] - 2*(roi_coord[1] - roi_coord[0]) - 1: roi_coord[0] - (roi_coord[1] - roi_coord[0]) - 1])
                             if Intens_bkg > 0:
                                 Intens_err = numpy.sqrt(Intens + Intens_bkg)
                                 Intens = Intens - Intens_bkg
@@ -402,7 +402,7 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
         msgBox = QtWidgets.QMessageBox()
         msgBox.setWindowIcon(QtGui.QIcon(os.path.dirname(os.path.realpath(__file__)).replace("\\", "/") + "\icon.png"))
         msgBox.setText( "1) X limits for analysis are set automatically using ROI settings in .h5 file. Y limits are ignored, intensity is integrated across all detector height.  \n\n"
-                        "2) Area for background estimation is set to the same size as ROI and located at the left of ROI.\n\n"
+                        "2) Area for background estimation is set to the same size as ROI and located at the left of ROI with a little offset.\n\n"
                         "3) All Direct Beam files are analized in the the same order as they are in the table. Only last value with certain combination of s1hg and s2hg is used for Direct Beam normalization. \n\n"
                         "4) File can appear in \"Recheck following files in Single File Mode\" if peak of its intensity (at Qz 0.02-0.03) is not in the middle of ROI.\n\n"
                         "5) Trapezoid beam form is used for overillumination correction.\n\n"
@@ -631,10 +631,10 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
 
                     # analize integrated intensity for ROI
                     Intens = sum(self.scan_intens_sfm[index][round(roi_coord[0] / 2): round(roi_coord[1] / 2)])
-                    Intens_bkg = sum(self.scan_intens_sfm[index][round(roi_coord[0] / 2 - (roi_coord[1] - roi_coord[0]) / 2) - 1 : round(roi_coord[0] / 2) - 1])
+                    Intens_bkg = sum(self.scan_intens_sfm[index][round(roi_coord[0] / 2 - (roi_coord[1] - roi_coord[0])) : round(roi_coord[0] / 2 - (roi_coord[1] - roi_coord[0])/2)])
                     if self.scan_intens_sfm.shape[1] == 1400:
                         Intens = sum(self.scan_intens_sfm[index][roi_coord[0]: roi_coord[1]])
-                        Intens_bkg = sum(self.scan_intens_sfm[index][roi_coord[0]-(roi_coord[1]-roi_coord[0])-1 : roi_coord[0]-1])
+                        Intens_bkg = sum(self.scan_intens_sfm[index][roi_coord[0]-2*(roi_coord[1]-roi_coord[0])-1 : roi_coord[0]-(roi_coord[1]-roi_coord[0])-1])
 
                     # minus background, devide by monitor, overillumination correct + calculate errors
                     if Intens < 0: continue
