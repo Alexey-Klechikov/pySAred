@@ -195,7 +195,7 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                             else: scan_intens = ""
                         elif str(detector) == "psd_ud": scan_intens = intens_ud_scalers_data
                         elif str(detector) == "psd_du": scan_intens = intens_du_scalers_data
-                    else: scan_intens = scan_data_instr.get("detectors").get(str(detector)).get('data')[:].sum(axis=1)
+                    else: scan_intens = scan_data_instr.get("detectors").get(str(detector)).get('data')[:, original_roi_coord_arr[0]:original_roi_coord_arr[1], :].sum(axis=1)
 
                     new_file = open(save_file_directory + file_name + "_" + str(detector) + ".dat", "w")
 
@@ -217,12 +217,12 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                         monitor = monitor_scalers_data[index]
 
                         # check if we are not in a middle of ROI in Qz approx 0.02)
-                        if round(Qz, 2) == 0.02 and check_this_file == 0:
-                            if not len(scan_data_ponos.get('data')) == 1:
-                                scan_data_0_02 = numpy.array(scan_data_ponos.get('data').get("data_uu"))[index][roi_coord[0]: roi_coord[1]]
-                            else: scan_data_0_02 = scan_intens[index][roi_coord[0]: roi_coord[1]]
+                        if round(Qz, 3) == 0.015 and check_this_file == 0:
+                            if self.checkBox_fast_calc.isChecked():
+                                scan_data_0_015 = numpy.array(scan_data_ponos.get('data').get("data_uu"))[index][round(roi_coord[0]/2): round(roi_coord[1]/2)]
+                            else: scan_data_0_015 = scan_intens[index][roi_coord[0]: roi_coord[1]]
 
-                            if max(scan_data_0_02) != max(scan_data_0_02[round((len(scan_data_0_02) / 2.5)):-round((len(scan_data_0_02) / 2.5))]):
+                            if not max(scan_data_0_015) == max(scan_data_0_015[round((len(scan_data_0_015) / 3)):-round((len(scan_data_0_015) / 3))]):
                                 self.listWidget_filesToCheck.addItem(file_name)
                                 check_this_file = 1
 
@@ -289,7 +289,7 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                         os.remove(save_file_directory + file_name + "_" + str(detector) + ".dat")
 
         self.statusbar.showMessage(str(self.tableWidget_Scans.rowCount()) + " files reduced, " + str(
-            self.listWidget_filesToCheck.count()) + " files need extra care.")
+            self.listWidget_filesToCheck.count()) + " files might need extra care.")
     ##<--
 
     ##--> extra functions to shorten the code
@@ -462,8 +462,8 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
             motors_data = numpy.array(scan_data_instr.get('motors').get('data')).T
             scalers_data = numpy.array(scan_data_instr.get('scalers').get('data')).T
 
-            ROI_y_top = scan_data_instr.get('scalers').get('roi').get('roi')[1]
-            ROI_y_bottom = scan_data_instr.get('scalers').get('roi').get('roi')[0]
+            self.ROI_y_top = scan_data_instr.get('scalers').get('roi').get('roi')[1]
+            self.ROI_y_bottom = scan_data_instr.get('scalers').get('roi').get('roi')[0]
 
             for index, motor in enumerate(scan_data_instr.get('motors').get('SPEC_motor_mnemonics')):
                 if "'th'" in str(motor): th_motor_data = motors_data[index]
@@ -508,13 +508,13 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                     if self.draw_roi:
                         self.graphicsView_det_images.removeItem(self.draw_roi)
 
-                    for i in range(int(ROI_y_bottom), int(ROI_y_top)):
+                    for i in range(int(self.ROI_y_bottom), int(self.ROI_y_top)):
                         spots.append({'x': int(self.lineEdit_ROI_x_left.text()), 'y': i})
                         spots.append({'x': int(self.lineEdit_ROI_x_right.text()), 'y': i})
 
                     for i in range(int(self.lineEdit_ROI_x_left.text()), int(self.lineEdit_ROI_x_right.text())):
-                        spots.append({'x': i, 'y': int(ROI_y_top)})
-                        spots.append({'x': i, 'y': int(ROI_y_bottom)})
+                        spots.append({'x': i, 'y': int(self.ROI_y_top)})
+                        spots.append({'x': i, 'y': int(self.ROI_y_bottom)})
 
                     self.draw_roi = pg.ScatterPlotItem(spots=spots, size=0.5, pen=pg.mkPen(255, 255, 255))
                     self.graphicsView_det_images.addItem(self.draw_roi)
@@ -522,6 +522,7 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                     break
 
     def load_reflectivity_preview(self):
+
         self.graphicsView_refl_profile.getPlotItem().clear()
         self.label_sample_len_missing.setVisible(False)
         self.label_DB_missing.setVisible(False)
@@ -570,7 +571,7 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                 if "'mon0'" in str(scaler): monitor_scalers_data = scalers_data[index]
 
             if self.lineEdit_SkipSubstrBKG.text(): skip_BKG = float(self.lineEdit_SkipSubstrBKG.text())
-            else: skip_BKG = 0.085
+            else: skip_BKG = 0
 
             # iterate through scans and th points
 
@@ -607,7 +608,7 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                     else:
                         # SUM of 1400 rows takes 2.5+ seconds, lets avoid useless reSUM each time
                         if not self.SFM_file == self.SFM_file_already_anilized:
-                            self.scan_intens_sfm = scan_data_instr.get("detectors").get("psd").get('data')[:].sum(axis=1)
+                            self.scan_intens_sfm = scan_data_instr.get("detectors").get("psd").get('data')[:, int(self.ROI_y_bottom) : int(self.ROI_y_top), :].sum(axis=1)
                             self.SFM_file_already_anilized = self.SFM_file
                         color = [0, 0, 0]
 
@@ -630,7 +631,7 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
 
                     # analize integrated intensity for ROI
                     Intens = sum(self.scan_intens_sfm[index][round(roi_coord[0] / 2): round(roi_coord[1] / 2)])
-                    Intens_bkg = sum(self.scan_intens_sfm[index][round(roi_coord[0] - (roi_coord[1] - roi_coord[0]) - 1 / 2) : round(roi_coord[0] - 1 / 2)])
+                    Intens_bkg = sum(self.scan_intens_sfm[index][round(roi_coord[0] / 2 - (roi_coord[1] - roi_coord[0]) / 2) - 1 : round(roi_coord[0] / 2) - 1])
                     if self.scan_intens_sfm.shape[1] == 1400:
                         Intens = sum(self.scan_intens_sfm[index][roi_coord[0]: roi_coord[1]])
                         Intens_bkg = sum(self.scan_intens_sfm[index][roi_coord[0]-(roi_coord[1]-roi_coord[0])-1 : roi_coord[0]-1])
