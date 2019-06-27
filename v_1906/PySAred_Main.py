@@ -586,9 +586,10 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
             # find DB file with nearest scan number
             if len(db_list) == 1: DB_file_scan = db_list[0]
             else:
-                for i in db_list:
-                    DB_file_scan = i
-                    if int(i[:5]) > self.SFM_file_scan_num: break
+                for i, scan in enumerate(db_list):
+                    if i == 0: DB_file_scan = scan
+                    if int(scan[:5]) > self.SFM_file_scan_num: break
+                    DB_file_scan = scan
 
         if self.checkBox_DBatten.isChecked():
             self.DB_atten_factor = 10.4
