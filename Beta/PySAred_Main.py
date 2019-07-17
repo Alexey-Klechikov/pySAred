@@ -18,7 +18,10 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
         # current file in Single File Mode
         self.SFM_file = ""
         self.SFM_file_already_anilized = ""
-        self.scan_intens_sfm = []
+        self.I_uu_sfm = []
+        self.I_du_sfm = []
+        self.I_ud_sfm = []
+        self.I_dd_sfm = []
 
         # current th point
         self.current_th = ""
@@ -207,11 +210,6 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
 
                 for index, scaler in enumerate(scan_data_instr.get('scalers').get('SPEC_counter_mnemonics')):
                     if "'mon0'" in str(scaler): monitor_scalers_data = scalers_data[index]
-                    elif "'roi'" in str(scaler): intens_scalers_data = scalers_data[index]
-                    elif "'rmm'" in str(scaler): intens_dd_scalers_data = scalers_data[index]
-                    elif "'rpp'" in str(scaler): intens_uu_scalers_data = scalers_data[index]
-                    elif "'rpm'" in str(scaler): intens_ud_scalers_data = scalers_data[index]
-                    elif "'rmp'" in str(scaler): intens_du_scalers_data = scalers_data[index]
 
                 # ROI region
                 roi_coord = [int(self.tableWidget_Scans.item(i, 1).text().split()[0]),
@@ -223,21 +221,10 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                 for detector in scan_data_instr.get('detectors'):
                     if str(detector) not in ("psd", "psd_du", "psd_uu", "psd_ud", "psd_dd"): continue
 
-                    # we use preintegrated I in roi if roi was not changed, otherwice calculate
+                    # we use preintegrated I if roi was not changed, otherwice calculate
                     original_roi_coord_arr = numpy.array(scan_data_instr.get('scalers').get('roi').get("roi"))
-                    original_roi_coord = [int(original_roi_coord_arr[2]), int(original_roi_coord_arr[3])]
 
-                    if roi_coord == original_roi_coord and not self.checkBox_SubstrBKG.isChecked() and self.checkBox_fast_calc.isChecked():
-                        if str(detector) == "psd": scan_intens = intens_scalers_data
-                        if str(detector) == "psd_uu":
-                            if sum(intens_uu_scalers_data) > 0: scan_intens = intens_uu_scalers_data
-                            else: scan_intens = intens_scalers_data
-                        elif str(detector) == "psd_dd":
-                            if sum(intens_dd_scalers_data) > 0: scan_intens = intens_dd_scalers_data
-                            else: scan_intens = ""
-                        elif str(detector) == "psd_ud": scan_intens = intens_ud_scalers_data
-                        elif str(detector) == "psd_du": scan_intens = intens_du_scalers_data
-                    else: scan_intens = scan_data_instr.get("detectors").get(str(detector)).get('data')[:, int(original_roi_coord_arr[0]) : int(original_roi_coord_arr[1]), :].sum(axis=1)
+                    scan_intens = scan_data_instr.get("detectors").get(str(detector)).get('data')[:, int(original_roi_coord_arr[0]) : int(original_roi_coord_arr[1]), :].sum(axis=1)
 
                     new_file = open(save_file_directory + file_name + "_" + str(detector) + " (" + DB_file_scan + ")" + ".dat", "w")
 
@@ -469,6 +456,7 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                 self.SFM_file_scan_num = int(self.tableWidget_Scans.item(i, 0).text()[:5])
 
         with h5py.File(self.SFM_file, 'r') as file:
+
             scan_data = file[list(file.keys())[0]]
             roi_coord = numpy.array(scan_data.get("instrument").get('scalers').get('roi').get("roi"))
             roi_width = int(round(roi_coord[3] / 2)) - int(round(roi_coord[2] / 2))
@@ -480,7 +468,6 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
 
             for index, th in enumerate(scan_data.get("instrument").get('motors').get('th').get("value")):
                 if str(th)[0:5] in ("-0.00", "0.00"): continue
-                #if sum(numpy.array(scan_data.get("ponos").get('data').get('data_uu'))[index]) == 0: continue
 
                 self.comboBox_point_number.addItem(str(round(th, 3)))
 
@@ -633,49 +620,57 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
             for index, scaler in enumerate(scan_data_instr.get('scalers').get('SPEC_counter_mnemonics')):
                 if "'mon0'" in str(scaler): monitor_scalers_data = scalers_data[index]
 
-            # iterate through scans and th points
+            # get or create 2-dimentional intensity array for each polarisation
+
+
             for scan in scan_data_ponos.get('data'):
-
+                # use preintegrated intensity if it exists and "Fast calc" mode is activated
                 if str(scan) in ("data_du", "data_uu", "data_dd", "data_ud") and self.checkBox_fast_calc.isChecked():
-                    self.scan_intens_sfm = numpy.array(scan_data_ponos.get('data').get(scan))
-                    if str(scan) == "data_uu": color = [0, 0, 0]
-                    elif str(scan) == "data_dd": color = [0, 0, 255]
-                    elif str(scan) == "data_ud": color = [0, 255, 0]
-                    elif str(scan) == "data_du": color = [255, 0, 0]
+                    if str(scan) == "data_uu":
+                        self.I_uu_sfm = numpy.array(scan_data_ponos.get('data').get(scan))
+                    elif str(scan) == "data_dd":
+                        self.I_dd_sfm = numpy.array(scan_data_ponos.get('data').get(scan))
+                    elif str(scan) == "data_ud":
+                        self.I_ud_sfm = numpy.array(scan_data_ponos.get('data').get(scan))
+                    elif str(scan) == "data_du":
+                        self.I_du_sfm = numpy.array(scan_data_ponos.get('data').get(scan))
                     self.SFM_file_already_anilized = ""
-
-                # old files with no polarisation have no ponos
+                # old files with no polarisation have no preintegrated intensity
                 elif not self.checkBox_fast_calc.isChecked():
-                    if "pnr" in list(file[list(file.keys())[0]]):
-                        if str(scan) == "data_du":
-                            self.scan_intens_sfm = scan_data_instr.get("detectors").get("psd_du").get('data')[:,
-                                  int(original_roi_coord_arr[0]): int(original_roi_coord_arr[1]), :].sum(axis=1)
-                            color = [255, 0, 0]
-                        elif str(scan) == "data_uu":
-                            self.scan_intens_sfm = scan_data_instr.get("detectors").get("psd_uu").get('data')[:,
-                                  int(original_roi_coord_arr[0]): int(original_roi_coord_arr[1]), :].sum(axis=1)
-                            color = [0, 0, 0]
-                        elif str(scan) == "data_ud":
-                            self.scan_intens_sfm = scan_data_instr.get("detectors").get("psd_ud").get('data')[:,
-                                  int(original_roi_coord_arr[0]): int(original_roi_coord_arr[1]), :].sum(axis=1)
-                            color = [0, 255, 0]
-                        elif str(scan) == "data_dd":
-                            self.scan_intens_sfm = scan_data_instr.get("detectors").get("psd_dd").get('data')[:,
-                                  int(original_roi_coord_arr[0]): int(original_roi_coord_arr[1]), :].sum(axis=1)
-                            color = [0, 0, 255]
-                    else:
-                        # SUM of 1400 rows takes 2.5+ seconds, lets avoid useless reSUM each time
-                        if not self.SFM_file == self.SFM_file_already_anilized:
-                            self.scan_intens_sfm = scan_data_instr.get("detectors").get("psd").get('data')[:, int(self.ROI_y_bottom) : int(self.ROI_y_top), :].sum(axis=1)
-                            self.SFM_file_already_anilized = self.SFM_file
-                        color = [0, 0, 0]
-
+                    # avoid reSUM of intensity after each action
+                    if not self.SFM_file == self.SFM_file_already_anilized:
+                        if "pnr" in list(file[list(file.keys())[0]]):
+                            if str(scan) == "data_du":
+                                self.I_du_sfm = scan_data_instr.get("detectors").get("psd_du").get('data')[:,
+                                      int(original_roi_coord_arr[0]): int(original_roi_coord_arr[1]), :].sum(axis=1)
+                            elif str(scan) == "data_uu":
+                                self.I_uu_sfm = scan_data_instr.get("detectors").get("psd_uu").get('data')[:,
+                                      int(original_roi_coord_arr[0]): int(original_roi_coord_arr[1]), :].sum(axis=1)
+                            elif str(scan) == "data_ud":
+                                self.I_ud_sfm = scan_data_instr.get("detectors").get("psd_ud").get('data')[:,
+                                      int(original_roi_coord_arr[0]): int(original_roi_coord_arr[1]), :].sum(axis=1)
+                            elif str(scan) == "data_dd":
+                                self.I_dd_sfm = scan_data_instr.get("detectors").get("psd_dd").get('data')[:,
+                                      int(original_roi_coord_arr[0]): int(original_roi_coord_arr[1]), :].sum(axis=1)
+                        else:
+                            self.I_uu_sfm = scan_data_instr.get("detectors").get("psd").get('data')[:, int(self.ROI_y_bottom) : int(self.ROI_y_top), :].sum(axis=1)
                 else: continue
+
+            if not self.checkBox_fast_calc.isChecked(): self.SFM_file_already_anilized = self.SFM_file
+
+            for color_index, scan_intens_sfm in enumerate([self.I_uu_sfm, self.I_dd_sfm, self.I_ud_sfm, self.I_du_sfm]):
 
                 plot_I = []
                 plot_angle = []
                 plot_dI_err_bottom = []
                 plot_dI_err_top = []
+
+                if scan_intens_sfm == []: continue
+
+                if color_index == 0: color = [0, 0, 0]
+                elif color_index == 1: color = [0, 0, 255]
+                elif color_index == 2: color = [0, 255, 0]
+                elif color_index == 3: color = [255, 0, 0]
 
                 for index, th in enumerate(th_motor_data):
                     # read motors
@@ -688,35 +683,37 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                     else: overill_corr = self.overillumination_correct_coeff(s1hg, s2hg, round(th, 4), float(self.lineEdit_SampleLength.text()))[0]
 
                     # analize integrated intensity for ROI
-                    Intens = sum(self.scan_intens_sfm[index][round(roi_coord[0] / 2): round(roi_coord[1] / 2)])
-                    Intens_bkg = sum(self.scan_intens_sfm[index][round(roi_coord[0] / 2 - (roi_coord[1] - roi_coord[0])) : round(roi_coord[0] / 2 - (roi_coord[1] - roi_coord[0])/2)])
-                    if self.scan_intens_sfm.shape[1] == 1400:
-                        Intens = sum(self.scan_intens_sfm[index][roi_coord[0]: roi_coord[1]])
-                        Intens_bkg = sum(self.scan_intens_sfm[index][roi_coord[0]-2*(roi_coord[1]-roi_coord[0])-1 : roi_coord[0]-(roi_coord[1]-roi_coord[0])-1])
+                    # case No 1 - preintegrated intensity (ponos) - 700 points
+                    Intens = sum(scan_intens_sfm[index][round(roi_coord[0] / 2): round(roi_coord[1] / 2)])
+                    Intens_bkg = sum(scan_intens_sfm[index][round(roi_coord[0] / 2 - (roi_coord[1] - roi_coord[0])) : round(roi_coord[0] / 2 - (roi_coord[1] - roi_coord[0])/2)])
+                    # case No 2 - full detector - 1400 points
+                    if scan_intens_sfm.shape[1] == 1400:
+                        Intens = sum(scan_intens_sfm[index][roi_coord[0]: roi_coord[1]])
+                        Intens_bkg = sum(scan_intens_sfm[index][roi_coord[0]-2*(roi_coord[1]-roi_coord[0])-1 : roi_coord[0]-(roi_coord[1]-roi_coord[0])-1])
 
                     # minus background, devide by monitor, overillumination correct + calculate errors
-                    if Intens < 0: continue
+                    if not Intens > 0: Intens = 0
+                    else:
+                        Intens_err = numpy.sqrt(Intens)
 
-                    Intens_err = numpy.sqrt(Intens)
+                        if self.checkBox_SubstrBKG.isChecked() and Qz > skip_BKG and Intens > 0:
+                            if Intens_bkg > 0:
+                                Intens_err = numpy.sqrt(Intens + Intens_bkg)
+                                Intens = Intens - Intens_bkg
 
-                    if self.checkBox_SubstrBKG.isChecked() and Qz > skip_BKG and Intens > 0:
-                        if Intens_bkg > 0:
-                            Intens_err = numpy.sqrt(Intens + Intens_bkg)
-                            Intens = Intens - Intens_bkg
+                        if self.checkBox_DevideByMon.isChecked() and Intens > 0:
+                            Intens_err = (Intens / monitor) * numpy.sqrt((Intens_err / Intens) ** 2 + (1 / monitor))
+                            Intens = Intens / monitor
 
-                    if self.checkBox_DevideByMon.isChecked() and Intens > 0:
-                        Intens_err = (Intens / monitor) * numpy.sqrt((Intens_err / Intens) ** 2 + (1 / monitor))
-                        Intens = Intens / monitor
+                        if self.checkBox_OverillCorr.isChecked() and Intens > 0:
+                            Intens_err = Intens_err / overill_corr
+                            Intens = Intens / overill_corr
 
-                    if self.checkBox_OverillCorr.isChecked() and Intens > 0:
-                        Intens_err = Intens_err / overill_corr
-                        Intens = Intens / overill_corr
-
-                    if self.checkBox_NormDB.isChecked() and Intens > 0:
-                        DB_intens = float(self.DB_info[DB_file_scan + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[0]) * self.DB_atten_factor
-                        DB_err = overill_corr * float(self.DB_info[DB_file_scan + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[1]) * self.DB_atten_factor
-                        Intens_err = (Intens / DB_intens) * numpy.sqrt((DB_err / DB_intens) ** 2 + (Intens_err / Intens) ** 2)
-                        Intens = Intens / DB_intens
+                        if self.checkBox_NormDB.isChecked() and Intens > 0:
+                            DB_intens = float(self.DB_info[DB_file_scan + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[0]) * self.DB_atten_factor
+                            DB_err = overill_corr * float(self.DB_info[DB_file_scan + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[1]) * self.DB_atten_factor
+                            Intens_err = (Intens / DB_intens) * numpy.sqrt((DB_err / DB_intens) ** 2 + (Intens_err / Intens) ** 2)
+                            Intens = Intens / DB_intens
 
                     if Intens > 0:
                         plot_I.append(numpy.log10(Intens))

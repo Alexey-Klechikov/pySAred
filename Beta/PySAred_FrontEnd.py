@@ -154,13 +154,13 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.lineEdit_SampleLength.setObjectName("lineEdit_SampleLength")
 
         # Block: Reductions and Instrument settings
-        self.tabWidget_red_instr = QtWidgets.QTabWidget(self.centralwidget)
-        self.tabWidget_red_instr.setGeometry(QtCore.QRect(246, 58, 281, 196))
-        self.tabWidget_red_instr.setFont(font_ee)
-        self.tabWidget_red_instr.setTabPosition(QtWidgets.QTabWidget.North)
-        self.tabWidget_red_instr.setTabShape(QtWidgets.QTabWidget.Rounded)
-        self.tabWidget_red_instr.setElideMode(QtCore.Qt.ElideNone)
-        self.tabWidget_red_instr.setObjectName("tabWidget_red_instr")
+        self.tabWidget_red_instr_exp = QtWidgets.QTabWidget(self.centralwidget)
+        self.tabWidget_red_instr_exp.setGeometry(QtCore.QRect(246, 58, 281, 196))
+        self.tabWidget_red_instr_exp.setFont(font_ee)
+        self.tabWidget_red_instr_exp.setTabPosition(QtWidgets.QTabWidget.North)
+        self.tabWidget_red_instr_exp.setTabShape(QtWidgets.QTabWidget.Rounded)
+        self.tabWidget_red_instr_exp.setElideMode(QtCore.Qt.ElideNone)
+        self.tabWidget_red_instr_exp.setObjectName("tabWidget_red_instr_exp")
 
         # Tab: Reductions
         self.tab_reduct = QtWidgets.QWidget()
@@ -202,8 +202,8 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.checkBox_OverillCorr.setFont(font_ee)
         self.checkBox_OverillCorr.setObjectName("checkBox_OverillCorr")
         self.checkBox_OverillCorr.setText("Overillumination correction")
-        self.tabWidget_red_instr.addTab(self.tab_reduct, "")
-        self.tabWidget_red_instr.setTabText(0, "Reductions")
+        self.tabWidget_red_instr_exp.addTab(self.tab_reduct, "")
+        self.tabWidget_red_instr_exp.setTabText(0, "Reductions")
 
         # Tab: Instrument settings
         self.tab_instr = QtWidgets.QWidget()
@@ -248,20 +248,32 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.lineEdit_s2_sample_dist.setFont(font_ee)
         self.lineEdit_s2_sample_dist.setObjectName("lineEdit_s2_sample_dist")
         self.lineEdit_s2_sample_dist.setText("195")
-        self.checkBox_add_resolution_column = QtWidgets.QCheckBox(self.tab_instr)
-        self.checkBox_add_resolution_column.setGeometry(QtCore.QRect(10, 100, 371, 18))
+        self.tabWidget_red_instr_exp.addTab(self.tab_instr, "")
+        self.tabWidget_red_instr_exp.setTabText(1, "Instrument settings")
+
+        # Tab: Export options
+        self.tab_export_options = QtWidgets.QWidget()
+        self.tab_export_options.setObjectName("tab_export_options")
+        self.checkBox_add_resolution_column = QtWidgets.QCheckBox(self.tab_export_options)
+        self.checkBox_add_resolution_column.setGeometry(QtCore.QRect(10, 10, 250, 18))
         self.checkBox_add_resolution_column.setFont(font_ee)
         self.checkBox_add_resolution_column.setChecked(True)
         self.checkBox_add_resolution_column.setObjectName("checkBox_add_resolution_column")
-        self.checkBox_add_resolution_column.setText("Include ang. resolution column to the output file")
-        self.checkBox_resol_sared = QtWidgets.QCheckBox(self.tab_instr)
-        self.checkBox_resol_sared.setGeometry(QtCore.QRect(10, 120, 361, 18))
+        self.checkBox_add_resolution_column.setText("Include ang. resolution column in the output file")
+        self.checkBox_resol_sared = QtWidgets.QCheckBox(self.tab_export_options)
+        self.checkBox_resol_sared.setGeometry(QtCore.QRect(30, 30, 250, 18))
         self.checkBox_resol_sared.setFont(font_ee)
         self.checkBox_resol_sared.setChecked(True)
         self.checkBox_resol_sared.setObjectName("checkBox_resol_sared")
         self.checkBox_resol_sared.setText("Calculate ang. resolution in the same way as Sared")
-        self.tabWidget_red_instr.addTab(self.tab_instr, "")
-        self.tabWidget_red_instr.setTabText(1, "Instrument settings")
+        self.checkBox_for_botofit = QtWidgets.QCheckBox(self.tab_export_options)
+        self.checkBox_for_botofit.setGeometry(QtCore.QRect(10, 50, 250, 18))
+        self.checkBox_for_botofit.setFont(font_ee)
+        self.checkBox_for_botofit.setChecked(False)
+        self.checkBox_for_botofit.setObjectName("checkBox_for_botofit")
+        self.checkBox_for_botofit.setText("Export reflectivity for BoToFit")
+        self.tabWidget_red_instr_exp.addTab(self.tab_export_options, "")
+        self.tabWidget_red_instr_exp.setTabText(2, "Export options")
 
         # Block: Save reduced files at
         self.label_save_at = QtWidgets.QLabel(self.centralwidget)
@@ -539,7 +551,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.actionVersion.setText("Version 1.0")
         self.menuBar.addAction(self.menuHelp.menuAction())
 
-        self.tabWidget_red_instr.setCurrentIndex(0)
+        self.tabWidget_red_instr_exp.setCurrentIndex(0)
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
     ##<--
