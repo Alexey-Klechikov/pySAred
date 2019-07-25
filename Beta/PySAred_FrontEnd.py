@@ -272,6 +272,12 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.checkBox_for_botofit.setChecked(False)
         self.checkBox_for_botofit.setObjectName("checkBox_for_botofit")
         self.checkBox_for_botofit.setText("Export reflectivity for BoToFit")
+        self.checkBox_remove_zeros = QtWidgets.QCheckBox(self.tab_export_options)
+        self.checkBox_remove_zeros.setGeometry(QtCore.QRect(10, 70, 250, 18))
+        self.checkBox_remove_zeros.setFont(font_ee)
+        self.checkBox_remove_zeros.setChecked(True)
+        self.checkBox_remove_zeros.setObjectName("checkBox_remove_zeros")
+        self.checkBox_remove_zeros.setText("Remove zeros")
         self.tabWidget_red_instr_exp.addTab(self.tab_export_options, "")
         self.tabWidget_red_instr_exp.setTabText(2, "Export options")
 

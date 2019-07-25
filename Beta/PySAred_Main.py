@@ -221,12 +221,30 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                 for detector in scan_data_instr.get('detectors'):
                     if str(detector) not in ("psd", "psd_du", "psd_uu", "psd_ud", "psd_dd"): continue
 
-                    # we use preintegrated I if roi was not changed, otherwice calculate
+                    # create 2D array of intensities where we keep Y ROI limits
                     original_roi_coord_arr = numpy.array(scan_data_instr.get('scalers').get('roi').get("roi"))
 
                     scan_intens = scan_data_instr.get("detectors").get(str(detector)).get('data')[:, int(original_roi_coord_arr[0]) : int(original_roi_coord_arr[1]), :].sum(axis=1)
 
                     new_file = open(save_file_directory + file_name + "_" + str(detector) + " (" + DB_file_scan + ")" + ".dat", "w")
+
+                    '''
+                    if "pnr" in list(file[list(file.keys())[0]]):
+                        if str(scan) == "data_du":
+                            self.I_du_sfm = scan_data_instr.get("detectors").get("psd_du").get('data')[:,
+                                  int(original_roi_coord_arr[0]): int(original_roi_coord_arr[1]), :].sum(axis=1)
+                        elif str(scan) == "data_uu":
+                            self.I_uu_sfm = scan_data_instr.get("detectors").get("psd_uu").get('data')[:,
+                                  int(original_roi_coord_arr[0]): int(original_roi_coord_arr[1]), :].sum(axis=1)
+                        elif str(scan) == "data_ud":
+                            self.I_ud_sfm = scan_data_instr.get("detectors").get("psd_ud").get('data')[:,
+                                  int(original_roi_coord_arr[0]): int(original_roi_coord_arr[1]), :].sum(axis=1)
+                        elif str(scan) == "data_dd":
+                            self.I_dd_sfm = scan_data_instr.get("detectors").get("psd_dd").get('data')[:,
+                                  int(original_roi_coord_arr[0]): int(original_roi_coord_arr[1]), :].sum(axis=1)
+                    else:
+                        self.I_uu_sfm = scan_data_instr.get("detectors").get("psd").get('data')[:, int(self.ROI_y_bottom) : int(self.ROI_y_top), :].sum(axis=1)
+                    '''
 
                     # iterate through th points
                     for index, th in enumerate(th_motor_data):
