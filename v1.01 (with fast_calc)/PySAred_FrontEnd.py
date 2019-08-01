@@ -498,6 +498,12 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.checkBox_incl_errorbars.setGeometry(QtCore.QRect(190, 4, 111, 18))
         self.checkBox_incl_errorbars.setObjectName("checkBox_incl_errorbars")
         self.checkBox_incl_errorbars.setText("Include Error Bars")
+        self.checkBox_fast_calc = QtWidgets.QCheckBox(self.tab_refl_preview)
+        self.checkBox_fast_calc.setFont(font_ee)
+        self.checkBox_fast_calc.setGeometry(QtCore.QRect(70, 4, 111, 18))
+        self.checkBox_fast_calc.setObjectName("checkBox_fast_calc")
+        self.checkBox_fast_calc.setText("Fast refl. calculation")
+        self.checkBox_fast_calc.setChecked(True)
         self.tabWidget_SFM.addTab(self.tab_refl_preview, "")
         self.tabWidget_SFM.setTabText(self.tabWidget_SFM.indexOf(self.tab_refl_preview), "Reflectivity preview")
 
