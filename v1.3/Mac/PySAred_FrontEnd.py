@@ -317,6 +317,12 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.checkBox_resol_sared.setChecked(True)
         self.checkBox_resol_sared.setObjectName("checkBox_resol_sared")
         self.checkBox_resol_sared.setText("Calculate ang. resolution in 'Sared' way")
+        self.checkBox_remove_zeros = QtWidgets.QCheckBox(self.tab_export_options)
+        self.checkBox_remove_zeros.setGeometry(QtCore.QRect(10, 60, 250, 18))
+        self.checkBox_remove_zeros.setFont(font_ee)
+        self.checkBox_remove_zeros.setChecked(False)
+        self.checkBox_remove_zeros.setObjectName("checkBox_remove_zeros")
+        self.checkBox_remove_zeros.setText("Remove zeros from reduced files")
         self.tabWidget_red_instr_exp.addTab(self.tab_export_options, "")
         self.tabWidget_red_instr_exp.setTabText(2, "Export")
 
