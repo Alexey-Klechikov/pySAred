@@ -249,9 +249,10 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                         if len(scan_intens.shape) == 1: Intens = scan_intens[index]
                         elif len(scan_intens.shape) == 2: Intens = sum(scan_intens[index][int(original_roi_coord[2]): int(original_roi_coord[3])])
 
-                        if Intens == 0: continue
+                        if Intens == 0 and self.checkBox_remove_zeros.isChecked(): continue
 
-                        Intens_err = numpy.sqrt(Intens)
+                        if Intens == 0: Intens_err = 1
+                        else: Intens_err = numpy.sqrt(Intens)
 
                         # read motors
                         Qz = (4 * numpy.pi / float(self.lineEdit_wavelength.text())) * numpy.sin(numpy.radians(th))
@@ -305,7 +306,7 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                         Resolution = Resolution / (2 * numpy.sqrt(2 * numpy.log(2)))
 
                         # minus background, devide by monitor, overillumination correct + calculate errors
-                        if self.checkBox_SubtrBKG.isChecked() and Qz > skip_BKG and Intens > 0:
+                        if self.checkBox_SubtrBKG.isChecked() and Qz > skip_BKG:
                             Intens_bkg = sum(scan_intens[index][
                                              int(original_roi_coord[2]) - 2 * (int(original_roi_coord[3]) - int(original_roi_coord[2])): int(original_roi_coord[2]) - (
                                                          int(original_roi_coord[3]) - int(original_roi_coord[2]))])
@@ -314,29 +315,34 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                                 Intens_err = numpy.sqrt(Intens + Intens_bkg)
                                 Intens = Intens - Intens_bkg
 
-                        if self.checkBox_DevideByMon.isChecked() and Intens > 0:
-                            Intens_err = (Intens / monitor) * numpy.sqrt((Intens_err / Intens) ** 2 + (1 / monitor))
+                        if self.checkBox_DevideByMon.isChecked():
+                            if Intens == 0: Intens_err = Intens_err / monitor
+                            else: Intens_err = (Intens / monitor) * numpy.sqrt((Intens_err / Intens) ** 2 + (1 / monitor))
                             Intens = Intens / monitor
 
-                        if self.checkBox_OverillCorr.isChecked() and Intens > 0:
+                        if self.checkBox_OverillCorr.isChecked():
                             Intens_err = Intens_err / overill_corr
                             Intens = Intens / overill_corr
 
-                        if self.checkBox_NormDB.isChecked() and Intens > 0:
+                        if self.checkBox_NormDB.isChecked():
                             DB_intens = float(
                                 self.DB_info[str(DB_file_scan) + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[0]) * DB_atten_factor
                             DB_err = overill_corr * float(
                                 self.DB_info[str(DB_file_scan) + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[1]) * self.DB_atten_factor
 
-                            Intens_err = (Intens / DB_intens) * numpy.sqrt(
-                                (DB_err / DB_intens) ** 2 + (Intens_err / Intens) ** 2)
+                            if Intens == 0: Intens_err += DB_err
+                            else: Intens_err = (Intens / DB_intens) * numpy.sqrt((DB_err / DB_intens) ** 2 + (Intens_err / Intens) ** 2)
+
                             Intens = Intens / DB_intens
 
                         # skip first point
-                        if index > 1 and Intens > 0:
-                            new_file.write(str(Qz) + ' ' + str(Intens) + ' ' + str(Intens_err) + ' ')
-                            if self.checkBox_add_resolution_column.isChecked(): new_file.write(str(Resolution))
-                            new_file.write('\n')
+                        if index == 1: continue
+
+                        if Intens == 0 and self.checkBox_remove_zeros.isChecked(): continue
+
+                        new_file.write(str(Qz) + ' ' + str(Intens) + ' ' + str(Intens_err) + ' ')
+                        if self.checkBox_add_resolution_column.isChecked(): new_file.write(str(Resolution))
+                        new_file.write('\n')
 
                     # close files
                     new_file.close()
@@ -352,7 +358,7 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
     def button_Start_sfm(self):
 
         # polarisation order - uu, dd, ud, du
-        detector = ["uu", "dd", "ud", "du"]
+        detector = ["uu", "du", "ud", "dd"]
 
         for i in range(0, len(self.SFM_export_Qz)):
 
@@ -363,6 +369,7 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
             with open(self.lineEdit_saveAt.text() + self.SFM_file[self.SFM_file.rfind("/") + 1 : -3] + "_" + str(detector[i]) + " (" + SFM_DB_file_export + ")" + " SFM.dat", "w") as new_file:
                 for j in range(0, len(self.SFM_export_Qz[i])):
                     if self.SFM_export_Qz[i][j] == 0: continue
+                    if self.SFM_export_I[i][j] == 0 and self.checkBox_remove_zeros.isChecked(): continue
                     new_file.write(str(self.SFM_export_Qz[i][j]) + ' ' + str(self.SFM_export_I[i][j]) + ' ' + str(self.SFM_export_dI[i][j]) + ' ')
                     if self.checkBox_add_resolution_column.isChecked(): new_file.write(str(self.SFM_export_Resolution[i][j]))
                     new_file.write('\n')
@@ -742,7 +749,7 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
 
             self.SFM_file_already_analized = self.SFM_file
 
-            for color_index, scan_intens_sfm in enumerate([self.I_uu_sfm, self.I_dd_sfm, self.I_ud_sfm, self.I_du_sfm]):
+            for color_index, scan_intens_sfm in enumerate([self.I_uu_sfm, self.I_du_sfm, self.I_ud_sfm, self.I_dd_sfm]):
 
                 SFM_export_Qz_one_pol = []
                 SFM_export_I_one_pol = []
@@ -761,15 +768,15 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                     color = [0, 0, 0]
                     if numpy.count_nonzero(monitor_uu_scalers_data) == 0: monitor_data = monitor_scalers_data
                     else: monitor_data = monitor_uu_scalers_data
-                elif color_index == 1: # --
+                elif color_index == 1: # -+
                     color = [0, 0, 255]
-                    monitor_data = monitor_dd_scalers_data
-                elif color_index == 2: # +-
+                    monitor_data = monitor_du_scalers_data
+                elif color_index == 2: # --
                     color = [0, 255, 0]
                     monitor_data = monitor_ud_scalers_data
-                elif color_index == 3: # -+
+                elif color_index == 3: # --
                     color = [255, 0, 0]
-                    monitor_data = monitor_du_scalers_data
+                    monitor_data = monitor_dd_scalers_data
 
                 for index, th in enumerate(th_motor_data):
 
@@ -825,27 +832,29 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
 
                     # minus background, devide by monitor, overillumination correct + calculate errors
                     if not Intens > 0: Intens = 0
-                    else:
-                        Intens_err = numpy.sqrt(Intens)
+                        # I want to avoid error==0 if intens==0
+                    if Intens == 0: Intens_err = 1
+                    else: Intens_err = numpy.sqrt(Intens)
 
-                        if self.checkBox_SubtrBKG.isChecked() and Qz > skip_BKG and Intens > 0:
-                            if Intens_bkg > 0:
-                                Intens_err = numpy.sqrt(Intens + Intens_bkg)
-                                Intens = Intens - Intens_bkg
+                    if self.checkBox_SubtrBKG.isChecked() and Qz > skip_BKG:
+                        if Intens_bkg > 0:
+                            Intens_err = numpy.sqrt(Intens + Intens_bkg)
+                            Intens = Intens - Intens_bkg
 
-                        if self.checkBox_DevideByMon.isChecked() and Intens > 0:
-                            Intens_err = (Intens / monitor) * numpy.sqrt((Intens_err / Intens) ** 2 + (1 / monitor))
-                            Intens = Intens / monitor
+                    if self.checkBox_DevideByMon.isChecked():
+                        if Intens == 0:  Intens_err = Intens_err / monitor
+                        else: Intens_err = (Intens / monitor) * numpy.sqrt((Intens_err / Intens) ** 2 + (1 / monitor))
+                        Intens = Intens / monitor
 
-                        if self.checkBox_OverillCorr.isChecked() and Intens > 0 and overill_corr > 0:
-                            Intens_err = Intens_err / overill_corr
-                            Intens = Intens / overill_corr
+                    if self.checkBox_OverillCorr.isChecked() and overill_corr > 0:
+                        Intens_err = Intens_err / overill_corr
+                        Intens = Intens / overill_corr
 
-                        if self.checkBox_NormDB.isChecked() and Intens > 0:
-                            DB_intens = float(self.DB_info[self.SFM_DB_file + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[0]) * self.DB_atten_factor
-                            DB_err = overill_corr * float(self.DB_info[self.SFM_DB_file + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[1]) * self.DB_atten_factor
-                            Intens_err = (Intens / DB_intens) * numpy.sqrt((DB_err / DB_intens) ** 2 + (Intens_err / Intens) ** 2)
-                            Intens = Intens / DB_intens
+                    if self.checkBox_NormDB.isChecked():
+                        DB_intens = float(self.DB_info[self.SFM_DB_file + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[0]) * self.DB_atten_factor
+                        DB_err = overill_corr * float(self.DB_info[self.SFM_DB_file + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[1]) * self.DB_atten_factor
+                        Intens_err = (Intens / DB_intens) * numpy.sqrt((DB_err / DB_intens) ** 2 + (Intens_err / Intens) ** 2)
+                        Intens = Intens / DB_intens
 
                     try:
                         show_first = int(self.lineEdit_skip_first_points.text())
@@ -854,20 +863,22 @@ class GUI(PySAred_FrontEnd.Ui_MainWindow):
                         show_first = 0
                         show_last = len(th_motor_data)
 
-                    if Intens > 0 and index < show_last and index > show_first:
-                        # I need this for "Reduse SFM" option. First - store one pol.
+                    if not Intens < 0 and index < show_last and index > show_first:
+                        # I need this for "Reduce SFM" option. First - store one pol.
                         SFM_export_Qz_one_pol.append(Qz)
                         SFM_export_I_one_pol.append(Intens)
                         SFM_export_dI_one_pol.append(Intens_err)
                         SFM_export_Resolution_one_pol.append(Resolution)
 
-                        plot_I.append(numpy.log10(Intens))
-                        plot_angle.append(Qz)
-                        plot_dI_err_top.append(abs(numpy.log10(Intens + Intens_err) - numpy.log10(Intens)))
-                        plot_overillumination.append(overill_corr_plot)
+                        if Intens > 0:
+                            plot_I.append(numpy.log10(Intens))
+                            plot_angle.append(Qz)
+                            plot_dI_err_top.append(abs(numpy.log10(Intens + Intens_err) - numpy.log10(Intens)))
 
-                        if Intens > Intens_err: plot_dI_err_bottom.append(numpy.log10(Intens) - numpy.log10(Intens - Intens_err))
-                        else: plot_dI_err_bottom.append(0)
+                            plot_overillumination.append(overill_corr_plot)
+
+                            if Intens > Intens_err: plot_dI_err_bottom.append(numpy.log10(Intens) - numpy.log10(Intens - Intens_err))
+                            else: plot_dI_err_bottom.append(0)
 
                         if self.comboBox_plot_axis.currentText() in ("Reflectivity (lin) vs Angle (Qz)", "Reflectivity (lin) vs Angle (deg)"):
                             plot_I.pop()
