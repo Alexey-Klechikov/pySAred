@@ -2018,7 +2018,7 @@ class GUI(Ui_MainWindow):
 
         elif self.comboBox_SFM_2Dmap_Axes.currentText() == "Alpha_i vs. Alpha_f":
             self.graphicsView_SFM_2Dmap.setImage(self.res_Aif, axes={'x': 0, 'y': 1}, levels=(0, 0.1))
-            self.graphicsView_SFM_2Dmap.getImageItem().setRect(QtCore.QRectF(min(self.int_SFM_Detector_image_Aif[0]), min(self.int_SFM_Detector_image_Aif[1]), abs(min(self.int_SFM_Detector_image_Aif[0])) + abs(max(self.int_SFM_Detector_image_Aif[0])), abs(min(self.int_SFM_Detector_image_Aif[1])) + abs(max(self.int_SFM_Detector_image_Aif[1]))))
+            self.graphicsView_SFM_2Dmap.getImageItem().setRect(QtCore.QRectF(min(self.int_SFM_Detector_image_Aif[0]), min(self.int_SFM_Detector_image_Aif[1]), max(self.int_SFM_Detector_image_Aif[0]) - min(self.int_SFM_Detector_image_Aif[0]), max(self.int_SFM_Detector_image_Aif[1]) - min(self.int_SFM_Detector_image_Aif[1])))
             self.graphicsView_SFM_2Dmap.getView().enableAutoScale()
 
         elif self.comboBox_SFM_2Dmap_Axes.currentText() == "Qx vs. Qz":
