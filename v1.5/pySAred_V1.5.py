@@ -12,8 +12,10 @@ class Ui_MainWindow(QtGui.QMainWindow):
 
     def __create_element(self, object, geometry, object_name, text=None, font=None, placeholder=None, visible=None, stylesheet=None, checked=None, title=None, combo=None, enabled=None):
 
-        object.setGeometry(QtCore.QRect(geometry[0], geometry[1], geometry[2], geometry[3]))
         object.setObjectName(object_name)
+
+        if not geometry == [999, 999, 999, 999]:
+            object.setGeometry(QtCore.QRect(geometry[0], geometry[1], geometry[2], geometry[3]))
 
         if not text == None: object.setText(text)
         if not title == None: object.setTitle(title)
@@ -476,20 +478,16 @@ class Ui_MainWindow(QtGui.QMainWindow):
 
         # MenuBar
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 21))
-        self.menubar.setObjectName("menu_bar")
+        self.__create_element(self.menubar, [0, 0, 1000, 21], "menubar")
         self.menu_Help = QtWidgets.QMenu(self.menubar)
-        self.menu_Help.setObjectName("menu_Help")
-        self.menu_Help.setTitle("Help")
+        self.__create_element(self.menu_Help, [999, 999, 999, 999], "menu_Help", title="Help")
         MainWindow.setMenuBar(self.menubar)
         self.action_Algorithm_info = QtWidgets.QAction(MainWindow)
-        self.action_Algorithm_info.setObjectName("action_Algorithm_info")
-        self.action_Algorithm_info.setText("Algorithm info")
+        self.__create_element(self.action_Algorithm_info, [999, 999, 999, 999], "action_Algorithm_info", text="Algorithm info")
         self.action_Version = QtWidgets.QAction(MainWindow)
-        self.action_Version.setObjectName("action_Version")
+        self.__create_element(self.action_Version, [999, 999, 999, 999], "action_Version", text="V1.5")
         self.menu_Help.addAction(self.action_Algorithm_info)
         self.menu_Help.addAction(self.action_Version)
-        self.action_Version.setText("V1.5")
         self.menubar.addAction(self.menu_Help.menuAction())
 
         self.tabWidget_Reductions.setCurrentIndex(0)
@@ -514,10 +512,7 @@ class GUI(Ui_MainWindow):
         self.SFM_FILE = ""
         self.sfm_file_already_analized = ""
         self.sfm_file_2d_calculated_params = []
-        self.psd_uu_sfm = []
-        self.psd_du_sfm = []
-        self.psd_ud_sfm = []
-        self.psd_dd_sfm = []
+        self.psd_uu_sfm, self.psd_du_sfm, self.psd_ud_sfm, self.psd_dd_sfm = [], [], [], []
 
         # current th point
         self.current_th = ""
@@ -530,9 +525,7 @@ class GUI(Ui_MainWindow):
         self.db_already_analized = []
 
         # ROI frames
-        self.draw_roi = []
-        self.draw_roi_bkg = []
-        self.draw_roi_2D_map = []
+        self.draw_roi, self.draw_roi_bkg, self.draw_roi_2D_map = [], [], []
 
         # Recalc intens if Y roi is changed
         self.old_roi_coord_Y = []

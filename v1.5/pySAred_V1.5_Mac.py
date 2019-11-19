@@ -477,7 +477,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
         # MenuBar
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 21))
-        self.menubar.setObjectName("menu_bar")
+        self.menubar.setObjectName("menubar")
         self.menu_Help = QtWidgets.QMenu(self.menubar)
         self.menu_Help.setObjectName("menu_Help")
         self.menu_Help.setTitle("Help")
