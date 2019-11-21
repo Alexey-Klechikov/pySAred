@@ -960,22 +960,21 @@ class GUI(Ui_MainWindow):
             elif s1hg == s2hg:
                 OB = s1hg / 2
                 OC = s1hg * (float(self.lineEdit_Instrument_Distance_s1_to_sample.text()) / (float(self.lineEdit_Instrument_Distance_s1_to_sample.text()) - float(self.lineEdit_Instrument_Distance_s2_to_sample.text())) - 1 / 2)
+
+            #OB = [OB if OB > min(s1hg / 2, s2hg / 2) else min(s1hg / 2, s2hg / 2)][0]
             BC = OC - OB
-            AO = 1 / (OB + OC)  # normalized height of trapezoid
-
-            FWHM_beam = BC/2 + OB # half of the beam FWHM
-
+            AO = 1 / (BC/2 + OB)  # normalized height of trapezoid
+            FWHM_beam = BC/2 + OB  # half of the beam FWHM
             sample_len_relative = float(sample_len) * np.sin(np.radians(np.fabs(th)))  # projection of sample surface on the beam
 
             # "coeff" represents how much of total beam intensity illuminates the sample
             if sample_len_relative / 2 >= OC: coeff[0] = 1
             else:  # check if we use only middle part of the beam or trapezoid "shoulders" also
-                if sample_len_relative / 2 > OB: coeff[0] = 1 - ((OC - sample_len_relative / 2) * AO)  # 1 - 2 trimmed triangles
-                elif sample_len_relative / 2 <= OB: coeff[0] = 1 - (BC * AO) - ((OB - sample_len_relative / 2) * 2 * AO)  # 1 - 2 squares and 2 trimmed triangles
+                if sample_len_relative / 2 <= OB: coeff[0] = AO*sample_len_relative/2 # Square part
+                elif sample_len_relative / 2 > OB: coeff[0] = AO * (OB + BC/2 - ((OC-sample_len_relative/2)**2) / (2*BC)) # Square part + triangle - edge of triangle that dont cover the sample
 
             # for the beam resolution calcultion we check how much of the beam FHWM we cover by the sample
-            if sample_len_relative / 2 >= FWHM_beam: coeff[1] = s2hg
-            else: coeff[1] = sample_len_relative
+            coeff[1] = [s2hg if sample_len_relative / 2 >= FWHM_beam else sample_len_relative][0]
 
             self.overill_coeff_lib[config] = coeff
 
