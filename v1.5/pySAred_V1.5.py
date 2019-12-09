@@ -86,8 +86,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.tableWidget_Scans.setRowCount(0)
         headers_table_scans = ["Scan", "DB", "Scan_file_full_path"]
         for i in range(0,3):
-            item = QtWidgets.QTableWidgetItem()
-            self.tableWidget_Scans.setHorizontalHeaderItem(i, item)
+            self.tableWidget_Scans.setHorizontalHeaderItem(i, QtWidgets.QTableWidgetItem())
             self.tableWidget_Scans.horizontalHeaderItem(i).setText(headers_table_scans[i])
         self.tableWidget_Scans.horizontalHeader().setVisible(True)
         self.tableWidget_Scans.verticalHeader().setVisible(False)
@@ -113,8 +112,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.tableWidget_DB.setRowCount(0)
         headers_table_db = ["Scan", "Path"]
         for i in range(0, 2):
-            item = QtWidgets.QTableWidgetItem()
-            self.tableWidget_DB.setHorizontalHeaderItem(i, item)
+            self.tableWidget_DB.setHorizontalHeaderItem(i, QtWidgets.QTableWidgetItem())
             self.tableWidget_DB.horizontalHeaderItem(i).setText(headers_table_db[i])
         self.tableWidget_DB.horizontalHeader().setVisible(False)
         self.tableWidget_DB.verticalHeader().setVisible(False)
@@ -504,40 +502,18 @@ class GUI(Ui_MainWindow):
         super(GUI, self).__init__()
         self.setupUi(self)
 
-        # Other parameters
+        # Some parameters
         self.locked_roi = []
-
-        # current file in Single File Mode
-        self.SFM_FILE = ""
-        self.sfm_file_already_analized = ""
-        self.sfm_file_2d_calculated_params = []
-        self.psd_uu_sfm, self.psd_du_sfm, self.psd_ud_sfm, self.psd_dd_sfm = [], [], [], []
-
-        # current th point
-        self.current_th = ""
-
-        # write calculated overillumination coefficients into library
-        self.overill_coeff_lib = {}
-
-        # Write DB info into library
-        self.DB_INFO = {}
-        self.db_already_analized = []
-
-        # ROI frames
-        self.draw_roi, self.draw_roi_bkg, self.draw_roi_2D_map = [], [], []
-
-        # Recalc intens if Y roi is changed
-        self.old_roi_coord_Y = []
-        self.draw_roi_int = []
-
-        # Trigger to switch the detector image view
-        self.show_det_int_trigger = True
-
-        # Alpha_i vs Alpha_f array
-        self.res_Aif = []
-
-        # Last sample curvature (lets avoid extra recalcs)
-        self.sample_curvature_last = "0"
+        self.SFM_FILE, self.sfm_file_already_analized, self.sfm_file_2d_calculated_params = "", "", []  # current file in Single File Mode
+        self.psd_uu_sfm, self.psd_du_sfm, self.psd_ud_sfm, self.psd_dd_sfm = [], [], [], []             # 2d arrays of pol detector
+        self.current_th = ""                                                                            # current th point
+        self.overill_coeff_lib = {}                                                                     # write calculated overillumination coefficients into library
+        self.DB_INFO, self.db_already_analized = {}, []                                                 # Write DB info into library
+        self.draw_roi, self.draw_roi_bkg, self.draw_roi_2D_map = [], [], []                             # ROI frames
+        self.old_roi_coord_Y, self.draw_roi_int = [], []                                                # Recalc intens if Y roi is changed
+        self.show_det_int_trigger = True                                                                # Trigger to switch the detector image view
+        self.res_Aif = []                                                                               # Alpha_i vs Alpha_f array
+        self.sample_curvature_last = "0"                                                                # Last sample curvature (lets avoid extra recalcs)
 
         # Triggers
         self.action_Version.triggered.connect(self.menu_info)
@@ -651,9 +627,7 @@ class GUI(Ui_MainWindow):
                 self.tableWidget_Scans.insertRow(self.tableWidget_Scans.rowCount())
                 self.tableWidget_Scans.setRowHeight(self.tableWidget_Scans.rowCount()-1, 10)
                 # File name (row 0) and full path (row 2)
-                for j in range(0, 3):
-                    item = QtWidgets.QTableWidgetItem()
-                    self.tableWidget_Scans.setItem(self.tableWidget_Scans.rowCount()-1, j, item)
+                for j in range(0, 3): self.tableWidget_Scans.setItem(self.tableWidget_Scans.rowCount()-1, j, QtWidgets.QTableWidgetItem())
                 self.tableWidget_Scans.item(self.tableWidget_Scans.rowCount() - 1, 0).setText(FILE[FILE.rfind("/") + 1:])
                 self.tableWidget_Scans.item(self.tableWidget_Scans.rowCount() - 1, 2).setText(FILE)
 
@@ -661,7 +635,6 @@ class GUI(Ui_MainWindow):
                 self.comboBox_SFM_Scan.addItem(str(FILE[FILE.rfind("/") + 1:]))
 
                 self.db_analaze()
-
                 self.load_SFM_Reflectivity_preview()
 
         if self.sender().objectName() == "pushButton_Delete_scans":
@@ -698,9 +671,7 @@ class GUI(Ui_MainWindow):
                 self.tableWidget_DB.insertRow(self.tableWidget_DB.rowCount())
                 self.tableWidget_DB.setRowHeight(self.tableWidget_DB.rowCount()-1, 10)
                 # File name (row 0) and full path (row 2)
-                for j in range(0, 2):
-                    item = QtWidgets.QTableWidgetItem()
-                    self.tableWidget_DB.setItem(self.tableWidget_DB.rowCount()-1, j, item)
+                for j in range(0, 2): self.tableWidget_DB.setItem(self.tableWidget_DB.rowCount()-1, j, QtWidgets.QTableWidgetItem())
                 self.tableWidget_DB.item(self.tableWidget_DB.rowCount() - 1, 0).setText(FILE[FILE.rfind("/") + 1:])
                 self.tableWidget_DB.item(self.tableWidget_DB.rowCount() - 1, 1).setText(FILE)
 
