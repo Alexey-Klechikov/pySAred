@@ -200,7 +200,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.lineEdit_Instrument_Sample_curvature = QtWidgets.QLineEdit(self.tab_Instrument_settings)
         self.__create_element(self.lineEdit_Instrument_Sample_curvature, [220, 152, 41, 18], "lineEdit_Instrument_Sample_curvature", font=font_ee, text="0")
         self.label_Instrument_Offset_full = QtWidgets.QLabel(self.tab_Instrument_settings)
-        self.__create_element(self.label_Instrument_Offset_full, [10, 175, 241, 16], "label_Instrument_Offset_full", font=font_ee, text="Full scan offset (SFM) (th - deg)")
+        self.__create_element(self.label_Instrument_Offset_full, [10, 175, 241, 16], "label_Instrument_Offset_full", font=font_ee, text="Sample angle offset (SFM) (th - deg)")
         self.lineEdit_Instrument_Offset_full = QtWidgets.QLineEdit(self.tab_Instrument_settings)
         self.__create_element(self.lineEdit_Instrument_Offset_full, [220, 175, 41, 18], "lineEdit_Instrument_Offset_full", font=font_ee, text="0")
         self.tabWidget_Reductions.addTab(self.tab_Instrument_settings, "")
@@ -718,22 +718,16 @@ class GUI(Ui_MainWindow):
             self.db_analaze()
 
     def button_SaveDir(self):
-
         saveAt = QtWidgets.QFileDialog().getExistingDirectory()
         if not saveAt: return
-
-        self.lineEdit_Save_at.setText(str(saveAt))
-        if not str(saveAt)[-1] == "/": self.lineEdit_Save_at.setText(str(saveAt) + "/")
+        self.lineEdit_Save_at.setText(str(saveAt) + ("" if str(saveAt)[-1] == "/" else "/"))
 
     def button_reduce_all(self):
-
         self.listWidget_Recheck_files_in_SFM.clear()
 
-        if self.lineEdit_Reductions_Subtract_bkg_Skip.text(): skip_bkg = float(self.lineEdit_Reductions_Subtract_bkg_Skip.text())
-        else: skip_bkg = 0
+        skip_bkg = float(self.lineEdit_Reductions_Subtract_bkg_Skip.text()) if self.lineEdit_Reductions_Subtract_bkg_Skip.text() else 0
 
-        if self.lineEdit_Save_at.text():  save_file_directory = self.lineEdit_Save_at.text()
-        else: save_file_directory = self.current_dir
+        save_file_directory = self.lineEdit_Save_at.text() if self.lineEdit_Save_at.text() else self.current_dir
 
         if self.checkBox_Reductions_Overillumination_correction.isChecked() and self.lineEdit_Sample_len.text() == "":
             self.statusbar.showMessage("Sample length is missing")
@@ -749,7 +743,7 @@ class GUI(Ui_MainWindow):
             db_atten_factor = 1
             if self.checkBox_Reductions_Attenuator_DB.isChecked():
                 try:
-                    db_atten_factor = [10 if self.lineEdit_Reductions_Attenuator_DB.text() == "" else float(self.lineEdit_Reductions_Attenuator_DB.text())][0]
+                    db_atten_factor = 10 if self.lineEdit_Reductions_Attenuator_DB.text() == "" else float(self.lineEdit_Reductions_Attenuator_DB.text())
                 except: True
 
         # iterate through table with scans
@@ -757,7 +751,7 @@ class GUI(Ui_MainWindow):
             file_name = self.tableWidget_Scans.item(i, 2).text()[self.tableWidget_Scans.item(i, 2).text().rfind("/") + 1: -3]
 
             # find full name DB file if there are several of them
-            FILE_DB = [self.tableWidget_Scans.item(i, 1).text() if self.checkBox_Reductions_Normalize_by_DB.isChecked() else ""][0]
+            FILE_DB = self.tableWidget_Scans.item(i, 1).text() if self.checkBox_Reductions_Normalize_by_DB.isChecked() else ""
 
             with h5py.File(self.tableWidget_Scans.item(i, 2).text(), 'r') as FILE:
 
@@ -796,32 +790,26 @@ class GUI(Ui_MainWindow):
                         if th == 0: continue
 
                         # analize integrated intensity for ROI
-                        if len(scan_intens.shape) == 1: Intens = scan_intens[index]
-                        elif len(scan_intens.shape) == 2: Intens = sum(scan_intens[index][int(original_roi_coord[2]): int(original_roi_coord[3])])
+                        Intens = scan_intens[index] if len(scan_intens.shape) == 1 else sum(scan_intens[index][int(original_roi_coord[2]): int(original_roi_coord[3])])
 
                         if Intens == 0 and self.checkBox_Export_Remove_zeros.isChecked(): continue
 
-                        Intens_err = [1 if Intens == 0 else np.sqrt(Intens)][0]
+                        Intens_err = 1 if Intens == 0 else np.sqrt(Intens)
 
                         # read motors
-                        Qz = (4 * np.pi / float(self.lineEdit_Instrument_Wavelength.text())) * np.sin(np.radians(th))
-                        s1hg, s2hg = s1hg_list[index], s2hg_list[index]
-
-                        if self.comboBox_Reductions_Divide_by_monitor_or_time.currentText() == "monitor": monitor = monitor_list[index]
-                        elif self.comboBox_Reductions_Divide_by_monitor_or_time.currentText() == "time": monitor = time_list[index]
+                        Qz, s1hg, s2hg = (4 * np.pi / float(self.lineEdit_Instrument_Wavelength.text())) * np.sin(np.radians(th)), s1hg_list[index], s2hg_list[index]
+                        monitor = monitor_list[index] if self.comboBox_Reductions_Divide_by_monitor_or_time.currentText() == "monitor" else time_list[index]
 
                         # check if we are not in a middle of ROI in Qz approx 0.02)
                         if round(Qz, 3) > 0.015 and round(Qz, 3) < 0.03 and check_this_file == 0:
                             scan_data_0_015 = scan_intens[index][int(original_roi_coord[2]): int(original_roi_coord[3])]
 
-                            if not max(scan_data_0_015) == max(scan_data_0_015[round((len(scan_data_0_015) / 3)):-round(
-                                    (len(scan_data_0_015) / 3))]):
+                            if not max(scan_data_0_015) == max(scan_data_0_015[round((len(scan_data_0_015) / 3)):-round((len(scan_data_0_015) / 3))]):
                                 self.listWidget_Recheck_files_in_SFM.addItem(file_name)
                                 check_this_file = 1
 
                         coeff = self.overillumination_correct_coeff(s1hg, s2hg, round(th, 4))
-                        FWHM_proj = coeff[1]
-                        overill_corr = [coeff[0] if self.checkBox_Reductions_Overillumination_correction.isChecked() else 1][0]
+                        FWHM_proj,  overill_corr = coeff[1], coeff[0] if self.checkBox_Reductions_Overillumination_correction.isChecked() else 1
 
                         # calculate resolution in Sared way or better
                         if self.checkBox_Export_Resolution_like_sared.isChecked():
@@ -839,33 +827,24 @@ class GUI(Ui_MainWindow):
                         if self.checkBox_Reductions_Subtract_bkg.isChecked() and Qz > skip_bkg:
                             Intens_bkg = sum(scan_intens[index][int(original_roi_coord[2]) - 2 * (int(original_roi_coord[3]) - int(original_roi_coord[2])): int(original_roi_coord[2]) - (int(original_roi_coord[3]) - int(original_roi_coord[2]))])
 
-                            if Intens_bkg > 0:
-                                Intens_err = np.sqrt(Intens + Intens_bkg)
-                                Intens = Intens - Intens_bkg
+                            if Intens_bkg > 0: Intens_err, Intens = np.sqrt(Intens + Intens_bkg), Intens - Intens_bkg
 
                         if self.checkBox_Reductions_Divide_by_monitor_or_time.isChecked():
                             if self.comboBox_Reductions_Divide_by_monitor_or_time.currentText() == "monitor":
-                                monitor = monitor_list[index]
-                                if Intens == 0: Intens_err = Intens_err / monitor
-                                else: Intens_err = (Intens / monitor) * np.sqrt((Intens_err / Intens) ** 2 + (1 / monitor))
+                                monitor, Intens_err = monitor_list[index], Intens_err / monitor if Intens == 0 else (Intens / monitor) * np.sqrt((Intens_err / Intens) ** 2 + (1 / monitor))
                             elif self.comboBox_Reductions_Divide_by_monitor_or_time.currentText() == "time":
-                                monitor = time_list[index]
-                                Intens_err = Intens_err / monitor
+                                monitor, Intens_err = time_list[index], Intens_err / monitor
 
                             Intens = Intens / monitor
 
-                        if self.checkBox_Reductions_Overillumination_correction.isChecked():
-                            Intens_err = Intens_err / overill_corr
-                            Intens = Intens / overill_corr
+                        if self.checkBox_Reductions_Overillumination_correction.isChecked(): Intens_err, Intens = Intens_err / overill_corr, Intens / overill_corr
 
                         if self.checkBox_Reductions_Normalize_by_DB.isChecked():
                             try:
                                 db_intens = float(self.DB_INFO[str(FILE_DB) + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[0]) * db_atten_factor
                                 db_err = overill_corr * float(self.DB_INFO[str(FILE_DB) + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[1]) * self.db_atten_factor
 
-                                if Intens == 0: Intens_err += db_err
-                                else: Intens_err = (Intens / db_intens) * np.sqrt((db_err / db_intens) ** 2 + (Intens_err / Intens) ** 2)
-
+                                Intens_err = Intens_err + db_err if Intens == 0 else (Intens / db_intens) * np.sqrt((db_err / db_intens) ** 2 + (Intens_err / Intens) ** 2)
                                 Intens = Intens / db_intens
                             except:
                                 if check_this_file == 0:
@@ -874,14 +853,10 @@ class GUI(Ui_MainWindow):
 
                             self.checkBox_Reductions_Scale_factor.setChecked(False)
 
-                        if self.checkBox_Reductions_Scale_factor.isChecked():
-                            Intens_err = Intens_err / self.scale_factor
-                            Intens = Intens / self.scale_factor
+                        if self.checkBox_Reductions_Scale_factor.isChecked(): Intens_err, Intens = Intens_err / self.scale_factor, Intens / self.scale_factor
 
                         # skip the first point
-                        if index == 0: continue
-
-                        if Intens == 0 and self.checkBox_Export_Remove_zeros.isChecked(): continue
+                        if index == 0 or (Intens == 0 and self.checkBox_Export_Remove_zeros.isChecked()): continue
 
                         new_file.write(str(Qz) + ' ' + str(Intens) + ' ' + str(Intens_err) + ' ')
                         if self.checkBox_Export_Add_resolution_column.isChecked(): new_file.write(str(Resolution))
@@ -899,19 +874,18 @@ class GUI(Ui_MainWindow):
 
     def button_reduce_sfm(self):
 
-        save_file_directory = [self.lineEdit_Save_at.text() if self.lineEdit_Save_at.text() else self.current_dir][0]
+        save_file_directory = self.lineEdit_Save_at.text() if self.lineEdit_Save_at.text() else self.current_dir
 
         # polarisation order - uu, dd, ud, du
         detector = ["uu", "du", "ud", "dd"]
 
         for i in range(0, len(self.sfm_Export_Qz)):
 
-            sfm_db_file_export = [self.SFM_DB_FILE if self.checkBox_Reductions_Normalize_by_DB.isChecked() else ""][0]
+            sfm_db_file_export = self.SFM_DB_FILE if self.checkBox_Reductions_Normalize_by_DB.isChecked() else ""
 
             with open(save_file_directory + self.SFM_FILE[self.SFM_FILE.rfind("/") + 1 : -3] + "_" + str(detector[i]) + " (" + sfm_db_file_export + ")" + " SFM.dat", "w") as new_file:
                 for j in range(0, len(self.sfm_Export_Qz[i])):
-                    if self.sfm_Export_Qz[i][j] == 0: continue
-                    if self.sfm_Export_I[i][j] == 0 and self.checkBox_Export_Remove_zeros.isChecked(): continue
+                    if self.sfm_Export_Qz[i][j] == 0 or (self.sfm_Export_I[i][j] == 0 and self.checkBox_Export_Remove_zeros.isChecked()): continue
                     new_file.write(str(self.sfm_Export_Qz[i][j]) + ' ' + str(self.sfm_Export_I[i][j]) + ' ' + str(self.sfm_Export_dI[i][j]) + ' ')
                     if self.checkBox_Export_Add_resolution_column.isChecked(): new_file.write(str(self.sfm_Export_Resolution[i][j]))
                     new_file.write('\n')
@@ -923,14 +897,9 @@ class GUI(Ui_MainWindow):
 
     def button_Clear(self):
 
-        self.comboBox_SFM_Scan.clear()
-        self.listWidget_Recheck_files_in_SFM.clear()
-        self.graphicsView_SFM_Detector_image.clear()
-        self.graphicsView_SFM_2Dmap.clear()
-        self.graphicsView_SFM_Reflectivity_preview.getPlotItem().clear()
-        self.comboBox_SFM_Detector_image_Incident_angle.clear()
-        self.comboBox_SFM_Detector_image_Polarisation.clear()
-        self.comboBox_SFM_2Dmap_Polarisation.clear()
+        for item in (self.comboBox_SFM_Scan, self.listWidget_Recheck_files_in_SFM, self.graphicsView_SFM_Detector_image, self.graphicsView_SFM_2Dmap, self.graphicsView_SFM_Reflectivity_preview.getPlotItem(),self.comboBox_SFM_Detector_image_Incident_angle, self.comboBox_SFM_Detector_image_Polarisation, self.comboBox_SFM_2Dmap_Polarisation):
+            item.clear()
+
         for i in range(self.tableWidget_Scans.rowCount(), -1, -1): self.tableWidget_Scans.removeRow(i)
         for i in range(self.tableWidget_DB.rowCount(), -1, -1): self.tableWidget_DB.removeRow(i)
     ##<--
@@ -961,7 +930,6 @@ class GUI(Ui_MainWindow):
                 OB = s1hg / 2
                 OC = s1hg * (float(self.lineEdit_Instrument_Distance_s1_to_sample.text()) / (float(self.lineEdit_Instrument_Distance_s1_to_sample.text()) - float(self.lineEdit_Instrument_Distance_s2_to_sample.text())) - 1 / 2)
 
-            #OB = [OB if OB > min(s1hg / 2, s2hg / 2) else min(s1hg / 2, s2hg / 2)][0]
             BC = OC - OB
             AO = 1 / (BC/2 + OB)  # normalized height of trapezoid
             FWHM_beam = BC/2 + OB  # half of the beam FWHM
@@ -974,7 +942,7 @@ class GUI(Ui_MainWindow):
                 elif sample_len_relative / 2 > OB: coeff[0] = AO * (OB + BC/2 - ((OC-sample_len_relative/2)**2) / (2*BC)) # Square part + triangle - edge of triangle that dont cover the sample
 
             # for the beam resolution calcultion we check how much of the beam FHWM we cover by the sample
-            coeff[1] = [s2hg if sample_len_relative / 2 >= FWHM_beam else sample_len_relative][0]
+            coeff[1] = s2hg if sample_len_relative / 2 >= FWHM_beam else sample_len_relative
 
             self.overill_coeff_lib[config] = coeff
 
@@ -1000,9 +968,7 @@ class GUI(Ui_MainWindow):
                     elif "'roi'" in str(scaler): intens_list = SCALERS_DATA[index]
                     elif "'sec'" in str(scaler): time_list = SCALERS_DATA[index]
 
-                if self.checkBox_Reductions_Divide_by_monitor_or_time.isChecked():
-                    if self.comboBox_Reductions_Divide_by_monitor_or_time.currentText() == "monitor": monitor = monitor_list
-                    elif self.comboBox_Reductions_Divide_by_monitor_or_time.currentText() == "time": monitor = time_list
+                if self.checkBox_Reductions_Divide_by_monitor_or_time.isChecked(): monitor = monitor_list if self.comboBox_Reductions_Divide_by_monitor_or_time.currentText() == "monitor" else time_list
                 else: monitor = np.ones_like(intens_list)
 
                 for j in range(0, len(th_list)):
@@ -1053,11 +1019,9 @@ class GUI(Ui_MainWindow):
 
         # we need to find full path for the SFM file from the table
         for i in range(0, self.tableWidget_Scans.rowCount()):
-            if self.tableWidget_Scans.item(i, 0).text() == self.comboBox_SFM_Scan.currentText():
-                self.SFM_FILE = self.tableWidget_Scans.item(i, 2).text()
+            self.SFM_FILE = self.tableWidget_Scans.item(i, 2).text() if self.tableWidget_Scans.item(i, 0).text() == self.comboBox_SFM_Scan.currentText() else self.SFM_FILE
 
         with h5py.File(self.SFM_FILE, 'r') as FILE:
-
             SCAN = FILE[list(FILE.keys())[0]]
 
             if not self.locked_roi == [] and self.checkBox_SFM_Detector_image_Lock_roi.isChecked(): original_roi_coord = np.array(self.locked_roi[0])
@@ -1082,13 +1046,11 @@ class GUI(Ui_MainWindow):
                 self.comboBox_SFM_Detector_image_Incident_angle.addItem(str(round(th, 3)))
 
             if len(SCAN.get("ponos").get('data')) == 1:
-                self.comboBox_SFM_Detector_image_Polarisation.addItem("uu")
-                self.comboBox_SFM_2Dmap_Polarisation.addItem("uu")
+                for item in (self.comboBox_SFM_Detector_image_Polarisation, self.comboBox_SFM_2Dmap_Polarisation): item.addItem("uu")
             for polarisation in SCAN.get("ponos").get('data'):
                 if polarisation not in ("data_du", "data_uu", "data_dd", "data_ud"): continue
                 if np.any(np.array(SCAN.get("ponos").get('data').get(polarisation))):
-                    self.comboBox_SFM_Detector_image_Polarisation.addItem(str(polarisation)[-2:])
-                    self.comboBox_SFM_2Dmap_Polarisation.addItem(str(polarisation)[-2:])
+                    for item in (self.comboBox_SFM_Detector_image_Polarisation, self.comboBox_SFM_2Dmap_Polarisation): item.addItem(str(polarisation)[-2:])
 
             self.comboBox_SFM_Detector_image_Polarisation.setCurrentIndex(0)
             self.comboBox_SFM_2Dmap_Polarisation.setCurrentIndex(0)
@@ -1097,8 +1059,7 @@ class GUI(Ui_MainWindow):
 
         if self.comboBox_SFM_Detector_image_Polarisation.currentText() == "" or self.comboBox_SFM_Detector_image_Incident_angle.currentText() == "": return
 
-        self.graphicsView_SFM_Detector_image.clear()
-        self.graphicsView_SFM_Detector_image_Roi.clear()
+        for item in (self.graphicsView_SFM_Detector_image, self.graphicsView_SFM_Detector_image_Roi): item.clear()
 
         if self.SFM_FILE == "": return
         with h5py.File(self.SFM_FILE, 'r') as FILE:
@@ -1122,9 +1083,7 @@ class GUI(Ui_MainWindow):
 
             for i in INSTRUMENT.get('detectors'):
                 if i not in ("psd", "psd_uu", "psd_dd", "psd_du", "psd_ud"): continue
-
-                if i == "psd": scan_psd = "psd"
-                else: scan_psd = "psd_" + self.comboBox_SFM_Detector_image_Polarisation.currentText()
+                scan_psd = "psd" if i == "psd" else "psd_" + self.comboBox_SFM_Detector_image_Polarisation.currentText()
 
             detector_images = INSTRUMENT.get('detectors').get(scan_psd).get('data')
 
@@ -1189,13 +1148,9 @@ class GUI(Ui_MainWindow):
 
         # Show "integrated roi" part
         if self.sender().objectName() == "pushButton_SFM_Detector_image_Show_integrated_roi":
-
-            if self.show_det_int_trigger:
-                self.graphicsView_SFM_Detector_image.setGeometry(QtCore.QRect(0, 30, 577, 420))
-                self.show_det_int_trigger = False
-            else:
-                self.graphicsView_SFM_Detector_image.setGeometry(QtCore.QRect(0, 30, 577, 510))
-                self.show_det_int_trigger = True
+            (height, trigger) = (420, False) if self.show_det_int_trigger else (510, True)
+            self.graphicsView_SFM_Detector_image.setGeometry(QtCore.QRect(0, 30, 577, height))
+            self.show_det_int_trigger = trigger
 
     def load_SFM_Reflectivity_preview(self):
 
@@ -1235,13 +1190,13 @@ class GUI(Ui_MainWindow):
         self.scale_factor = 1
         if self.checkBox_Reductions_Scale_factor.isChecked():
             try:
-                self.scale_factor = [10 if self.lineEdit_Reductions_Scale_factor.text() == "" else float(self.lineEdit_Reductions_Scale_factor.text())][0]
+                self.scale_factor = 10 if self.lineEdit_Reductions_Scale_factor.text() == "" else float(self.lineEdit_Reductions_Scale_factor.text())
             except: True
 
         self.db_atten_factor = 1
         if self.checkBox_Reductions_Attenuator_DB.isChecked():
             try:
-                self.db_atten_factor = [10 if self.lineEdit_Reductions_Attenuator_DB.text() == "" else float(self.lineEdit_Reductions_Attenuator_DB.text())][0]
+                self.db_atten_factor = 10 if self.lineEdit_Reductions_Attenuator_DB.text() == "" else float(self.lineEdit_Reductions_Attenuator_DB.text())
             except: True
 
         if self.lineEdit_Reductions_Subtract_bkg_Skip.text(): skip_bkg = float(self.lineEdit_Reductions_Subtract_bkg_Skip.text())
@@ -1342,7 +1297,7 @@ class GUI(Ui_MainWindow):
 
                 for index, th in enumerate(self.th_list):
 
-                    try: # Full offset. If "text" cant be converted to "float" - ignore the field
+                    try: # th offset. If "text" cant be converted to "float" - ignore the field
                         th = th - float(self.lineEdit_Instrument_Offset_full.text())
                     except: True
 
@@ -1477,24 +1432,17 @@ class GUI(Ui_MainWindow):
 
         self.int_SFM_Detector_image = []
 
-        self.graphicsView_SFM_2Dmap_Qxz_Theta.clear()
-        self.graphicsView_SFM_2Dmap.clear()
+        for item in (self.graphicsView_SFM_2Dmap_Qxz_Theta, self.graphicsView_SFM_2Dmap): item.clear()
 
         # change interface if for different views
         ELEMENTS = [self.label_SFM_2Dmap_Rescale_image_x, self.label_SFM_2Dmap_Rescale_image_y, self.horizontalSlider_SFM_2Dmap_Rescale_image_x, self.horizontalSlider_SFM_2Dmap_Rescale_image_y, self.label_SFM_2Dmap_Lower_number_of_points_by, self.comboBox_SFM_2Dmap_Lower_number_of_points_by, self.label_SFM_2Dmap_Qxz_Threshold, self.comboBox_SFM_2Dmap_Qxz_Threshold, self.label_SFM_2Dmap_View_scale, self.comboBox_SFM_2Dmap_View_scale]
 
-        if self.comboBox_SFM_2Dmap_Axes.currentText() == "Pixel vs. Point":
-            self.graphicsView_SFM_2Dmap_Qxz_Theta.setGeometry(QtCore.QRect(0, 0, 0, 0))
-            visible = [True, True, True, True, False, False, False, False, True, True]
-        elif self.comboBox_SFM_2Dmap_Axes.currentText() == "Qx vs. Qz":
-            self.graphicsView_SFM_2Dmap_Qxz_Theta.setGeometry(QtCore.QRect(0, 30, 577, 520))
-            visible = [False, False, False, False, True, True, True, True, False, False]
-        elif self.comboBox_SFM_2Dmap_Axes.currentText() == "Alpha_i vs. Alpha_f":
-            self.graphicsView_SFM_2Dmap_Qxz_Theta.setGeometry(QtCore.QRect(0, 0, 0, 0))
-            visible = [False, False, False, False, True, True, False, False, True, True]
+        if self.comboBox_SFM_2Dmap_Axes.currentText() == "Pixel vs. Point": visible, geometry = [True, True, True, True, False, False, False, False, True, True], [0, 0, 0, 0]
+        elif self.comboBox_SFM_2Dmap_Axes.currentText() == "Qx vs. Qz": visible, geometry = [False, False, False, False, True, True, True, True, False, False], [0, 30, 577, 522]
+        elif self.comboBox_SFM_2Dmap_Axes.currentText() == "Alpha_i vs. Alpha_f": visible, geometry = [False, False, False, False, True, True, False, False, True, True], [0, 0, 0, 0]
 
-        for index, index_visible in enumerate(visible):
-            ELEMENTS[index].setVisible(index_visible)
+        self.graphicsView_SFM_2Dmap_Qxz_Theta.setGeometry(QtCore.QRect(geometry[0], geometry[1], geometry[2], geometry[3]))
+        for index, index_visible in enumerate(visible): ELEMENTS[index].setVisible(index_visible)
 
         if self.SFM_FILE == "": return
 
@@ -1539,25 +1487,18 @@ class GUI(Ui_MainWindow):
                     for pixel_num, value in enumerate(det_image_i):
                         # Reduce number of points to draw (to save RAM)
                         if pixel_num % int(self.comboBox_SFM_2Dmap_Lower_number_of_points_by.currentText()) == 0:
-                            # theta F in deg
-                            theta_f = tth_i - theta_i
-                            # calculate delta theta F in deg
+                            theta_f = tth_i - theta_i # theta F in deg
                             delta_theta_F_mm = (pixel_num - roi_middle) * mm_per_pix
-                            delta_theta_F_deg = np.degrees(np.arctan(delta_theta_F_mm / float(self.lineEdit_Instrument_Distance_sample_to_detector.text())))
-                            # final theta F in deg for the point
-                            theta_f += delta_theta_F_deg
+                            delta_theta_F_deg = np.degrees(np.arctan(delta_theta_F_mm / float(self.lineEdit_Instrument_Distance_sample_to_detector.text()))) # calculate delta theta F in deg
+                            theta_f += delta_theta_F_deg # final theta F in deg for the point
                             # convert to Q
                             Qx = (2 * np.pi / float(self.lineEdit_Instrument_Wavelength.text())) * (np.cos(np.radians(theta_f)) - np.cos(np.radians(theta_i)))
                             Qz = (2 * np.pi / float(self.lineEdit_Instrument_Wavelength.text())) * (np.sin(np.radians(theta_f)) + np.sin(np.radians(theta_i)))
 
-                            self.int_SFM_Detector_image_Qxz.append([Qx, Qz, value])
-
-                            self.int_SFM_Detector_image_Aif[0].append(theta_i)
-                            self.int_SFM_Detector_image_Aif[1].append(theta_f)
-                            self.int_SFM_Detector_image_values_array.append(value)
+                            for arr, val in zip((self.int_SFM_Detector_image_Qxz, self.int_SFM_Detector_image_Aif[0], self.int_SFM_Detector_image_Aif[1], self.int_SFM_Detector_image_values_array), ([Qx, Qz, value], theta_i, theta_f, value)): arr.append(val)
 
                             # define colors - 2 count+ -> green, [0,1] - blue
-                            color = [[0, 0, 255] if value < int(self.comboBox_SFM_2Dmap_Qxz_Threshold.currentText()) else [0, 255, 0]][0]
+                            color = [0, 0, 255] if value < int(self.comboBox_SFM_2Dmap_Qxz_Threshold.currentText()) else [0, 255, 0]
 
                             self.spots_Qxz.append({'pos': (-Qx, Qz), 'pen': pg.mkPen(color[0], color[1], color[2])})
 
@@ -1577,11 +1518,9 @@ class GUI(Ui_MainWindow):
         # plot
         if self.comboBox_SFM_2Dmap_Axes.currentText() == "Pixel vs. Point":
 
-            if self.comboBox_SFM_2Dmap_View_scale.currentText() == "Log": image = self.int_SFM_Detector_image_log
-            else: image = self.int_SFM_Detector_image
+            image = self.int_SFM_Detector_image_log if self.comboBox_SFM_2Dmap_View_scale.currentText() == "Log" else self.int_SFM_Detector_image
 
-            self.graphicsView_SFM_2Dmap.setImage(image, axes={'x': 1, 'y': 0}, levels=(0, np.max(image)),
-                                           scale=(int(self.horizontalSlider_SFM_2Dmap_Rescale_image_x.value()), int(self.horizontalSlider_SFM_2Dmap_Rescale_image_y.value())))
+            self.graphicsView_SFM_2Dmap.setImage(image, axes={'x': 1, 'y': 0}, levels=(0, np.max(image)), scale=(int(self.horizontalSlider_SFM_2Dmap_Rescale_image_x.value()), int(self.horizontalSlider_SFM_2Dmap_Rescale_image_y.value())))
             # add ROI rectangular
             spots_ROI = {'x':(int(self.lineEdit_SFM_Detector_image_Roi_X_Left.text()) * int(self.horizontalSlider_SFM_2Dmap_Rescale_image_x.value()), int(self.lineEdit_SFM_Detector_image_Roi_X_Right.text()) * int(self.horizontalSlider_SFM_2Dmap_Rescale_image_x.value()), int(self.lineEdit_SFM_Detector_image_Roi_X_Right.text()) * int(self.horizontalSlider_SFM_2Dmap_Rescale_image_x.value()), int(self.lineEdit_SFM_Detector_image_Roi_X_Left.text()) * int(self.horizontalSlider_SFM_2Dmap_Rescale_image_x.value()), int(self.lineEdit_SFM_Detector_image_Roi_X_Left.text()) * int(self.horizontalSlider_SFM_2Dmap_Rescale_image_x.value())), 'y':(0,0,self.int_SFM_Detector_image.shape[0] * int(self.horizontalSlider_SFM_2Dmap_Rescale_image_y.value()),self.int_SFM_Detector_image.shape[0] * int(self.horizontalSlider_SFM_2Dmap_Rescale_image_y.value()),0)}
 
@@ -1590,8 +1529,7 @@ class GUI(Ui_MainWindow):
 
         elif self.comboBox_SFM_2Dmap_Axes.currentText() == "Alpha_i vs. Alpha_f":
 
-            if self.comboBox_SFM_2Dmap_View_scale.currentText() == "Log": image = self.res_Aif_log
-            else: image = self.res_Aif
+            image = self.res_Aif_log if self.comboBox_SFM_2Dmap_View_scale.currentText() == "Log" else self.res_Aif
 
             self.graphicsView_SFM_2Dmap.setImage(image, axes={'x': 0, 'y': 1}, levels=(0, np.max(image)))
             self.graphicsView_SFM_2Dmap.getImageItem().setRect(QtCore.QRectF(min(self.int_SFM_Detector_image_Aif[0]), min(self.int_SFM_Detector_image_Aif[1]), max(self.int_SFM_Detector_image_Aif[0]) - min(self.int_SFM_Detector_image_Aif[0]), max(self.int_SFM_Detector_image_Aif[1]) - min(self.int_SFM_Detector_image_Aif[1])))
@@ -1602,14 +1540,12 @@ class GUI(Ui_MainWindow):
             self.graphicsView_SFM_2Dmap_Qxz_Theta.addItem(s0)
 
         # hide Y axis in 2D map if "rescale image" is used. Reason - misleading scale
-        self.graphicsView_SFM_2Dmap.view.getAxis("left").setTicks(None)
-        self.graphicsView_SFM_2Dmap.view.getAxis("bottom").setTicks(None)
+        for item in (self.graphicsView_SFM_2Dmap.view.getAxis("left"), self.graphicsView_SFM_2Dmap.view.getAxis("bottom")): item.setTicks(None)
         if self.horizontalSlider_SFM_2Dmap_Rescale_image_x.value() > 1: self.graphicsView_SFM_2Dmap.view.getAxis("bottom").setTicks([])
         if self.horizontalSlider_SFM_2Dmap_Rescale_image_y.value() > 1: self.graphicsView_SFM_2Dmap.view.getAxis("left").setTicks([])
 
     def export_2d_map(self):
-        if self.lineEdit_Save_at.text(): save_file_directory = self.lineEdit_Save_at.text()
-        else: save_file_directory = self.current_dir
+        save_file_directory = self.lineEdit_Save_at.text() if self.lineEdit_Save_at.text() else self.current_dir
 
         if self.comboBox_SFM_2Dmap_Axes.currentText() == "Pixel vs. Point":
             with open(save_file_directory + self.SFM_FILE[self.SFM_FILE.rfind("/") + 1 : -3] + "_" + self.comboBox_SFM_2Dmap_Polarisation.currentText() + " 2D_map(Pixel vs. Point).dat", "w") as new_file_2d_map:
@@ -1644,13 +1580,11 @@ class GUI(Ui_MainWindow):
 
         self.draw_det_image()
         self.load_SFM_Reflectivity_preview()
-
         self.draw_2D_map()
 
     def color_det_image(self):
         if self.comboBox_SFM_Detector_image_Color_scheme.currentText() == "White / Black": self.color_det_image = np.array([[0, 0, 0, 255], [255, 255, 255, 255], [255, 255, 255, 255]], dtype=np.ubyte)
         elif self.comboBox_SFM_Detector_image_Color_scheme.currentText() == "Green / Blue": self.color_det_image = np.array([[0, 0, 255, 255], [255, 0, 0, 255], [0, 255, 0, 255]], dtype=np.ubyte)
-
         self.draw_det_image()
     ##<--
 
