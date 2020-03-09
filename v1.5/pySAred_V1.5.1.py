@@ -18,8 +18,6 @@ QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 
 class Ui_MainWindow(QtGui.QMainWindow):
 
-    groupbox_os_displ = 0 if platform.system() == 'Windows' else 2 # PyQt version/OS fix
-
     def __create_element(self, object, geometry, object_name, text=None, font=None, placeholder=None, visible=None, stylesheet=None, checked=None, title=None, combo=None, enabled=None):
 
         object.setObjectName(object_name)
@@ -87,11 +85,11 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.label_Files_Scans = QtWidgets.QLabel(self.centralwidget)
         self.__create_element(self.label_Files_Scans, [15, 5, 200, 20], "label_Files_Scans", text=".h5 files", font=font_headline)
         self.groupBox_Data = QtWidgets.QGroupBox(self.centralwidget)
-        self.__create_element(self.groupBox_Data, [10, 11-self.groupbox_os_displ, 279, 667+self.groupbox_os_displ], "groupBox_Data", font=font_ee)
+        self.__create_element(self.groupBox_Data, [10, 11, 279, 667], "groupBox_Data", font=font_ee)
         self.label_Data_files = QtWidgets.QLabel(self.groupBox_Data)
-        self.__create_element(self.label_Data_files, [10, 20+self.groupbox_os_displ, 121, 21], "label_Data_files", text="Data", font=font_headline)
+        self.__create_element(self.label_Data_files, [10, 20, 121, 21], "label_Data_files", text="Data", font=font_headline)
         self.tableWidget_Scans = QtWidgets.QTableWidget(self.groupBox_Data)
-        self.__create_element(self.tableWidget_Scans, [10, 45+self.groupbox_os_displ, 260, 342], "tableWidget_Scans", font=font_ee)
+        self.__create_element(self.tableWidget_Scans, [10, 45, 260, 342], "tableWidget_Scans", font=font_ee)
         self.tableWidget_Scans.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.tableWidget_Scans.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.tableWidget_Scans.setAutoScroll(True)
@@ -109,15 +107,15 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.tableWidget_Scans.setColumnWidth(1, int(self.tableWidget_Scans.width()) - int(self.tableWidget_Scans.columnWidth(0)) - 2)
         self.tableWidget_Scans.setColumnWidth(2, 0)
         self.pushButton_Delete_scans = QtWidgets.QPushButton(self.groupBox_Data)
-        self.__create_element(self.pushButton_Delete_scans, [10, 390+self.groupbox_os_displ, 81, 20], "pushButton_Delete_scans", text="Delete scans", font=font_ee)
+        self.__create_element(self.pushButton_Delete_scans, [10, 390, 81, 20], "pushButton_Delete_scans", text="Delete scans", font=font_ee)
         self.pushButton_Import_scans = QtWidgets.QPushButton(self.groupBox_Data)
-        self.__create_element(self.pushButton_Import_scans, [189, 390+self.groupbox_os_displ, 81, 20], "pushButton_Import_scans", text="Import scans", font=font_ee)
+        self.__create_element(self.pushButton_Import_scans, [189, 390, 81, 20], "pushButton_Import_scans", text="Import scans", font=font_ee)
         self.label_DB_files = QtWidgets.QLabel(self.groupBox_Data)
-        self.__create_element(self.label_DB_files, [10, 415+self.groupbox_os_displ, 191, 23], "label_DB_files", text="Direct Beam(s)", font=font_headline)
+        self.__create_element(self.label_DB_files, [10, 415, 191, 23], "label_DB_files", text="Direct Beam(s)", font=font_headline)
         self.checkBox_Rearrange_DB_after = QtWidgets.QCheckBox(self.groupBox_Data)
-        self.__create_element(self.checkBox_Rearrange_DB_after, [10, 435+self.groupbox_os_displ, 210, 20], "checkBox_Rearrange_DB_after", text="DB's were measured after the scans", font=font_ee)
+        self.__create_element(self.checkBox_Rearrange_DB_after, [10, 435, 210, 20], "checkBox_Rearrange_DB_after", text="DB's were measured after the scans", font=font_ee)
         self.tableWidget_DB = QtWidgets.QTableWidget(self.groupBox_Data)
-        self.__create_element(self.tableWidget_DB, [10, 455+self.groupbox_os_displ, 260, 183], "tableWidget_DB", font=font_ee)
+        self.__create_element(self.tableWidget_DB, [10, 455, 260, 183], "tableWidget_DB", font=font_ee)
         self.tableWidget_DB.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.tableWidget_DB.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.tableWidget_DB.setAutoScroll(True)
@@ -135,19 +133,19 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.tableWidget_DB.setColumnWidth(1, 0)
         self.tableWidget_DB.setSortingEnabled(True)
         self.pushButton_Delete_DB = QtWidgets.QPushButton(self.groupBox_Data)
-        self.__create_element(self.pushButton_Delete_DB, [10, 640+self.groupbox_os_displ, 81, 20], "pushButton_Delete_DB", text="Delete DB", font=font_ee)
+        self.__create_element(self.pushButton_Delete_DB, [10, 640, 81, 20], "pushButton_Delete_DB", text="Delete DB", font=font_ee)
         self.pushButton_Import_DB = QtWidgets.QPushButton(self.groupBox_Data)
-        self.__create_element(self.pushButton_Import_DB, [189, 640+self.groupbox_os_displ, 81, 20], "pushButton_Import_DB", text="Import DB", font=font_ee)
+        self.__create_element(self.pushButton_Import_DB, [189, 640, 81, 20], "pushButton_Import_DB", text="Import DB", font=font_ee)
 
         # Block: Sample
         self.label_Sample = QtWidgets.QLabel(self.centralwidget)
         self.__create_element(self.label_Sample, [305, 5, 200, 20], "label_Sample", text="Sample", font=font_headline)
         self.groupBox_Sample_len = QtWidgets.QGroupBox(self.centralwidget)
-        self.__create_element(self.groupBox_Sample_len, [300, 11-self.groupbox_os_displ, 282, 47+self.groupbox_os_displ], "groupBox_Sample_len", font=font_ee)
+        self.__create_element(self.groupBox_Sample_len, [300, 11, 282, 47], "groupBox_Sample_len", font=font_ee)
         self.label_Sample_len = QtWidgets.QLabel(self.groupBox_Sample_len)
-        self.__create_element(self.label_Sample_len, [10, 24+self.groupbox_os_displ, 131, 16], "label_Sample_len", text="Sample length (mm)", font=font_ee)
+        self.__create_element(self.label_Sample_len, [10, 24, 131, 16], "label_Sample_len", text="Sample length (mm)", font=font_ee)
         self.lineEdit_Sample_len = QtWidgets.QLineEdit(self.groupBox_Sample_len)
-        self.__create_element(self.lineEdit_Sample_len, [192, 22+self.groupbox_os_displ, 83, 21], "lineEdit_Sample_len", text="50")
+        self.__create_element(self.lineEdit_Sample_len, [192, 22, 83, 21], "lineEdit_Sample_len", text="50")
 
         # Block: Reductions and Instrument settings
         self.label_Reductions = QtWidgets.QLabel(self.centralwidget)
@@ -239,11 +237,11 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.label_Save_at = QtWidgets.QLabel(self.centralwidget)
         self.__create_element(self.label_Save_at, [305, 320, 200, 20], "label_Save_at", font=font_headline, text="Save reduced files at")
         self.groupBox_Save_at = QtWidgets.QGroupBox(self.centralwidget)
-        self.__create_element(self.groupBox_Save_at, [299, 325-self.groupbox_os_displ, 282, 48+self.groupbox_os_displ], "groupBox_Save_at", font=font_ee, title="")
+        self.__create_element(self.groupBox_Save_at, [299, 325, 282, 48], "groupBox_Save_at", font=font_ee, title="")
         self.lineEdit_Save_at = QtWidgets.QLineEdit(self.groupBox_Save_at)
-        self.__create_element(self.lineEdit_Save_at, [10, 22+self.groupbox_os_displ, 225, 22], "lineEdit_Save_at", font=font_ee, text=self.current_dir)
+        self.__create_element(self.lineEdit_Save_at, [10, 22, 225, 22], "lineEdit_Save_at", font=font_ee, text=self.current_dir)
         self.toolButton_Save_at = QtWidgets.QToolButton(self.groupBox_Save_at)
-        self.__create_element(self.toolButton_Save_at, [248, 22+self.groupbox_os_displ, 27, 22], "toolButton_Save_at", font=font_ee, text="...")
+        self.__create_element(self.toolButton_Save_at, [248, 22, 27, 22], "toolButton_Save_at", font=font_ee, text="...")
 
         # Button: Clear
         self.pushButton_Clear = QtWidgets.QPushButton(self.centralwidget)
@@ -257,23 +255,23 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.label_Recheck_files_in_SFM = QtWidgets.QLabel(self.centralwidget)
         self.__create_element(self.label_Recheck_files_in_SFM, [305, 490, 250, 20], "label_Recheck_files_in_SFM", font=font_headline, text="Recheck following files in SFM")
         self.groupBox_Recheck_files_in_SFM = QtWidgets.QGroupBox(self.centralwidget)
-        self.__create_element(self.groupBox_Recheck_files_in_SFM, [299, 500-self.groupbox_os_displ, 282, 178+self.groupbox_os_displ], "groupBox_Recheck_files_in_SFM", font=font_ee, title="")
+        self.__create_element(self.groupBox_Recheck_files_in_SFM, [299, 500, 282, 178], "groupBox_Recheck_files_in_SFM", font=font_ee, title="")
         self.listWidget_Recheck_files_in_SFM = QtWidgets.QListWidget(self.groupBox_Recheck_files_in_SFM)
-        self.__create_element(self.listWidget_Recheck_files_in_SFM, [10, 27+self.groupbox_os_displ, 262, 143], "listWidget_Recheck_files_in_SFM")
+        self.__create_element(self.listWidget_Recheck_files_in_SFM, [10, 27, 262, 143], "listWidget_Recheck_files_in_SFM")
 
         # Block: Single File Mode
         self.label_SFM = QtWidgets.QLabel(self.centralwidget)
         self.__create_element(self.label_SFM, [596, 5, 200, 20], "label_SFM", font=font_headline, text="Single File Mode (SFM)")
         self.groupBox_SFM_Scan = QtWidgets.QGroupBox(self.centralwidget)
-        self.__create_element(self.groupBox_SFM_Scan, [591, 11-self.groupbox_os_displ, 472, 47+self.groupbox_os_displ], "groupBox_SFM_Scan", title="")
+        self.__create_element(self.groupBox_SFM_Scan, [591, 11, 472, 47 ], "groupBox_SFM_Scan", font=font_ee)
         self.label_SFM_Scan = QtWidgets.QLabel(self.groupBox_SFM_Scan)
-        self.__create_element(self.label_SFM_Scan, [10, 22+self.groupbox_os_displ, 47, 20], "label_SFM_Scan", font=font_ee, text="Scan")
+        self.__create_element(self.label_SFM_Scan, [10, 24, 47, 16], "label_SFM_Scan", font=font_ee, text="Scan")
         self.comboBox_SFM_Scan = QtWidgets.QComboBox(self.groupBox_SFM_Scan)
-        self.__create_element(self.comboBox_SFM_Scan, [40, 22+self.groupbox_os_displ, 300, 20], "comboBox_SFM_Scan", font=font_ee)
+        self.__create_element(self.comboBox_SFM_Scan, [40, 22, 300, 21], "comboBox_SFM_Scan", font=font_ee)
         self.label_SFM_DB = QtWidgets.QLabel(self.groupBox_SFM_Scan)
-        self.__create_element(self.label_SFM_DB, [360, 22 + self.groupbox_os_displ, 20, 20], "label_SFM_DB", font=font_ee, text="DB")
+        self.__create_element(self.label_SFM_DB, [360, 24, 20, 16], "label_SFM_DB", font=font_ee, text="DB")
         self.comboBox_SFM_DB = QtWidgets.QComboBox(self.groupBox_SFM_Scan)
-        self.__create_element(self.comboBox_SFM_DB, [380, 22 + self.groupbox_os_displ, 85, 20], "comboBox_SFM_DB", font=font_ee)
+        self.__create_element(self.comboBox_SFM_DB, [380, 22, 85, 21], "comboBox_SFM_DB", font=font_ee)
         pg.setConfigOption('background', (255, 255, 255))
         pg.setConfigOption('foreground', 'k')
 
@@ -756,8 +754,6 @@ class GUI(Ui_MainWindow):
                     # iterate through th points
                     for index, th in enumerate(th_list):
 
-                        if th == 0: continue
-
                         th = th - float(self.lineEdit_Instrument_Offset_full.text())  # th offset
 
                         # analize integrated intensity for ROI
@@ -923,7 +919,7 @@ class GUI(Ui_MainWindow):
             BC = OC - OB
             AO = 1 / (BC/2 + OB)  # normalized height of trapezoid
             FWHM_beam = BC/2 + OB  # half of the beam FWHM
-            sample_len_relative = float(sample_len) * np.sin(np.radians(np.fabs(th)))  # projection of sample surface on the beam
+            sample_len_relative = float(sample_len) * np.sin(np.radians(np.fabs(th if not th == 0 else 0.00001)))  # projection of sample surface on the beam
 
             # "coeff" represents how much of total beam intensity illuminates the sample
             if sample_len_relative / 2 >= OC: coeff[0] = 1
@@ -1032,8 +1028,6 @@ class GUI(Ui_MainWindow):
             self.lineEdit_SFM_Detector_image_Roi_bkg_X_Left.setText(str(int(self.lineEdit_SFM_Detector_image_Roi_bkg_X_Right.text()) - roi_width))
 
             for index, th in enumerate(SCAN.get("instrument").get('motors').get('th').get("value")):
-                if str(th)[0:5] in ("-0.00", "0.00"): continue
-
                 self.comboBox_SFM_Detector_image_Incident_angle.addItem(str(round(th, 3)))
 
             if len(SCAN.get("ponos").get('data')) == 1:
