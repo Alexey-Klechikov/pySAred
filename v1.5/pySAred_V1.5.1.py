@@ -83,7 +83,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
 
         # Block: .h5 files
         self.label_Files_Scans = QtWidgets.QLabel(self.centralwidget)
-        self.__create_element(self.label_Files_Scans, [15, 5, 200, 20], "label_Files_Scans", text=".h5 files", font=font_headline)
+        self.__create_element(self.label_Files_Scans, [15, 5, 200, 20], "label_Files_Scans", text=".h5 files", font=font_headline, stylesheet="QLabel { color : blue; }")
         self.groupBox_Data = QtWidgets.QGroupBox(self.centralwidget)
         self.__create_element(self.groupBox_Data, [10, 11, 279, 667], "groupBox_Data", font=font_ee)
         self.label_Data_files = QtWidgets.QLabel(self.groupBox_Data)
@@ -139,7 +139,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
 
         # Block: Sample
         self.label_Sample = QtWidgets.QLabel(self.centralwidget)
-        self.__create_element(self.label_Sample, [305, 5, 200, 20], "label_Sample", text="Sample", font=font_headline)
+        self.__create_element(self.label_Sample, [305, 5, 200, 20], "label_Sample", text="Sample", font=font_headline, stylesheet="QLabel { color : blue; }")
         self.groupBox_Sample_len = QtWidgets.QGroupBox(self.centralwidget)
         self.__create_element(self.groupBox_Sample_len, [300, 11, 282, 47], "groupBox_Sample_len", font=font_ee)
         self.label_Sample_len = QtWidgets.QLabel(self.groupBox_Sample_len)
@@ -149,7 +149,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
 
         # Block: Reductions and Instrument settings
         self.label_Reductions = QtWidgets.QLabel(self.centralwidget)
-        self.__create_element(self.label_Reductions, [305, 65, 200, 16], "label_Reductions", text="Reductions", font=font_headline)
+        self.__create_element(self.label_Reductions, [305, 65, 200, 16], "label_Reductions", text="Reductions", font=font_headline, stylesheet="QLabel { color : blue; }")
         self.tabWidget_Reductions = QtWidgets.QTabWidget(self.centralwidget)
         self.__create_element(self.tabWidget_Reductions, [300, 87, 281, 226], "tabWidget_Reductions", font=font_ee)
         self.tabWidget_Reductions.setTabPosition(QtWidgets.QTabWidget.North)
@@ -235,7 +235,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
 
         # Block: Save reduced files at
         self.label_Save_at = QtWidgets.QLabel(self.centralwidget)
-        self.__create_element(self.label_Save_at, [305, 320, 200, 20], "label_Save_at", font=font_headline, text="Save reduced files at")
+        self.__create_element(self.label_Save_at, [305, 320, 200, 20], "label_Save_at", font=font_headline, text="Save reduced files at", stylesheet="QLabel { color : blue; }")
         self.groupBox_Save_at = QtWidgets.QGroupBox(self.centralwidget)
         self.__create_element(self.groupBox_Save_at, [299, 325, 282, 48], "groupBox_Save_at", font=font_ee, title="")
         self.lineEdit_Save_at = QtWidgets.QLineEdit(self.groupBox_Save_at)
@@ -253,7 +253,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
 
         # Block: Recheck following files in SFM
         self.label_Recheck_files_in_SFM = QtWidgets.QLabel(self.centralwidget)
-        self.__create_element(self.label_Recheck_files_in_SFM, [305, 490, 250, 20], "label_Recheck_files_in_SFM", font=font_headline, text="Recheck following files in SFM")
+        self.__create_element(self.label_Recheck_files_in_SFM, [305, 490, 250, 20], "label_Recheck_files_in_SFM", font=font_headline, text="Recheck following files in SFM", stylesheet="QLabel { color : blue; }")
         self.groupBox_Recheck_files_in_SFM = QtWidgets.QGroupBox(self.centralwidget)
         self.__create_element(self.groupBox_Recheck_files_in_SFM, [299, 500, 282, 178], "groupBox_Recheck_files_in_SFM", font=font_ee, title="")
         self.listWidget_Recheck_files_in_SFM = QtWidgets.QListWidget(self.groupBox_Recheck_files_in_SFM)
@@ -261,7 +261,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
 
         # Block: Single File Mode
         self.label_SFM = QtWidgets.QLabel(self.centralwidget)
-        self.__create_element(self.label_SFM, [596, 5, 200, 20], "label_SFM", font=font_headline, text="Single File Mode (SFM)")
+        self.__create_element(self.label_SFM, [596, 5, 200, 20], "label_SFM", font=font_headline, text="Single File Mode (SFM)", stylesheet="QLabel { color : blue; }")
         self.groupBox_SFM_Scan = QtWidgets.QGroupBox(self.centralwidget)
         self.__create_element(self.groupBox_SFM_Scan, [591, 11, 472, 47 ], "groupBox_SFM_Scan", font=font_ee)
         self.label_SFM_Scan = QtWidgets.QLabel(self.groupBox_SFM_Scan)
@@ -1238,7 +1238,6 @@ class GUI(Ui_MainWindow):
 
             # get or create 2-dimentional intensity array for each polarisation
             for scan in PONOS.get('data'):
-
                 # avoid reSUM of intensity after each action
                 # reSUM if we change SFM file or Sample curvature
                 if self.SFM_FILE == self.sfm_file_already_analized and str(self.sample_curvature_last) == self.lineEdit_Instrument_Sample_curvature.text(): continue
@@ -1248,6 +1247,7 @@ class GUI(Ui_MainWindow):
                     elif str(scan) == "data_uu": self.psd_uu_sfm = INSTRUMENT.get("detectors").get("psd_uu").get('data')[:, int(roi_coord_Y[0]): int(roi_coord_Y[1]), :].sum(axis=1)
                     elif str(scan) == "data_ud": self.psd_ud_sfm = INSTRUMENT.get("detectors").get("psd_ud").get('data')[:, int(roi_coord_Y[0]): int(roi_coord_Y[1]), :].sum(axis=1)
                     elif str(scan) == "data_dd": self.psd_dd_sfm = INSTRUMENT.get("detectors").get("psd_dd").get('data')[:, int(roi_coord_Y[0]): int(roi_coord_Y[1]), :].sum(axis=1)
+
                 else: self.psd_uu_sfm = INSTRUMENT.get("detectors").get("psd").get('data')[:, int(roi_coord_Y[0]) : int(roi_coord_Y[1]), :].sum(axis=1)
 
             if not self.SFM_FILE == self.sfm_file_already_analized: self.sfm_file_already_analized, self.sample_curvature_last = self.SFM_FILE, "0"
@@ -1559,6 +1559,7 @@ class GUI(Ui_MainWindow):
                     new_file_2d_map.write("\n")
 
         elif self.comboBox_SFM_2Dmap_Axes.currentText() == "Alpha_i vs. Alpha_f":
+            # Matrix
             with open(save_file_directory + self.SFM_FILE[self.SFM_FILE.rfind("/") + 1 : -3] + "_" + self.comboBox_SFM_2Dmap_Polarisation.currentText() + " 2D_map_(Alpha_i vs. Alpha_f)).dat", "w") as new_file_2d_map_Aif:
                 # header
                 new_file_2d_map_Aif.write("Alpha_i limits: " + str(min(self.int_SFM_Detector_image_Aif[0])) + " : " + str(max(self.int_SFM_Detector_image_Aif[0])) +
@@ -1566,6 +1567,11 @@ class GUI(Ui_MainWindow):
                 for line in np.rot90(self.res_Aif):
                     for row in line: new_file_2d_map_Aif.write(str(row) + " ")
                     new_file_2d_map_Aif.write("\n")
+
+            # Points
+            with open(save_file_directory + self.SFM_FILE[self.SFM_FILE.rfind("/") + 1: -3] + "_" + self.comboBox_SFM_2Dmap_Polarisation.currentText() + " 2D_map_(Alpha_i vs. Alpha_f))_Points.dat", "w") as new_file_2d_map_Aif_points:
+                for index in range(len(self.int_SFM_Detector_image_values_array)):
+                    new_file_2d_map_Aif_points.write(f"{str(self.int_SFM_Detector_image_Aif[0][index])} {str(self.int_SFM_Detector_image_Aif[1][index])} {str(self.int_SFM_Detector_image_values_array[index])} \n")
 
         elif self.comboBox_SFM_2Dmap_Axes.currentText() in ["Qx vs. Qz"]:
             with open(save_file_directory + self.SFM_FILE[self.SFM_FILE.rfind("/") + 1 : -3] + "_" + self.comboBox_SFM_2Dmap_Polarisation.currentText() + " points_(Qx, Qz, intens).dat", "w") as new_file_2d_map_Qxz:
