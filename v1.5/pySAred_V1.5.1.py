@@ -18,9 +18,9 @@ QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 
 class Ui_MainWindow(QtGui.QMainWindow):
 
-    def __create_element(self, object, geometry, object_name, text=None, font=None, placeholder=None, visible=None, stylesheet=None, checked=None, title=None, combo=None, enabled=None):
+    def __create_element(self, object, geometry, objectName, text=None, font=None, placeholder=None, visible=None, stylesheet=None, checked=None, title=None, combo=None, enabled=None):
 
-        object.setObjectName(object_name)
+        object.setObjectName(objectName)
 
         if not geometry == [999, 999, 999, 999]: object.setGeometry(QtCore.QRect(geometry[0], geometry[1], geometry[2], geometry[3]))
 
@@ -82,39 +82,39 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.centralwidget.setObjectName("centralwidget")
 
         # Block: .h5 files
-        self.label_Files_Scans = QtWidgets.QLabel(self.centralwidget)
-        self.__create_element(self.label_Files_Scans, [15, 5, 200, 20], "label_Files_Scans", text=".h5 files", font=font_headline, stylesheet="QLabel { color : blue; }")
-        self.groupBox_Data = QtWidgets.QGroupBox(self.centralwidget)
-        self.__create_element(self.groupBox_Data, [10, 11, 279, 667], "groupBox_Data", font=font_ee)
-        self.label_Data_files = QtWidgets.QLabel(self.groupBox_Data)
-        self.__create_element(self.label_Data_files, [10, 20, 121, 21], "label_Data_files", text="Data", font=font_headline)
-        self.tableWidget_Scans = QtWidgets.QTableWidget(self.groupBox_Data)
-        self.__create_element(self.tableWidget_Scans, [10, 45, 260, 342], "tableWidget_Scans", font=font_ee)
-        self.tableWidget_Scans.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.tableWidget_Scans.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.tableWidget_Scans.setAutoScroll(True)
-        self.tableWidget_Scans.setEditTriggers(QtWidgets.QAbstractItemView.AllEditTriggers)
-        self.tableWidget_Scans.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
-        self.tableWidget_Scans.setColumnCount(4)
-        self.tableWidget_Scans.setRowCount(0)
+        self.label_h5Scans = QtWidgets.QLabel(self.centralwidget)
+        self.__create_element(self.label_h5Scans, [15, 5, 200, 20], "label_h5Scans", text=".h5 files", font=font_headline, stylesheet="QLabel { color : blue; }")
+        self.groupBox_data = QtWidgets.QGroupBox(self.centralwidget)
+        self.__create_element(self.groupBox_data, [10, 11, 279, 667], "groupBox_data", font=font_ee)
+        self.label_dataFiles = QtWidgets.QLabel(self.groupBox_data)
+        self.__create_element(self.label_dataFiles, [10, 20, 121, 21], "label_dataFiles", text="Data", font=font_headline)
+        self.tableWidget_scans = QtWidgets.QTableWidget(self.groupBox_data)
+        self.__create_element(self.tableWidget_scans, [10, 45, 260, 342], "tableWidget_scans", font=font_ee)
+        self.tableWidget_scans.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.tableWidget_scans.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.tableWidget_scans.setAutoScroll(True)
+        self.tableWidget_scans.setEditTriggers(QtWidgets.QAbstractItemView.AllEditTriggers)
+        self.tableWidget_scans.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
+        self.tableWidget_scans.setColumnCount(4)
+        self.tableWidget_scans.setRowCount(0)
         headers_table_scans = ["Scan", "DB", "Scan_file_full_path"]
         for i in range(0,3):
-            self.tableWidget_Scans.setHorizontalHeaderItem(i, QtWidgets.QTableWidgetItem())
-            self.tableWidget_Scans.horizontalHeaderItem(i).setText(headers_table_scans[i])
-        self.tableWidget_Scans.horizontalHeader().setVisible(True)
-        self.tableWidget_Scans.verticalHeader().setVisible(False)
-        self.tableWidget_Scans.setColumnWidth(0, 200)
-        self.tableWidget_Scans.setColumnWidth(1, int(self.tableWidget_Scans.width()) - int(self.tableWidget_Scans.columnWidth(0)) - 2)
-        self.tableWidget_Scans.setColumnWidth(2, 0)
-        self.pushButton_Delete_scans = QtWidgets.QPushButton(self.groupBox_Data)
-        self.__create_element(self.pushButton_Delete_scans, [10, 390, 81, 20], "pushButton_Delete_scans", text="Delete scans", font=font_ee)
-        self.pushButton_Import_scans = QtWidgets.QPushButton(self.groupBox_Data)
-        self.__create_element(self.pushButton_Import_scans, [189, 390, 81, 20], "pushButton_Import_scans", text="Import scans", font=font_ee)
-        self.label_DB_files = QtWidgets.QLabel(self.groupBox_Data)
+            self.tableWidget_scans.setHorizontalHeaderItem(i, QtWidgets.QTableWidgetItem())
+            self.tableWidget_scans.horizontalHeaderItem(i).setText(headers_table_scans[i])
+        self.tableWidget_scans.horizontalHeader().setVisible(True)
+        self.tableWidget_scans.verticalHeader().setVisible(False)
+        self.tableWidget_scans.setColumnWidth(0, 200)
+        self.tableWidget_scans.setColumnWidth(1, int(self.tableWidget_scans.width()) - int(self.tableWidget_scans.columnWidth(0)) - 2)
+        self.tableWidget_scans.setColumnWidth(2, 0)
+        self.pushButton_deleteScans = QtWidgets.QPushButton(self.groupBox_data)
+        self.__create_element(self.pushButton_deleteScans, [10, 390, 81, 20], "pushButton_deleteScans", text="Delete scans", font=font_ee)
+        self.pushButton_importScans = QtWidgets.QPushButton(self.groupBox_data)
+        self.__create_element(self.pushButton_importScans, [189, 390, 81, 20], "pushButton_importScans", text="Import scans", font=font_ee)
+        self.label_DB_files = QtWidgets.QLabel(self.groupBox_data)
         self.__create_element(self.label_DB_files, [10, 415, 191, 23], "label_DB_files", text="Direct Beam(s)", font=font_headline)
-        self.checkBox_Rearrange_DB_after = QtWidgets.QCheckBox(self.groupBox_Data)
-        self.__create_element(self.checkBox_Rearrange_DB_after, [10, 435, 210, 20], "checkBox_Rearrange_DB_after", text="DB's were measured after the scans", font=font_ee)
-        self.tableWidget_DB = QtWidgets.QTableWidget(self.groupBox_Data)
+        self.checkBox_rearrangeDbAfter = QtWidgets.QCheckBox(self.groupBox_data)
+        self.__create_element(self.checkBox_rearrangeDbAfter, [10, 435, 210, 20], "checkBox_rearrangeDbAfter", text="DB's were measured after the scans", font=font_ee)
+        self.tableWidget_DB = QtWidgets.QTableWidget(self.groupBox_data)
         self.__create_element(self.tableWidget_DB, [10, 455, 260, 183], "tableWidget_DB", font=font_ee)
         self.tableWidget_DB.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.tableWidget_DB.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
@@ -132,152 +132,152 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.tableWidget_DB.setColumnWidth(0, self.tableWidget_DB.width())
         self.tableWidget_DB.setColumnWidth(1, 0)
         self.tableWidget_DB.setSortingEnabled(True)
-        self.pushButton_Delete_DB = QtWidgets.QPushButton(self.groupBox_Data)
-        self.__create_element(self.pushButton_Delete_DB, [10, 640, 81, 20], "pushButton_Delete_DB", text="Delete DB", font=font_ee)
-        self.pushButton_Import_DB = QtWidgets.QPushButton(self.groupBox_Data)
-        self.__create_element(self.pushButton_Import_DB, [189, 640, 81, 20], "pushButton_Import_DB", text="Import DB", font=font_ee)
+        self.pushButton_deleteDB = QtWidgets.QPushButton(self.groupBox_data)
+        self.__create_element(self.pushButton_deleteDB, [10, 640, 81, 20], "pushButton_deleteDB", text="Delete DB", font=font_ee)
+        self.pushButton_importDB = QtWidgets.QPushButton(self.groupBox_data)
+        self.__create_element(self.pushButton_importDB, [189, 640, 81, 20], "pushButton_importDB", text="Import DB", font=font_ee)
 
         # Block: Sample
-        self.label_Sample = QtWidgets.QLabel(self.centralwidget)
-        self.__create_element(self.label_Sample, [305, 5, 200, 20], "label_Sample", text="Sample", font=font_headline, stylesheet="QLabel { color : blue; }")
-        self.groupBox_Sample_len = QtWidgets.QGroupBox(self.centralwidget)
-        self.__create_element(self.groupBox_Sample_len, [300, 11, 282, 47], "groupBox_Sample_len", font=font_ee)
-        self.label_Sample_len = QtWidgets.QLabel(self.groupBox_Sample_len)
-        self.__create_element(self.label_Sample_len, [10, 24, 131, 16], "label_Sample_len", text="Sample length (mm)", font=font_ee)
-        self.lineEdit_Sample_len = QtWidgets.QLineEdit(self.groupBox_Sample_len)
-        self.__create_element(self.lineEdit_Sample_len, [192, 22, 83, 21], "lineEdit_Sample_len", text="50")
+        self.label_sample = QtWidgets.QLabel(self.centralwidget)
+        self.__create_element(self.label_sample, [305, 5, 200, 20], "label_sample", text="Sample", font=font_headline, stylesheet="QLabel { color : blue; }")
+        self.groupBox_sampleLen = QtWidgets.QGroupBox(self.centralwidget)
+        self.__create_element(self.groupBox_sampleLen, [300, 11, 282, 47], "groupBox_sampleLen", font=font_ee)
+        self.label_sampleLen = QtWidgets.QLabel(self.groupBox_sampleLen)
+        self.__create_element(self.label_sampleLen, [10, 24, 131, 16], "label_sampleLen", text="Sample length (mm)", font=font_ee)
+        self.lineEdit_sampleLen = QtWidgets.QLineEdit(self.groupBox_sampleLen)
+        self.__create_element(self.lineEdit_sampleLen, [192, 22, 83, 21], "lineEdit_sampleLen", text="50")
 
         # Block: Reductions and Instrument settings
-        self.label_Reductions = QtWidgets.QLabel(self.centralwidget)
-        self.__create_element(self.label_Reductions, [305, 65, 200, 16], "label_Reductions", text="Reductions", font=font_headline, stylesheet="QLabel { color : blue; }")
-        self.tabWidget_Reductions = QtWidgets.QTabWidget(self.centralwidget)
-        self.__create_element(self.tabWidget_Reductions, [300, 87, 281, 226], "tabWidget_Reductions", font=font_ee)
-        self.tabWidget_Reductions.setTabPosition(QtWidgets.QTabWidget.North)
-        self.tabWidget_Reductions.setTabShape(QtWidgets.QTabWidget.Rounded)
-        self.tabWidget_Reductions.setElideMode(QtCore.Qt.ElideNone)
+        self.label_reductions = QtWidgets.QLabel(self.centralwidget)
+        self.__create_element(self.label_reductions, [305, 65, 200, 16], "label_reductions", text="Reductions", font=font_headline, stylesheet="QLabel { color : blue; }")
+        self.tabWidget_reductions = QtWidgets.QTabWidget(self.centralwidget)
+        self.__create_element(self.tabWidget_reductions, [300, 87, 281, 226], "tabWidget_reductions", font=font_ee)
+        self.tabWidget_reductions.setTabPosition(QtWidgets.QTabWidget.North)
+        self.tabWidget_reductions.setTabShape(QtWidgets.QTabWidget.Rounded)
+        self.tabWidget_reductions.setElideMode(QtCore.Qt.ElideNone)
 
         # Tab: Reductions
-        self.tab_Reductions = QtWidgets.QWidget()
-        self.tab_Reductions.setObjectName("tab_Reductions")
-        self.checkBox_Reductions_Divide_by_monitor_or_time = QtWidgets.QCheckBox(self.tab_Reductions)
-        self.__create_element(self.checkBox_Reductions_Divide_by_monitor_or_time, [10, 10, 131, 18], "checkBox_Reductions_Divide_by_monitor_or_time", font=font_ee, text="Divide by")
-        self.comboBox_Reductions_Divide_by_monitor_or_time = QtWidgets.QComboBox(self.tab_Reductions)
-        self.__create_element(self.comboBox_Reductions_Divide_by_monitor_or_time, [80, 9, 70, 20], "comboBox_Reductions_Divide_by_monitor_or_time", font=font_ee, combo=["monitor", "time"])
-        self.checkBox_Reductions_Normalize_by_DB = QtWidgets.QCheckBox(self.tab_Reductions)
-        self.__create_element(self.checkBox_Reductions_Normalize_by_DB, [10, 35, 181, 18], "checkBox_Reductions_Normalize_by_DB", text="Normalize by direct beam", font=font_ee)
+        self.tab_reductions = QtWidgets.QWidget()
+        self.tab_reductions.setObjectName("tab_reductions")
+        self.checkBox_reductions_divideByMonitorOrTime = QtWidgets.QCheckBox(self.tab_reductions)
+        self.__create_element(self.checkBox_reductions_divideByMonitorOrTime, [10, 10, 131, 18], "checkBox_reductions_divideByMonitorOrTime", font=font_ee, text="Divide by")
+        self.comboBox_reductions_divideByMonitorOrTime = QtWidgets.QComboBox(self.tab_reductions)
+        self.__create_element(self.comboBox_reductions_divideByMonitorOrTime, [80, 9, 70, 20], "comboBox_reductions_divideByMonitorOrTime", font=font_ee, combo=["monitor", "time"])
+        self.checkBox_reductions_normalizeByDB = QtWidgets.QCheckBox(self.tab_reductions)
+        self.__create_element(self.checkBox_reductions_normalizeByDB, [10, 35, 181, 18], "checkBox_reductions_normalizeByDB", text="Normalize by direct beam", font=font_ee)
         # User will need Attenuator only with DB. Otherwice I hide this option and replace with Scale factor
-        self.checkBox_Reductions_Attenuator_DB = QtWidgets.QCheckBox(self.tab_Reductions)
-        self.__create_element(self.checkBox_Reductions_Attenuator_DB, [10, 60, 161, 18], "checkBox_Reductions_Attenuator_DB", text="Direct beam attenuator", font=font_ee, checked=True, visible=False)
-        self.lineEdit_Reductions_Attenuator_DB = QtWidgets.QLineEdit(self.tab_Reductions)
-        self.__create_element(self.lineEdit_Reductions_Attenuator_DB, [30, 85, 221, 20], "lineEdit_Reductions_Subtract_bkg_Skip", text="", font=font_ee, placeholder="Attenuator correction factor [default 10]", visible=False)
-        self.checkBox_Reductions_Scale_factor = QtWidgets.QCheckBox(self.tab_Reductions)
-        self.__create_element(self.checkBox_Reductions_Scale_factor, [10, 60, 161, 18], "checkBox_Reductions_Scale_factor", text="Scale factor", font=font_ee, checked=False)
-        self.lineEdit_Reductions_Scale_factor = QtWidgets.QLineEdit(self.tab_Reductions)
-        self.__create_element(self.lineEdit_Reductions_Scale_factor, [30, 85, 221, 20], "lineEdit_Reductions_Scale_factor", text="",  font=font_ee, placeholder="Divide reflectivity curve by [default 10]")
-        self.checkBox_Reductions_Subtract_bkg = QtWidgets.QCheckBox(self.tab_Reductions)
-        self.__create_element(self.checkBox_Reductions_Subtract_bkg, [10, 115, 231, 18], "checkBox_Reductions_Subtract_bkg", text="Subtract background (using 1 ROI)", font=font_ee)
-        self.lineEdit_Reductions_Subtract_bkg_Skip = QtWidgets.QLineEdit(self.tab_Reductions)
-        self.__create_element(self.lineEdit_Reductions_Subtract_bkg_Skip, [30, 140, 221, 20], "lineEdit_Reductions_Subtract_bkg_Skip", text="", font=font_ee, placeholder="Skip background corr. at Qz < [default 0]")
-        self.checkBox_Reductions_Overillumination_correction = QtWidgets.QCheckBox(self.tab_Reductions)
-        self.__create_element(self.checkBox_Reductions_Overillumination_correction, [10, 170, 181, 18], "checkBox_Reductions_Overillumination_correction", text="Overillumination correction", font=font_ee)
-        self.tabWidget_Reductions.addTab(self.tab_Reductions, "")
-        self.tabWidget_Reductions.setTabText(0, "Reductions")
+        self.checkBox_reductions_attenuatorDB = QtWidgets.QCheckBox(self.tab_reductions)
+        self.__create_element(self.checkBox_reductions_attenuatorDB, [10, 60, 161, 18], "checkBox_reductions_attenuatorDB", text="Direct beam attenuator", font=font_ee, checked=True, visible=False)
+        self.lineEdit_reductions_attenuatorDB = QtWidgets.QLineEdit(self.tab_reductions)
+        self.__create_element(self.lineEdit_reductions_attenuatorDB, [30, 85, 221, 20], "lineEdit_reductions_subtractBkg_Skip", text="", font=font_ee, placeholder="Attenuator correction factor [default 10]", visible=False)
+        self.checkBox_reductions_scaleFactor = QtWidgets.QCheckBox(self.tab_reductions)
+        self.__create_element(self.checkBox_reductions_scaleFactor, [10, 60, 161, 18], "checkBox_reductions_scaleFactor", text="Scale factor", font=font_ee, checked=False)
+        self.lineEdit_reductions_scaleFactor = QtWidgets.QLineEdit(self.tab_reductions)
+        self.__create_element(self.lineEdit_reductions_scaleFactor, [30, 85, 221, 20], "lineEdit_reductions_scaleFactor", text="",  font=font_ee, placeholder="Divide reflectivity curve by [default 10]")
+        self.checkBox_reductions_subtractBkg = QtWidgets.QCheckBox(self.tab_reductions)
+        self.__create_element(self.checkBox_reductions_subtractBkg, [10, 115, 231, 18], "checkBox_reductions_subtractBkg", text="Subtract background (using 1 ROI)", font=font_ee)
+        self.lineEdit_reductions_subtractBkg_Skip = QtWidgets.QLineEdit(self.tab_reductions)
+        self.__create_element(self.lineEdit_reductions_subtractBkg_Skip, [30, 140, 221, 20], "lineEdit_reductions_subtractBkg_Skip", text="", font=font_ee, placeholder="Skip background corr. at Qz < [default 0]")
+        self.checkBox_reductions_overilluminationCorr = QtWidgets.QCheckBox(self.tab_reductions)
+        self.__create_element(self.checkBox_reductions_overilluminationCorr, [10, 170, 181, 18], "checkBox_reductions_overilluminationCorr", text="Overillumination correction", font=font_ee)
+        self.tabWidget_reductions.addTab(self.tab_reductions, "")
+        self.tabWidget_reductions.setTabText(0, "Reductions")
 
         # Tab: Instrument settings
-        self.tab_Instrument_settings = QtWidgets.QWidget()
-        self.tab_Instrument_settings.setObjectName("tab_Instrument_settings")
-        self.label_Instrument_Wavelength = QtWidgets.QLabel(self.tab_Instrument_settings)
-        self.__create_element(self.label_Instrument_Wavelength, [10, 10, 111, 16], "label_Instrument_Wavelength", text="Wavelength (A)", font=font_ee)
-        self.lineEdit_Instrument_Wavelength = QtWidgets.QLineEdit(self.tab_Instrument_settings)
-        self.__create_element(self.lineEdit_Instrument_Wavelength, [225, 10, 41, 18], "lineEdit_Instrument_Wavelength", font=font_ee, text="5.2")
-        self.label_Instrument_Wavelength_resolution = QtWidgets.QLabel(self.tab_Instrument_settings)
-        self.__create_element(self.label_Instrument_Wavelength_resolution, [10, 33, 271, 16], "label_Instrument_Wavelength_resolution", text="Wavelength resolution (d_lambda/lambda)", font=font_ee)
-        self.lineEdit_Instrument_Wavelength_resolution = QtWidgets.QLineEdit(self.tab_Instrument_settings)
-        self.__create_element(self.lineEdit_Instrument_Wavelength_resolution, [225, 33, 41, 18], "lineEdit_Instrument_Wavelength_resolution", font=font_ee, text="0.004")
-        self.label_Instrument_Distance_s1_to_sample = QtWidgets.QLabel(self.tab_Instrument_settings)
-        self.__create_element(self.label_Instrument_Distance_s1_to_sample, [10, 56, 241, 16], "label_Instrument_Distance_s1_to_sample", font=font_ee, text="Mono_slit to Samplle distance (mm)")
-        self.lineEdit_Instrument_Distance_s1_to_sample = QtWidgets.QLineEdit(self.tab_Instrument_settings)
-        self.__create_element(self.lineEdit_Instrument_Distance_s1_to_sample, [225, 56, 41, 18], "lineEdit_Instrument_Distance_s1_to_sample", font=font_ee, text="2300")
-        self.label_Instrument_Distance_s2_to_sample = QtWidgets.QLabel(self.tab_Instrument_settings)
-        self.__create_element(self.label_Instrument_Distance_s2_to_sample, [10, 79, 241, 16], "label_Instrument_Distance_s2_to_sample", font=font_ee, text="Sample_slit to Sample distance (mm)")
-        self.lineEdit_Instrument_Distance_s2_to_sample = QtWidgets.QLineEdit(self.tab_Instrument_settings)
-        self.__create_element(self.lineEdit_Instrument_Distance_s2_to_sample, [225, 79, 41, 18], "lineEdit_Instrument_Distance_s2_to_sample", font=font_ee, text="290")
-        self.label_Instrument_Distance_sample_to_detector = QtWidgets.QLabel(self.tab_Instrument_settings)
-        self.__create_element(self.label_Instrument_Distance_sample_to_detector, [10, 102, 241, 16], "label_Instrument_Distance_sample_to_detector", font=font_ee, text="Sample to Detector distance (mm)")
-        self.lineEdit_Instrument_Distance_sample_to_detector = QtWidgets.QLineEdit(self.tab_Instrument_settings)
-        self.__create_element(self.lineEdit_Instrument_Distance_sample_to_detector, [225, 102, 41, 18], "lineEdit_Instrument_Distance_sample_to_detector", font=font_ee, text="2500")
-        self.label_Instrument_Sample_curvature = QtWidgets.QLabel(self.tab_Instrument_settings)
-        self.__create_element(self.label_Instrument_Sample_curvature, [10, 152, 241, 16], "label_Instrument_Sample_curvature", font=font_ee, text="Sample curvature (in ROI) (SFM) (rad)")
-        self.lineEdit_Instrument_Sample_curvature = QtWidgets.QLineEdit(self.tab_Instrument_settings)
-        self.__create_element(self.lineEdit_Instrument_Sample_curvature, [225, 152, 41, 18], "lineEdit_Instrument_Sample_curvature", font=font_ee, text="0")
-        self.label_Instrument_Offset_full = QtWidgets.QLabel(self.tab_Instrument_settings)
-        self.__create_element(self.label_Instrument_Offset_full, [10, 175, 241, 16], "label_Instrument_Offset_full", font=font_ee, text="Sample angle offset (th - deg)")
-        self.lineEdit_Instrument_Offset_full = QtWidgets.QLineEdit(self.tab_Instrument_settings)
-        self.__create_element(self.lineEdit_Instrument_Offset_full, [225, 175, 41, 18], "lineEdit_Instrument_Offset_full", font=font_ee, text="0")
-        self.tabWidget_Reductions.addTab(self.tab_Instrument_settings, "")
-        self.tabWidget_Reductions.setTabText(1, "Instrument / Corrections")
+        self.tab_instrumentSettings = QtWidgets.QWidget()
+        self.tab_instrumentSettings.setObjectName("tab_instrumentSettings")
+        self.label_instrument_wavelength = QtWidgets.QLabel(self.tab_instrumentSettings)
+        self.__create_element(self.label_instrument_wavelength, [10, 10, 111, 16], "label_instrument_wavelength", text="Wavelength (A)", font=font_ee)
+        self.lineEdit_instrument_wavelength = QtWidgets.QLineEdit(self.tab_instrumentSettings)
+        self.__create_element(self.lineEdit_instrument_wavelength, [225, 10, 41, 18], "lineEdit_instrument_wavelength", font=font_ee, text="5.2")
+        self.label_instrument_wavelengthResolution = QtWidgets.QLabel(self.tab_instrumentSettings)
+        self.__create_element(self.label_instrument_wavelengthResolution, [10, 33, 271, 16], "label_instrument_wavelengthResolution", text="Wavelength resolution (d_lambda/lambda)", font=font_ee)
+        self.lineEdit_instrument_wavelengthResolution = QtWidgets.QLineEdit(self.tab_instrumentSettings)
+        self.__create_element(self.lineEdit_instrument_wavelengthResolution, [225, 33, 41, 18], "lineEdit_instrument_wavelengthResolution", font=font_ee, text="0.004")
+        self.label_instrument_distanceS1ToSample = QtWidgets.QLabel(self.tab_instrumentSettings)
+        self.__create_element(self.label_instrument_distanceS1ToSample, [10, 56, 241, 16], "label_instrument_distanceS1ToSample", font=font_ee, text="Mono_slit to Samplle distance (mm)")
+        self.lineEdit_instrument_distanceS1ToSample = QtWidgets.QLineEdit(self.tab_instrumentSettings)
+        self.__create_element(self.lineEdit_instrument_distanceS1ToSample, [225, 56, 41, 18], "lineEdit_instrument_distanceS1ToSample", font=font_ee, text="2300")
+        self.label_instrument_distanceS2ToSample = QtWidgets.QLabel(self.tab_instrumentSettings)
+        self.__create_element(self.label_instrument_distanceS2ToSample, [10, 79, 241, 16], "label_instrument_distanceS2ToSample", font=font_ee, text="Sample_slit to Sample distance (mm)")
+        self.lineEdit_instrument_distanceS2ToSample = QtWidgets.QLineEdit(self.tab_instrumentSettings)
+        self.__create_element(self.lineEdit_instrument_distanceS2ToSample, [225, 79, 41, 18], "lineEdit_instrument_distanceS2ToSample", font=font_ee, text="290")
+        self.label_instrument_distanceSampleToDetector = QtWidgets.QLabel(self.tab_instrumentSettings)
+        self.__create_element(self.label_instrument_distanceSampleToDetector, [10, 102, 241, 16], "label_instrument_distanceSampleToDetector", font=font_ee, text="Sample to Detector distance (mm)")
+        self.lineEdit_instrument_distanceSampleToDetector = QtWidgets.QLineEdit(self.tab_instrumentSettings)
+        self.__create_element(self.lineEdit_instrument_distanceSampleToDetector, [225, 102, 41, 18], "lineEdit_instrument_distanceSampleToDetector", font=font_ee, text="2500")
+        self.label_instrument_sampleCurvature = QtWidgets.QLabel(self.tab_instrumentSettings)
+        self.__create_element(self.label_instrument_sampleCurvature, [10, 152, 241, 16], "label_instrument_sampleCurvature", font=font_ee, text="Sample curvature (in ROI) (SFM) (rad)")
+        self.lineEdit_instrument_sampleCurvature = QtWidgets.QLineEdit(self.tab_instrumentSettings)
+        self.__create_element(self.lineEdit_instrument_sampleCurvature, [225, 152, 41, 18], "lineEdit_instrument_sampleCurvature", font=font_ee, text="0")
+        self.label_instrument_offsetFull = QtWidgets.QLabel(self.tab_instrumentSettings)
+        self.__create_element(self.label_instrument_offsetFull, [10, 175, 241, 16], "label_instrument_offsetFull", font=font_ee, text="Sample angle offset (th - deg)")
+        self.lineEdit_instrument_offsetFull = QtWidgets.QLineEdit(self.tab_instrumentSettings)
+        self.__create_element(self.lineEdit_instrument_offsetFull, [225, 175, 41, 18], "lineEdit_instrument_offsetFull", font=font_ee, text="0")
+        self.tabWidget_reductions.addTab(self.tab_instrumentSettings, "")
+        self.tabWidget_reductions.setTabText(1, "Instrument / Corrections")
 
         # Tab: Export options
-        self.tab_Export_options = QtWidgets.QWidget()
-        self.tab_Export_options.setObjectName("tab_Export_options")
-        self.checkBox_Export_Add_resolution_column = QtWidgets.QCheckBox(self.tab_Export_options)
-        self.__create_element(self.checkBox_Export_Add_resolution_column, [10, 10, 260, 18], "checkBox_Export_Add_resolution_column", text="Include ang. resolution column in the output file", font=font_ee, checked=True)
-        self.checkBox_Export_Resolution_like_sared = QtWidgets.QCheckBox(self.tab_Export_options)
-        self.__create_element(self.checkBox_Export_Resolution_like_sared, [10, 35, 250, 18], "checkBox_Export_Resolution_like_sared", text="Use original 'Sared' way for ang. resolution calc.", font=font_ee, checked=False)
-        self.checkBox_Export_Remove_zeros = QtWidgets.QCheckBox(self.tab_Export_options)
-        self.__create_element(self.checkBox_Export_Remove_zeros, [10, 60, 250, 18], "checkBox_Export_Remove_zeros", text="Remove zeros from reduced files", font=font_ee, checked=False)
-        self.label_Export_Angle = QtWidgets.QLabel(self.tab_Export_options)
-        self.__create_element(self.label_Export_Angle, [10, 85, 70, 18], "label_Export_Angle", font=font_ee, text="Export angle:")
-        self.comboBox_Export_Angle = QtWidgets.QComboBox(self.tab_Export_options)
-        self.__create_element(self.comboBox_Export_Angle, [85, 84, 70, 20], "comboBox_Export_Angle", font=font_ee, combo=["Qz", "Degrees", "Radians"])
-        self.tabWidget_Reductions.addTab(self.tab_Export_options, "")
-        self.tabWidget_Reductions.setTabText(2, "Export")
+        self.tab_exportOptions = QtWidgets.QWidget()
+        self.tab_exportOptions.setObjectName("tab_exportOptions")
+        self.checkBox_export_addResolutionColumn = QtWidgets.QCheckBox(self.tab_exportOptions)
+        self.__create_element(self.checkBox_export_addResolutionColumn, [10, 10, 260, 18], "checkBox_export_addResolutionColumn", text="Include ang. resolution column in the output file", font=font_ee, checked=True)
+        self.checkBox_export_resolutionLikeSared = QtWidgets.QCheckBox(self.tab_exportOptions)
+        self.__create_element(self.checkBox_export_resolutionLikeSared, [10, 35, 250, 18], "checkBox_export_resolutionLikeSared", text="Use original 'Sared' way for ang. resolution calc.", font=font_ee, checked=False)
+        self.checkBox_export_removeZeros = QtWidgets.QCheckBox(self.tab_exportOptions)
+        self.__create_element(self.checkBox_export_removeZeros, [10, 60, 250, 18], "checkBox_export_removeZeros", text="Remove zeros from reduced files", font=font_ee, checked=False)
+        self.label_export_angle = QtWidgets.QLabel(self.tab_exportOptions)
+        self.__create_element(self.label_export_angle, [10, 85, 70, 18], "label_export_angle", font=font_ee, text="Export angle:")
+        self.comboBox_export_angle = QtWidgets.QComboBox(self.tab_exportOptions)
+        self.__create_element(self.comboBox_export_angle, [85, 84, 70, 20], "comboBox_export_angle", font=font_ee, combo=["Qz", "Degrees", "Radians"])
+        self.tabWidget_reductions.addTab(self.tab_exportOptions, "")
+        self.tabWidget_reductions.setTabText(2, "Export")
 
         # Block: Save reduced files at
-        self.label_Save_at = QtWidgets.QLabel(self.centralwidget)
-        self.__create_element(self.label_Save_at, [305, 320, 200, 20], "label_Save_at", font=font_headline, text="Save reduced files at", stylesheet="QLabel { color : blue; }")
-        self.groupBox_Save_at = QtWidgets.QGroupBox(self.centralwidget)
-        self.__create_element(self.groupBox_Save_at, [299, 325, 282, 48], "groupBox_Save_at", font=font_ee, title="")
-        self.lineEdit_Save_at = QtWidgets.QLineEdit(self.groupBox_Save_at)
-        self.__create_element(self.lineEdit_Save_at, [10, 22, 225, 22], "lineEdit_Save_at", font=font_ee, text=self.current_dir)
-        self.toolButton_Save_at = QtWidgets.QToolButton(self.groupBox_Save_at)
-        self.__create_element(self.toolButton_Save_at, [248, 22, 27, 22], "toolButton_Save_at", font=font_ee, text="...")
+        self.label_saveAt = QtWidgets.QLabel(self.centralwidget)
+        self.__create_element(self.label_saveAt, [305, 320, 200, 20], "label_saveAt", font=font_headline, text="Save reduced files at", stylesheet="QLabel { color : blue; }")
+        self.groupBox_saveAt = QtWidgets.QGroupBox(self.centralwidget)
+        self.__create_element(self.groupBox_saveAt, [299, 325, 282, 48], "groupBox_saveAt", font=font_ee, title="")
+        self.lineEdit_saveAt = QtWidgets.QLineEdit(self.groupBox_saveAt)
+        self.__create_element(self.lineEdit_saveAt, [10, 22, 225, 22], "lineEdit_saveAt", font=font_ee, text=self.dir_current)
+        self.toolButton_saveAt = QtWidgets.QToolButton(self.groupBox_saveAt)
+        self.__create_element(self.toolButton_saveAt, [248, 22, 27, 22], "toolButton_saveAt", font=font_ee, text="...")
 
         # Button: Clear
-        self.pushButton_Clear = QtWidgets.QPushButton(self.centralwidget)
-        self.__create_element(self.pushButton_Clear, [300, 380, 88, 30], "pushButton_Clear", font=font_button, text="Clear all")
+        self.pushButton_clear = QtWidgets.QPushButton(self.centralwidget)
+        self.__create_element(self.pushButton_clear, [300, 380, 88, 30], "pushButton_clear", font=font_button, text="Clear all")
 
         # Button: Reduce all
-        self.pushButton_Reduce_all = QtWidgets.QPushButton(self.centralwidget)
-        self.__create_element(self.pushButton_Reduce_all, [493, 380, 88, 30], "pushButton_Reduce_all", font=font_button, text="Reduce all")
+        self.pushButton_reduceAll = QtWidgets.QPushButton(self.centralwidget)
+        self.__create_element(self.pushButton_reduceAll, [493, 380, 88, 30], "pushButton_reduceAll", font=font_button, text="Reduce all")
 
         # Block: Recheck following files in SFM
-        self.label_Recheck_files_in_SFM = QtWidgets.QLabel(self.centralwidget)
-        self.__create_element(self.label_Recheck_files_in_SFM, [305, 490, 250, 20], "label_Recheck_files_in_SFM", font=font_headline, text="Recheck following files in SFM", stylesheet="QLabel { color : blue; }")
-        self.groupBox_Recheck_files_in_SFM = QtWidgets.QGroupBox(self.centralwidget)
-        self.__create_element(self.groupBox_Recheck_files_in_SFM, [299, 500, 282, 178], "groupBox_Recheck_files_in_SFM", font=font_ee, title="")
-        self.listWidget_Recheck_files_in_SFM = QtWidgets.QListWidget(self.groupBox_Recheck_files_in_SFM)
-        self.__create_element(self.listWidget_Recheck_files_in_SFM, [10, 27, 262, 143], "listWidget_Recheck_files_in_SFM")
+        self.label_recheckFilesInSFM = QtWidgets.QLabel(self.centralwidget)
+        self.__create_element(self.label_recheckFilesInSFM, [305, 490, 250, 20], "label_recheckFilesInSFM", font=font_headline, text="Recheck following files in SFM", stylesheet="QLabel { color : blue; }")
+        self.groupBox_recheckFilesInSFM = QtWidgets.QGroupBox(self.centralwidget)
+        self.__create_element(self.groupBox_recheckFilesInSFM, [299, 500, 282, 178], "groupBox_recheckFilesInSFM", font=font_ee, title="")
+        self.listWidget_recheckFilesInSFM = QtWidgets.QListWidget(self.groupBox_recheckFilesInSFM)
+        self.__create_element(self.listWidget_recheckFilesInSFM, [10, 27, 262, 143], "listWidget_recheckFilesInSFM")
 
         # Block: Single File Mode
         self.label_SFM = QtWidgets.QLabel(self.centralwidget)
         self.__create_element(self.label_SFM, [596, 5, 200, 20], "label_SFM", font=font_headline, text="Single File Mode (SFM)", stylesheet="QLabel { color : blue; }")
-        self.groupBox_SFM_Scan = QtWidgets.QGroupBox(self.centralwidget)
-        self.__create_element(self.groupBox_SFM_Scan, [591, 11, 472, 47 ], "groupBox_SFM_Scan", font=font_ee)
-        self.label_SFM_Scan = QtWidgets.QLabel(self.groupBox_SFM_Scan)
-        self.__create_element(self.label_SFM_Scan, [10, 24, 47, 16], "label_SFM_Scan", font=font_ee, text="Scan")
-        self.comboBox_SFM_Scan = QtWidgets.QComboBox(self.groupBox_SFM_Scan)
-        self.__create_element(self.comboBox_SFM_Scan, [40, 22, 300, 21], "comboBox_SFM_Scan", font=font_ee)
-        self.label_SFM_DB = QtWidgets.QLabel(self.groupBox_SFM_Scan)
+        self.groupBox_SFM_scan = QtWidgets.QGroupBox(self.centralwidget)
+        self.__create_element(self.groupBox_SFM_scan, [591, 11, 472, 47 ], "groupBox_SFM_scan", font=font_ee)
+        self.label_SFM_scan = QtWidgets.QLabel(self.groupBox_SFM_scan)
+        self.__create_element(self.label_SFM_scan, [10, 24, 47, 16], "label_SFM_scan", font=font_ee, text="Scan")
+        self.comboBox_SFM_scan = QtWidgets.QComboBox(self.groupBox_SFM_scan)
+        self.__create_element(self.comboBox_SFM_scan, [40, 22, 300, 21], "comboBox_SFM_scan", font=font_ee)
+        self.label_SFM_DB = QtWidgets.QLabel(self.groupBox_SFM_scan)
         self.__create_element(self.label_SFM_DB, [360, 24, 20, 16], "label_SFM_DB", font=font_ee, text="DB")
-        self.comboBox_SFM_DB = QtWidgets.QComboBox(self.groupBox_SFM_Scan)
+        self.comboBox_SFM_DB = QtWidgets.QComboBox(self.groupBox_SFM_scan)
         self.__create_element(self.comboBox_SFM_DB, [380, 22, 85, 21], "comboBox_SFM_DB", font=font_ee)
         pg.setConfigOption('background', (255, 255, 255))
         pg.setConfigOption('foreground', 'k')
 
         # Button: Reduce SFM
-        self.pushButton_Reduce_SFM = QtWidgets.QPushButton(self.centralwidget)
-        self.__create_element(self.pushButton_Reduce_SFM, [1070, 28, 100, 31], "pushButton_Reduce_SFM", font=font_button, text="Reduce SFM")
+        self.pushButton_reduceSFM = QtWidgets.QPushButton(self.centralwidget)
+        self.__create_element(self.pushButton_reduceSFM, [1070, 28, 100, 31], "pushButton_reduceSFM", font=font_button, text="Reduce SFM")
 
         # Block: Detector Images and Reflectivity preview
         self.tabWidget_SFM = QtWidgets.QTabWidget(self.centralwidget)
@@ -286,143 +286,143 @@ class Ui_MainWindow(QtGui.QMainWindow):
         # Tab: Detector images
         linedit_size_X = 30
         linedit_size_Y = 18
-        self.tab_SFM_Detector_image = QtWidgets.QWidget()
-        self.tab_SFM_Detector_image.setObjectName("tab_SFM_Detector_image")
-        self.graphicsView_SFM_Detector_image_Roi = pg.PlotWidget(self.tab_SFM_Detector_image, viewBox=pg.ViewBox())
-        self.__create_element(self.graphicsView_SFM_Detector_image_Roi, [0, 450, 577, 90], "graphicsView_SFM_Detector_image_Roi")
-        self.graphicsView_SFM_Detector_image_Roi.hideAxis("left")
-        self.graphicsView_SFM_Detector_image_Roi.getAxis("bottom").tickFont = font_graphs
-        self.graphicsView_SFM_Detector_image_Roi.getAxis("bottom").setStyle(tickTextOffset=10)
-        self.graphicsView_SFM_Detector_image_Roi.setMouseEnabled(y=False)
-        self.graphicsView_SFM_Detector_image = pg.ImageView(self.tab_SFM_Detector_image, view=pg.PlotItem(viewBox=pg.ViewBox()))
-        self.graphicsView_SFM_Detector_image.setGeometry(QtCore.QRect(0, 30, 577, 510))
-        self.graphicsView_SFM_Detector_image.setObjectName("graphicsView_SFM_Detector_image")
-        self.graphicsView_SFM_Detector_image.ui.histogram.hide()
-        self.graphicsView_SFM_Detector_image.ui.menuBtn.hide()
-        self.graphicsView_SFM_Detector_image.ui.roiBtn.hide()
-        self.graphicsView_SFM_Detector_image.view.showAxis("left", False)
-        self.graphicsView_SFM_Detector_image.view.showAxis("bottom", False)
-        self.graphicsView_SFM_Detector_image.view.getViewBox().setXLink(self.graphicsView_SFM_Detector_image_Roi)
-        self.label_SFM_Detector_image_Incident_angle = QtWidgets.QLabel(self.tab_SFM_Detector_image)
-        self.__create_element(self.label_SFM_Detector_image_Incident_angle, [10, 7, 100, 16], "label_SFM_Detector_image_Incident_angle", font=font_ee, text="Incident ang. (deg)")
-        self.comboBox_SFM_Detector_image_Incident_angle = QtWidgets.QComboBox(self.tab_SFM_Detector_image)
-        self.__create_element(self.comboBox_SFM_Detector_image_Incident_angle, [110, 5, 55, 20], "comboBox_SFM_Detector_image_Incident_angle", font=font_ee)
-        self.label_SFM_Detector_image_Polarisation = QtWidgets.QLabel(self.tab_SFM_Detector_image)
-        self.__create_element(self.label_SFM_Detector_image_Polarisation, [180, 7, 60, 16], "label_SFM_Detector_image_Polarisation", font=font_ee, text="Polarisation")
-        self.comboBox_SFM_Detector_image_Polarisation = QtWidgets.QComboBox(self.tab_SFM_Detector_image)
-        self.__create_element(self.comboBox_SFM_Detector_image_Polarisation, [240, 5, 40, 20], "comboBox_SFM_Detector_image_Polarisation", font=font_ee)
-        self.label_SFM_Detector_image_Color_scheme = QtWidgets.QLabel(self.tab_SFM_Detector_image)
-        self.__create_element(self.label_SFM_Detector_image_Color_scheme, [295, 7, 60, 16], "label_SFM_Detector_image_Color_scheme", font=font_ee, text="Colors")
-        self.comboBox_SFM_Detector_image_Color_scheme = QtWidgets.QComboBox(self.tab_SFM_Detector_image)
-        self.__create_element(self.comboBox_SFM_Detector_image_Color_scheme, [330, 5, 90, 20], "comboBox_SFM_Detector_image_Color_scheme", font=font_ee, combo=["Green / Blue", "White / Black"])
-        self.pushButton_SFM_Detector_image_Show_integrated_roi = QtWidgets.QPushButton(self.tab_SFM_Detector_image)
-        self.__create_element(self.pushButton_SFM_Detector_image_Show_integrated_roi, [445, 5, 120, 20], "pushButton_SFM_Detector_image_Show_integrated_roi", font=font_ee, text="Integrated ROI")
-        self.label_SFM_Detector_image_Roi = QtWidgets.QLabel(self.tab_SFM_Detector_image)
-        self.__create_element(self.label_SFM_Detector_image_Roi, [10, 545, 31, 16], "label_SFM_Detector_image_Roi", font=font_ee, text="ROI (")
-        self.checkBox_SFM_Detector_image_Lock_roi = QtWidgets.QCheckBox(self.tab_SFM_Detector_image)
-        self.__create_element(self.checkBox_SFM_Detector_image_Lock_roi, [38, 545, 50, 16], "checkBox_SFM_Detector_image_Lock_roi", text="lock):", font=font_ee)
-        self.label_SFM_Detector_image_Roi_X_Left = QtWidgets.QLabel(self.tab_SFM_Detector_image)
-        self.__create_element(self.label_SFM_Detector_image_Roi_X_Left, [85, 545, 51, 16], "label_SFM_Detector_image_Roi_X_Left", font=font_ee, text="left")
-        self.lineEdit_SFM_Detector_image_Roi_X_Left = QtWidgets.QLineEdit(self.tab_SFM_Detector_image)
-        self.__create_element(self.lineEdit_SFM_Detector_image_Roi_X_Left, [115, 544, linedit_size_X, linedit_size_Y], "lineEdit_SFM_Detector_image_Roi_X_Left", font=font_ee)
-        self.label_SFM_Detector_image_Roi_X_Right = QtWidgets.QLabel(self.tab_SFM_Detector_image)
-        self.__create_element(self.label_SFM_Detector_image_Roi_X_Right, [85, 565, 51, 16], "label_SFM_Detector_image_Roi_X_Right", font=font_ee, text="right")
-        self.lineEdit_SFM_Detector_image_Roi_X_Right = QtWidgets.QLineEdit(self.tab_SFM_Detector_image)
-        self.__create_element(self.lineEdit_SFM_Detector_image_Roi_X_Right, [115, 564, linedit_size_X, linedit_size_Y], "lineEdit_SFM_Detector_image_Roi_X_Right", font=font_ee)
-        self.label_SFM_Detector_image_Roi_Y_Bottom = QtWidgets.QLabel(self.tab_SFM_Detector_image)
-        self.__create_element(self.label_SFM_Detector_image_Roi_Y_Bottom, [155, 545, 51, 16], "label_SFM_Detector_image_Roi_Y_Bottom", font=font_ee, text="bottom")
-        self.lineEdit_SFM_Detector_image_Roi_Y_Bottom = QtWidgets.QLineEdit(self.tab_SFM_Detector_image)
-        self.__create_element(self.lineEdit_SFM_Detector_image_Roi_Y_Bottom, [195, 544, linedit_size_X, linedit_size_Y], "lineEdit_SFM_Detector_image_Roi_Y_Bottom", font=font_ee)
-        self.label_SFM_Detector_image_Roi_Y_Top = QtWidgets.QLabel(self.tab_SFM_Detector_image)
-        self.__create_element(self.label_SFM_Detector_image_Roi_Y_Top, [155, 565, 51, 16], "label_SFM_Detector_image_Roi_Y_Top", font=font_ee, text="top")
-        self.lineEdit_SFM_Detector_image_Roi_Y_Top = QtWidgets.QLineEdit(self.tab_SFM_Detector_image)
-        self.__create_element(self.lineEdit_SFM_Detector_image_Roi_Y_Top, [195, 564, linedit_size_X, linedit_size_Y], "lineEdit_SFM_Detector_image_Roi_Y_Top", font=font_ee)
-        self.label_SFM_Detector_image_Roi_bkg = QtWidgets.QLabel(self.tab_SFM_Detector_image)
-        self.__create_element(self.label_SFM_Detector_image_Roi_bkg, [245, 545, 47, 16], "label_SFM_Detector_image_Roi_bkg", font=font_ee, text="BKG:")
-        self.label_SFM_Detector_image_Roi_bkg_X_Left = QtWidgets.QLabel(self.tab_SFM_Detector_image)
-        self.__create_element(self.label_SFM_Detector_image_Roi_bkg_X_Left, [270, 545, 51, 16], "label_SFM_Detector_image_Roi_bkg_X_Left", font=font_ee, text="left")
-        self.lineEdit_SFM_Detector_image_Roi_bkg_X_Left = QtWidgets.QLineEdit(self.tab_SFM_Detector_image)
-        self.__create_element(self.lineEdit_SFM_Detector_image_Roi_bkg_X_Left, [300, 544, linedit_size_X, linedit_size_Y], "lineEdit_SFM_Detector_image_Roi_bkg_X_Left", font=font_ee, enabled=False, stylesheet="color:rgb(0,0,0)")
-        self.label_SFM_Detector_image_Roi_bkg_X_Right = QtWidgets.QLabel(self.tab_SFM_Detector_image)
-        self.__create_element(self.label_SFM_Detector_image_Roi_bkg_X_Right, [270, 565, 51, 16], "label_SFM_Detector_image_Roi_bkg_X_Right", font=font_ee, text="right")
-        self.lineEdit_SFM_Detector_image_Roi_bkg_X_Right = QtWidgets.QLineEdit(self.tab_SFM_Detector_image)
-        self.__create_element(self.lineEdit_SFM_Detector_image_Roi_bkg_X_Right, [300, 564, linedit_size_X, linedit_size_Y], "lineEdit_SFM_Detector_image_Roi_bkg_X_Right", font=font_ee)
-        self.label_SFM_Detector_image_Time = QtWidgets.QLabel(self.tab_SFM_Detector_image)
-        self.__create_element(self.label_SFM_Detector_image_Time, [350, 545, 71, 16], "label_SFM_Detector_image_Time", font=font_ee, text="Time (s):")
-        self.lineEdit_SFM_Detector_image_Time = QtWidgets.QLineEdit(self.tab_SFM_Detector_image)
-        self.__create_element(self.lineEdit_SFM_Detector_image_Time, [400, 544, linedit_size_X, linedit_size_Y], "lineEdit_SFM_Detector_image_Time", font=font_ee, enabled=False, stylesheet="color:rgb(0,0,0)")
-        self.label_SFM_Detector_image_Slits = QtWidgets.QLabel(self.tab_SFM_Detector_image)
-        self.__create_element(self.label_SFM_Detector_image_Slits, [450, 545, 51, 16], "label_SFM_Detector_image_Slits", font=font_ee, text="Slits (mm):")
-        self.label_SFM_Detector_image_Slits_s1hg = QtWidgets.QLabel(self.tab_SFM_Detector_image)
-        self.__create_element(self.label_SFM_Detector_image_Slits_s1hg, [505, 545, 41, 16], "label_SFM_Detector_image_Slits_s1hg", font=font_ee, text="s1hg")
-        self.lineEdit_SFM_Detector_image_Slits_s1hg = QtWidgets.QLineEdit(self.tab_SFM_Detector_image)
-        self.__create_element(self.lineEdit_SFM_Detector_image_Slits_s1hg, [535, 544, linedit_size_X, linedit_size_Y], "lineEdit_SFM_Detector_image_Slits_s1hg", font=font_ee, enabled=False, stylesheet="color:rgb(0,0,0)")
-        self.label_SFM_Detector_image_Slits_s2hg = QtWidgets.QLabel(self.tab_SFM_Detector_image)
-        self.__create_element(self.label_SFM_Detector_image_Slits_s2hg, [505, 565, 30, 16], "label_SFM_Detector_image_Slits_s2hg", font=font_ee, text="s2hg")
-        self.lineEdit_SFM_Detector_image_Slits_s2hg = QtWidgets.QLineEdit(self.tab_SFM_Detector_image)
-        self.__create_element(self.lineEdit_SFM_Detector_image_Slits_s2hg, [535, 564, linedit_size_X, linedit_size_Y], "lineEdit_SFM_Detector_image_Slits_s2hg", font=font_ee, enabled=False, stylesheet="color:rgb(0,0,0)")
-        self.tabWidget_SFM.addTab(self.tab_SFM_Detector_image, "")
-        self.tabWidget_SFM.setTabText(self.tabWidget_SFM.indexOf(self.tab_SFM_Detector_image), "Detector Image")
+        self.tab_SFM_detectorImage = QtWidgets.QWidget()
+        self.tab_SFM_detectorImage.setObjectName("tab_SFM_detectorImage")
+        self.graphicsView_SFM_detectorImage_roi = pg.PlotWidget(self.tab_SFM_detectorImage, viewBox=pg.ViewBox())
+        self.__create_element(self.graphicsView_SFM_detectorImage_roi, [0, 450, 577, 90], "graphicsView_SFM_detectorImage_roi")
+        self.graphicsView_SFM_detectorImage_roi.hideAxis("left")
+        self.graphicsView_SFM_detectorImage_roi.getAxis("bottom").tickFont = font_graphs
+        self.graphicsView_SFM_detectorImage_roi.getAxis("bottom").setStyle(tickTextOffset=10)
+        self.graphicsView_SFM_detectorImage_roi.setMouseEnabled(y=False)
+        self.graphicsView_SFM_detectorImage = pg.ImageView(self.tab_SFM_detectorImage, view=pg.PlotItem(viewBox=pg.ViewBox()))
+        self.graphicsView_SFM_detectorImage.setGeometry(QtCore.QRect(0, 30, 577, 510))
+        self.graphicsView_SFM_detectorImage.setObjectName("graphicsView_SFM_detectorImage")
+        self.graphicsView_SFM_detectorImage.ui.histogram.hide()
+        self.graphicsView_SFM_detectorImage.ui.menuBtn.hide()
+        self.graphicsView_SFM_detectorImage.ui.roiBtn.hide()
+        self.graphicsView_SFM_detectorImage.view.showAxis("left", False)
+        self.graphicsView_SFM_detectorImage.view.showAxis("bottom", False)
+        self.graphicsView_SFM_detectorImage.view.getViewBox().setXLink(self.graphicsView_SFM_detectorImage_roi)
+        self.label_SFM_detectorImage_incidentAngle = QtWidgets.QLabel(self.tab_SFM_detectorImage)
+        self.__create_element(self.label_SFM_detectorImage_incidentAngle, [10, 7, 100, 16], "label_SFM_detectorImage_incidentAngle", font=font_ee, text="Incident ang. (deg)")
+        self.comboBox_SFM_detectorImage_incidentAngle = QtWidgets.QComboBox(self.tab_SFM_detectorImage)
+        self.__create_element(self.comboBox_SFM_detectorImage_incidentAngle, [110, 5, 55, 20], "comboBox_SFM_detectorImage_incidentAngle", font=font_ee)
+        self.label_SFM_detectorImage_polarisation = QtWidgets.QLabel(self.tab_SFM_detectorImage)
+        self.__create_element(self.label_SFM_detectorImage_polarisation, [180, 7, 60, 16], "label_SFM_detectorImage_polarisation", font=font_ee, text="Polarisation")
+        self.comboBox_SFM_detectorImage_polarisation = QtWidgets.QComboBox(self.tab_SFM_detectorImage)
+        self.__create_element(self.comboBox_SFM_detectorImage_polarisation, [240, 5, 40, 20], "comboBox_SFM_detectorImage_polarisation", font=font_ee)
+        self.label_SFM_detectorImage_colorScheme = QtWidgets.QLabel(self.tab_SFM_detectorImage)
+        self.__create_element(self.label_SFM_detectorImage_colorScheme, [295, 7, 60, 16], "label_SFM_detectorImage_colorScheme", font=font_ee, text="Colors")
+        self.comboBox_SFM_detectorImage_colorScheme = QtWidgets.QComboBox(self.tab_SFM_detectorImage)
+        self.__create_element(self.comboBox_SFM_detectorImage_colorScheme, [330, 5, 90, 20], "comboBox_SFM_detectorImage_colorScheme", font=font_ee, combo=["Green / Blue", "White / Black"])
+        self.pushButton_SFM_detectorImage_showIntegratedRoi = QtWidgets.QPushButton(self.tab_SFM_detectorImage)
+        self.__create_element(self.pushButton_SFM_detectorImage_showIntegratedRoi, [445, 5, 120, 20], "pushButton_SFM_detectorImage_showIntegratedRoi", font=font_ee, text="Integrated ROI")
+        self.label_SFM_detectorImage_roi = QtWidgets.QLabel(self.tab_SFM_detectorImage)
+        self.__create_element(self.label_SFM_detectorImage_roi, [10, 545, 31, 16], "label_SFM_detectorImage_roi", font=font_ee, text="ROI (")
+        self.checkBox_SFM_detectorImage_lockRoi = QtWidgets.QCheckBox(self.tab_SFM_detectorImage)
+        self.__create_element(self.checkBox_SFM_detectorImage_lockRoi, [38, 545, 50, 16], "checkBox_SFM_detectorImage_lockRoi", text="lock):", font=font_ee)
+        self.label_SFM_detectorImage_roiX_left = QtWidgets.QLabel(self.tab_SFM_detectorImage)
+        self.__create_element(self.label_SFM_detectorImage_roiX_left, [85, 545, 51, 16], "label_SFM_detectorImage_roiX_left", font=font_ee, text="left")
+        self.lineEdit_SFM_detectorImage_roiX_left = QtWidgets.QLineEdit(self.tab_SFM_detectorImage)
+        self.__create_element(self.lineEdit_SFM_detectorImage_roiX_left, [115, 544, linedit_size_X, linedit_size_Y], "lineEdit_SFM_detectorImage_roiX_left", font=font_ee)
+        self.label_SFM_detectorImage_roiX_right = QtWidgets.QLabel(self.tab_SFM_detectorImage)
+        self.__create_element(self.label_SFM_detectorImage_roiX_right, [85, 565, 51, 16], "label_SFM_detectorImage_roiX_right", font=font_ee, text="right")
+        self.lineEdit_SFM_detectorImage_roiX_right = QtWidgets.QLineEdit(self.tab_SFM_detectorImage)
+        self.__create_element(self.lineEdit_SFM_detectorImage_roiX_right, [115, 564, linedit_size_X, linedit_size_Y], "lineEdit_SFM_detectorImage_roiX_right", font=font_ee)
+        self.label_SFM_detectorImage_roiY_bottom = QtWidgets.QLabel(self.tab_SFM_detectorImage)
+        self.__create_element(self.label_SFM_detectorImage_roiY_bottom, [155, 545, 51, 16], "label_SFM_detectorImage_roiY_bottom", font=font_ee, text="bottom")
+        self.lineEdit_SFM_detectorImage_roiY_bottom = QtWidgets.QLineEdit(self.tab_SFM_detectorImage)
+        self.__create_element(self.lineEdit_SFM_detectorImage_roiY_bottom, [195, 544, linedit_size_X, linedit_size_Y], "lineEdit_SFM_detectorImage_roiY_bottom", font=font_ee)
+        self.label_SFM_detectorImage_roiY_top = QtWidgets.QLabel(self.tab_SFM_detectorImage)
+        self.__create_element(self.label_SFM_detectorImage_roiY_top, [155, 565, 51, 16], "label_SFM_detectorImage_roiY_top", font=font_ee, text="top")
+        self.lineEdit_SFM_detectorImage_roiY_top = QtWidgets.QLineEdit(self.tab_SFM_detectorImage)
+        self.__create_element(self.lineEdit_SFM_detectorImage_roiY_top, [195, 564, linedit_size_X, linedit_size_Y], "lineEdit_SFM_detectorImage_roiY_top", font=font_ee)
+        self.label_SFM_detectorImage_roi_bkg = QtWidgets.QLabel(self.tab_SFM_detectorImage)
+        self.__create_element(self.label_SFM_detectorImage_roi_bkg, [245, 545, 47, 16], "label_SFM_detectorImage_roi_bkg", font=font_ee, text="BKG:")
+        self.label_SFM_detectorImage_roi_bkgX_left = QtWidgets.QLabel(self.tab_SFM_detectorImage)
+        self.__create_element(self.label_SFM_detectorImage_roi_bkgX_left, [270, 545, 51, 16], "label_SFM_detectorImage_roi_bkgX_left", font=font_ee, text="left")
+        self.lineEdit_SFM_detectorImage_roi_bkgX_left = QtWidgets.QLineEdit(self.tab_SFM_detectorImage)
+        self.__create_element(self.lineEdit_SFM_detectorImage_roi_bkgX_left, [300, 544, linedit_size_X, linedit_size_Y], "lineEdit_SFM_detectorImage_roi_bkgX_left", font=font_ee, enabled=False, stylesheet="color:rgb(0,0,0)")
+        self.label_SFM_detectorImage_roi_bkgX_right = QtWidgets.QLabel(self.tab_SFM_detectorImage)
+        self.__create_element(self.label_SFM_detectorImage_roi_bkgX_right, [270, 565, 51, 16], "label_SFM_detectorImage_roi_bkgX_right", font=font_ee, text="right")
+        self.lineEdit_SFM_detectorImage_roi_bkgX_right = QtWidgets.QLineEdit(self.tab_SFM_detectorImage)
+        self.__create_element(self.lineEdit_SFM_detectorImage_roi_bkgX_right, [300, 564, linedit_size_X, linedit_size_Y], "lineEdit_SFM_detectorImage_roi_bkgX_right", font=font_ee)
+        self.label_SFM_detectorImage_time = QtWidgets.QLabel(self.tab_SFM_detectorImage)
+        self.__create_element(self.label_SFM_detectorImage_time, [350, 545, 71, 16], "label_SFM_detectorImage_time", font=font_ee, text="Time (s):")
+        self.lineEdit_SFM_detectorImage_time = QtWidgets.QLineEdit(self.tab_SFM_detectorImage)
+        self.__create_element(self.lineEdit_SFM_detectorImage_time, [400, 544, linedit_size_X, linedit_size_Y], "lineEdit_SFM_detectorImage_time", font=font_ee, enabled=False, stylesheet="color:rgb(0,0,0)")
+        self.label_SFM_detectorImage_slits = QtWidgets.QLabel(self.tab_SFM_detectorImage)
+        self.__create_element(self.label_SFM_detectorImage_slits, [450, 545, 51, 16], "label_SFM_detectorImage_slits", font=font_ee, text="Slits (mm):")
+        self.label_SFM_detectorImage_slits_s1hg = QtWidgets.QLabel(self.tab_SFM_detectorImage)
+        self.__create_element(self.label_SFM_detectorImage_slits_s1hg, [505, 545, 41, 16], "label_SFM_detectorImage_slits_s1hg", font=font_ee, text="s1hg")
+        self.lineEdit_SFM_detectorImage_slits_s1hg = QtWidgets.QLineEdit(self.tab_SFM_detectorImage)
+        self.__create_element(self.lineEdit_SFM_detectorImage_slits_s1hg, [535, 544, linedit_size_X, linedit_size_Y], "lineEdit_SFM_detectorImage_slits_s1hg", font=font_ee, enabled=False, stylesheet="color:rgb(0,0,0)")
+        self.label_SFM_detectorImage_slits_s2hg = QtWidgets.QLabel(self.tab_SFM_detectorImage)
+        self.__create_element(self.label_SFM_detectorImage_slits_s2hg, [505, 565, 30, 16], "label_SFM_detectorImage_slits_s2hg", font=font_ee, text="s2hg")
+        self.lineEdit_SFM_detectorImage_slits_s2hg = QtWidgets.QLineEdit(self.tab_SFM_detectorImage)
+        self.__create_element(self.lineEdit_SFM_detectorImage_slits_s2hg, [535, 564, linedit_size_X, linedit_size_Y], "lineEdit_SFM_detectorImage_slits_s2hg", font=font_ee, enabled=False, stylesheet="color:rgb(0,0,0)")
+        self.tabWidget_SFM.addTab(self.tab_SFM_detectorImage, "")
+        self.tabWidget_SFM.setTabText(self.tabWidget_SFM.indexOf(self.tab_SFM_detectorImage), "Detector Image")
 
         # Tab: Reflectivity preview
-        self.tab_SFM_Reflectivity_preview = QtWidgets.QWidget()
-        self.tab_SFM_Reflectivity_preview.setObjectName("tabreflectivity_preview")
-        self.graphicsView_SFM_Reflectivity_preview = pg.PlotWidget(self.tab_SFM_Reflectivity_preview)
-        self.__create_element(self.graphicsView_SFM_Reflectivity_preview, [0, 20, 577, 540], "graphicsView_SFM_Reflectivity_preview")
-        self.graphicsView_SFM_Reflectivity_preview.getAxis("bottom").tickFont = font_graphs
-        self.graphicsView_SFM_Reflectivity_preview.getAxis("bottom").setStyle(tickTextOffset=10)
-        self.graphicsView_SFM_Reflectivity_preview.getAxis("left").tickFont = font_graphs
-        self.graphicsView_SFM_Reflectivity_preview.getAxis("left").setStyle(tickTextOffset=10)
-        self.graphicsView_SFM_Reflectivity_preview.showAxis("top")
-        self.graphicsView_SFM_Reflectivity_preview.getAxis("top").setTicks([])
-        self.graphicsView_SFM_Reflectivity_preview.showAxis("right")
-        self.graphicsView_SFM_Reflectivity_preview.getAxis("right").setTicks([])
-        self.checkBox_SFM_Reflectivity_preview_Show_overillumination = QtWidgets.QCheckBox(self.tab_SFM_Reflectivity_preview)
-        self.__create_element(self.checkBox_SFM_Reflectivity_preview_Show_overillumination, [10, 6, 140, 18], "checkBox_SFM_Reflectivity_preview_Show_overillumination", text="Show Overillumination", font=font_ee)
-        self.checkBox_SFM_Reflectivity_preview_Show_zero_level = QtWidgets.QCheckBox(self.tab_SFM_Reflectivity_preview)
-        self.__create_element(self.checkBox_SFM_Reflectivity_preview_Show_zero_level, [150, 6, 150, 18], "checkBox_SFM_Reflectivity_preview_Show_zero_level", text="Show Zero level", font=font_ee)
-        self.label_SFM_Reflectivity_preview_View_Reflectivity = QtWidgets.QLabel(self.tab_SFM_Reflectivity_preview)
-        self.__create_element(self.label_SFM_Reflectivity_preview_View_Reflectivity, [320, 7, 100, 16], "label_SFM_Reflectivity_preview_View_Reflectivity", text="View: Reflectivity", font=font_ee)
-        self.comboBox_SFM_Reflectivity_preview_View_Reflectivity = QtWidgets.QComboBox(self.tab_SFM_Reflectivity_preview)
-        self.__create_element(self.comboBox_SFM_Reflectivity_preview_View_Reflectivity, [410, 5, 50, 20], "comboBox_SFM_Reflectivity_preview_View_Reflectivity", font=font_ee, combo=["Log", "Lin"])
-        self.label_SFM_Reflectivity_preview_View_Angle = QtWidgets.QLabel(self.tab_SFM_Reflectivity_preview)
-        self.__create_element(self.label_SFM_Reflectivity_preview_View_Angle, [470, 7, 50, 16], "label_SFM_Reflectivity_preview_View_Angle", text="vs Angle", font=font_ee)
-        self.comboBox_SFM_Reflectivity_preview_View_Angle = QtWidgets.QComboBox(self.tab_SFM_Reflectivity_preview)
-        self.__create_element(self.comboBox_SFM_Reflectivity_preview_View_Angle, [515, 5, 50, 20], "comboBox_SFM_Reflectivity_preview_View_Angle", font=font_ee, combo=["Qz", "Deg"])
-        self.checkBox_SFM_Reflectivity_preview_Include_errorbars = QtWidgets.QCheckBox(self.tab_SFM_Reflectivity_preview)
-        self.__create_element(self.checkBox_SFM_Reflectivity_preview_Include_errorbars, [10, 565, 111, 18], "checkBox_SFM_Reflectivity_preview_Include_errorbars", text="Include Error Bars", font=font_ee)
-        self.label_SFM_Reflectivity_preview_Skip_points_Left = QtWidgets.QLabel(self.tab_SFM_Reflectivity_preview)
-        self.__create_element(self.label_SFM_Reflectivity_preview_Skip_points_Left, [372, 565, 100, 16], "label_SFM_Reflectivity_preview_Skip_points_Left", text="Points to skip:  left", font=font_ee)
-        self.lineEdit_SFM_Reflectivity_preview_Skip_points_Left = QtWidgets.QLineEdit(self.tab_SFM_Reflectivity_preview)
-        self.__create_element(self.lineEdit_SFM_Reflectivity_preview_Skip_points_Left, [470, 565, linedit_size_X, linedit_size_Y], "lineEdit_SFM_Reflectivity_preview_Skip_points_Left", text="0", font=font_ee)
-        self.label_SFM_Reflectivity_preview_Skip_points_Right = QtWidgets.QLabel(self.tab_SFM_Reflectivity_preview)
-        self.__create_element(self.label_SFM_Reflectivity_preview_Skip_points_Right, [510, 565, 80, 16], "label_SFM_Reflectivity_preview_Skip_points_Right", text="right", font=font_ee)
-        self.lineEdit_SFM_Reflectivity_preview_Skip_points_Right = QtWidgets.QLineEdit(self.tab_SFM_Reflectivity_preview)
-        self.__create_element(self.lineEdit_SFM_Reflectivity_preview_Skip_points_Right, [535, 565, linedit_size_X, linedit_size_Y], "lineEdit_SFM_Reflectivity_preview_Skip_points_Right", text="0", font=font_ee)
-        self.tabWidget_SFM.addTab(self.tab_SFM_Reflectivity_preview, "")
-        self.tabWidget_SFM.setTabText(self.tabWidget_SFM.indexOf(self.tab_SFM_Reflectivity_preview), "Reflectivity preview")
+        self.tab_SFM_reflectivityPreview = QtWidgets.QWidget()
+        self.tab_SFM_reflectivityPreview.setObjectName("tabreflectivity_preview")
+        self.graphicsView_SFM_reflectivityPreview = pg.PlotWidget(self.tab_SFM_reflectivityPreview)
+        self.__create_element(self.graphicsView_SFM_reflectivityPreview, [0, 20, 577, 540], "graphicsView_SFM_reflectivityPreview")
+        self.graphicsView_SFM_reflectivityPreview.getAxis("bottom").tickFont = font_graphs
+        self.graphicsView_SFM_reflectivityPreview.getAxis("bottom").setStyle(tickTextOffset=10)
+        self.graphicsView_SFM_reflectivityPreview.getAxis("left").tickFont = font_graphs
+        self.graphicsView_SFM_reflectivityPreview.getAxis("left").setStyle(tickTextOffset=10)
+        self.graphicsView_SFM_reflectivityPreview.showAxis("top")
+        self.graphicsView_SFM_reflectivityPreview.getAxis("top").setTicks([])
+        self.graphicsView_SFM_reflectivityPreview.showAxis("right")
+        self.graphicsView_SFM_reflectivityPreview.getAxis("right").setTicks([])
+        self.checkBox_SFM_reflectivityPreview_showOverillumination = QtWidgets.QCheckBox(self.tab_SFM_reflectivityPreview)
+        self.__create_element(self.checkBox_SFM_reflectivityPreview_showOverillumination, [10, 6, 140, 18], "checkBox_SFM_reflectivityPreview_showOverillumination", text="Show Overillumination", font=font_ee)
+        self.checkBox_SFM_reflectivityPreview_showZeroLevel = QtWidgets.QCheckBox(self.tab_SFM_reflectivityPreview)
+        self.__create_element(self.checkBox_SFM_reflectivityPreview_showZeroLevel, [150, 6, 150, 18], "checkBox_SFM_reflectivityPreview_showZeroLevel", text="Show Zero level", font=font_ee)
+        self.label_SFM_reflectivityPreview_view_reflectivity = QtWidgets.QLabel(self.tab_SFM_reflectivityPreview)
+        self.__create_element(self.label_SFM_reflectivityPreview_view_reflectivity, [320, 7, 100, 16], "label_SFM_reflectivityPreview_view_reflectivity", text="View: Reflectivity", font=font_ee)
+        self.comboBox_SFM_reflectivityPreview_view_reflectivity = QtWidgets.QComboBox(self.tab_SFM_reflectivityPreview)
+        self.__create_element(self.comboBox_SFM_reflectivityPreview_view_reflectivity, [410, 5, 50, 20], "comboBox_SFM_reflectivityPreview_view_reflectivity", font=font_ee, combo=["Log", "Lin"])
+        self.label_SFM_reflectivityPreview_view_angle = QtWidgets.QLabel(self.tab_SFM_reflectivityPreview)
+        self.__create_element(self.label_SFM_reflectivityPreview_view_angle, [470, 7, 50, 16], "label_SFM_reflectivityPreview_view_angle", text="vs Angle", font=font_ee)
+        self.comboBox_SFM_reflectivityPreview_view_angle = QtWidgets.QComboBox(self.tab_SFM_reflectivityPreview)
+        self.__create_element(self.comboBox_SFM_reflectivityPreview_view_angle, [515, 5, 50, 20], "comboBox_SFM_reflectivityPreview_view_angle", font=font_ee, combo=["Qz", "Deg"])
+        self.checkBox_SFM_reflectivityPreview_includeErrorbars = QtWidgets.QCheckBox(self.tab_SFM_reflectivityPreview)
+        self.__create_element(self.checkBox_SFM_reflectivityPreview_includeErrorbars, [10, 565, 111, 18], "checkBox_SFM_reflectivityPreview_includeErrorbars", text="Include Error Bars", font=font_ee)
+        self.label_SFM_reflectivityPreview_skipPoints_left = QtWidgets.QLabel(self.tab_SFM_reflectivityPreview)
+        self.__create_element(self.label_SFM_reflectivityPreview_skipPoints_left, [372, 565, 100, 16], "label_SFM_reflectivityPreview_skipPoints_left", text="Points to skip:  left", font=font_ee)
+        self.lineEdit_SFM_reflectivityPreview_skipPoints_left = QtWidgets.QLineEdit(self.tab_SFM_reflectivityPreview)
+        self.__create_element(self.lineEdit_SFM_reflectivityPreview_skipPoints_left, [470, 565, linedit_size_X, linedit_size_Y], "lineEdit_SFM_reflectivityPreview_skipPoints_left", text="0", font=font_ee)
+        self.label_SFM_reflectivityPreview_skipPoints_right = QtWidgets.QLabel(self.tab_SFM_reflectivityPreview)
+        self.__create_element(self.label_SFM_reflectivityPreview_skipPoints_right, [510, 565, 80, 16], "label_SFM_reflectivityPreview_skipPoints_right", text="right", font=font_ee)
+        self.lineEdit_SFM_reflectivityPreview_skipPoints_right = QtWidgets.QLineEdit(self.tab_SFM_reflectivityPreview)
+        self.__create_element(self.lineEdit_SFM_reflectivityPreview_skipPoints_right, [535, 565, linedit_size_X, linedit_size_Y], "lineEdit_SFM_reflectivityPreview_skipPoints_right", text="0", font=font_ee)
+        self.tabWidget_SFM.addTab(self.tab_SFM_reflectivityPreview, "")
+        self.tabWidget_SFM.setTabText(self.tabWidget_SFM.indexOf(self.tab_SFM_reflectivityPreview), "Reflectivity preview")
 
         # Tab: 2D Map
         self.tab_2Dmap = QtWidgets.QWidget()
         self.tab_2Dmap.setObjectName("tab_2Dmap")
         # scaling options are different for different views
         # "scale" for "Qx vs Qz"
-        self.label_SFM_2Dmap_Qxz_Threshold = QtWidgets.QLabel(self.tab_2Dmap)
-        self.__create_element(self.label_SFM_2Dmap_Qxz_Threshold, [5, 7, 220, 16], "label_SFM_2Dmap_Qxz_Threshold", text="Threshold for the view (number of neutrons):", font=font_ee, visible=False)
-        self.comboBox_SFM_2Dmap_Qxz_Threshold = QtWidgets.QComboBox(self.tab_2Dmap)
-        self.__create_element(self.comboBox_SFM_2Dmap_Qxz_Threshold, [230, 5, 40, 20], "comboBox_SFM_2Dmap_Qxz_Threshold", font=font_ee, visible=False, combo=[1, 2, 5, 10])
-        self.label_SFM_2Dmap_View_scale = QtWidgets.QLabel(self.tab_2Dmap)
-        self.__create_element(self.label_SFM_2Dmap_View_scale, [183, 7, 40, 16], "label_SFM_2Dmap_View_scale", text="View", font=font_ee)
-        self.comboBox_SFM_2Dmap_View_scale = QtWidgets.QComboBox(self.tab_2Dmap)
-        self.__create_element(self.comboBox_SFM_2Dmap_View_scale, [210, 5, 50, 20], "comboBox_SFM_2Dmap_View_scale", font=font_ee, combo=["Log", "Lin"])
-        self.label_SFM_2Dmap_Polarisation = QtWidgets.QLabel(self.tab_2Dmap)
-        self.__create_element(self.label_SFM_2Dmap_Polarisation, [284, 7, 71, 16], "label_SFM_2Dmap_Polarisation", text="Polarisation", font=font_ee)
-        self.comboBox_SFM_2Dmap_Polarisation = QtWidgets.QComboBox(self.tab_2Dmap)
-        self.__create_element(self.comboBox_SFM_2Dmap_Polarisation, [344, 5, 40, 20], "comboBox_SFM_2Dmap_Polarisation", font=font_ee)
-        self.label_SFM_2Dmap_Axes = QtWidgets.QLabel(self.tab_2Dmap)
-        self.__create_element(self.label_SFM_2Dmap_Axes, [405, 7, 71, 16], "label_SFM_2Dmap_Axes", text="Axes", font=font_ee)
-        self.comboBox_SFM_2Dmap_Axes = QtWidgets.QComboBox(self.tab_2Dmap)
-        self.__create_element(self.comboBox_SFM_2Dmap_Axes, [435, 5, 130, 20], "comboBox_SFM_2Dmap_Axes", font=font_ee, combo=["Pixel vs. Point", "Alpha_i vs. Alpha_f", "Qx vs. Qz"])
+        self.label_SFM_2Dmap_QxzThreshold = QtWidgets.QLabel(self.tab_2Dmap)
+        self.__create_element(self.label_SFM_2Dmap_QxzThreshold, [5, 7, 220, 16], "label_SFM_2Dmap_QxzThreshold", text="Threshold for the view (number of neutrons):", font=font_ee, visible=False)
+        self.comboBox_SFM_2Dmap_QxzThreshold = QtWidgets.QComboBox(self.tab_2Dmap)
+        self.__create_element(self.comboBox_SFM_2Dmap_QxzThreshold, [230, 5, 40, 20], "comboBox_SFM_2Dmap_QxzThreshold", font=font_ee, visible=False, combo=[1, 2, 5, 10])
+        self.label_SFM_2Dmap_view_scale = QtWidgets.QLabel(self.tab_2Dmap)
+        self.__create_element(self.label_SFM_2Dmap_view_scale, [183, 7, 40, 16], "label_SFM_2Dmap_view_scale", text="View", font=font_ee)
+        self.comboBox_SFM_2Dmap_view_scale = QtWidgets.QComboBox(self.tab_2Dmap)
+        self.__create_element(self.comboBox_SFM_2Dmap_view_scale, [210, 5, 50, 20], "comboBox_SFM_2Dmap_view_scale", font=font_ee, combo=["Log", "Lin"])
+        self.label_SFM_2Dmap_polarisation = QtWidgets.QLabel(self.tab_2Dmap)
+        self.__create_element(self.label_SFM_2Dmap_polarisation, [284, 7, 71, 16], "label_SFM_2Dmap_polarisation", text="Polarisation", font=font_ee)
+        self.comboBox_SFM_2Dmap_polarisation = QtWidgets.QComboBox(self.tab_2Dmap)
+        self.__create_element(self.comboBox_SFM_2Dmap_polarisation, [344, 5, 40, 20], "comboBox_SFM_2Dmap_polarisation", font=font_ee)
+        self.label_SFM_2Dmap_axes = QtWidgets.QLabel(self.tab_2Dmap)
+        self.__create_element(self.label_SFM_2Dmap_axes, [405, 7, 71, 16], "label_SFM_2Dmap_axes", text="Axes", font=font_ee)
+        self.comboBox_SFM_2Dmap_axes = QtWidgets.QComboBox(self.tab_2Dmap)
+        self.__create_element(self.comboBox_SFM_2Dmap_axes, [435, 5, 130, 20], "comboBox_SFM_2Dmap_axes", font=font_ee, combo=["Pixel vs. Point", "Alpha_i vs. Alpha_f", "Qx vs. Qz"])
         self.graphicsView_SFM_2Dmap = pg.ImageView(self.tab_2Dmap, view=pg.PlotItem())
         self.__create_element(self.graphicsView_SFM_2Dmap, [0, 30, 577, 522], "graphicsView_SFM_2Dmap")
         self.graphicsView_SFM_2Dmap.ui.menuBtn.hide()
@@ -442,37 +442,37 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.graphicsView_SFM_2Dmap.getView().getViewBox().invertY(b=False)
 
         # 2D map for "Qx vs Qz" is a plot, compared to "Pixel vs Points" which is Image.
-        # I rescale graphicsView_SFM_2Dmap_Qxz_Theta to show/hide it
-        self.graphicsView_SFM_2Dmap_Qxz_Theta = pg.PlotWidget(self.tab_2Dmap)
-        self.__create_element(self.graphicsView_SFM_2Dmap_Qxz_Theta, [0, 0, 0, 0], "graphicsView_SFM_2Dmap_Qxz_Theta")
-        self.graphicsView_SFM_2Dmap_Qxz_Theta.getAxis("bottom").tickFont = font_graphs
-        self.graphicsView_SFM_2Dmap_Qxz_Theta.getAxis("bottom").setStyle(tickTextOffset=10)
-        self.graphicsView_SFM_2Dmap_Qxz_Theta.getAxis("left").tickFont = font_graphs
-        self.graphicsView_SFM_2Dmap_Qxz_Theta.getAxis("left").setStyle(tickTextOffset=10)
-        self.graphicsView_SFM_2Dmap_Qxz_Theta.showAxis("top")
-        self.graphicsView_SFM_2Dmap_Qxz_Theta.getAxis("top").setTicks([])
-        self.graphicsView_SFM_2Dmap_Qxz_Theta.showAxis("right")
-        self.graphicsView_SFM_2Dmap_Qxz_Theta.getAxis("right").setTicks([])
-        self.label_SFM_2Dmap_Lower_number_of_points_by = QtWidgets.QLabel(self.tab_2Dmap)
-        self.__create_element(self.label_SFM_2Dmap_Lower_number_of_points_by, [5, 561, 211, 16], "label_SFM_2Dmap_Lower_number_of_points_by", text="Lower the number of points by factor", font=font_ee, visible=False)
-        self.comboBox_SFM_2Dmap_Lower_number_of_points_by = QtWidgets.QComboBox(self.tab_2Dmap)
-        self.__create_element(self.comboBox_SFM_2Dmap_Lower_number_of_points_by, [195, 559, 40, 20], "comboBox_SFM_2Dmap_Lower_number_of_points_by", font=font_ee, visible=False, combo=[5, 4, 3, 2, 1])
-        self.label_SFM_2Dmap_Rescale_image_x = QtWidgets.QLabel(self.tab_2Dmap)
-        self.__create_element(self.label_SFM_2Dmap_Rescale_image_x, [5, 561, 85, 16], "label_SFM_2Dmap_Rescale_image_x", text="Rescale image: x", font=font_ee)
-        self.horizontalSlider_SFM_2Dmap_Rescale_image_x = QtWidgets.QSlider(self.tab_2Dmap)
-        self.__create_element(self.horizontalSlider_SFM_2Dmap_Rescale_image_x, [95, 560, 80, 22], "horizontalSlider_SFM_2Dmap_Rescale_image_x")
-        self.horizontalSlider_SFM_2Dmap_Rescale_image_x.setOrientation(QtCore.Qt.Horizontal)
-        self.horizontalSlider_SFM_2Dmap_Rescale_image_x.setMinimum(1)
-        self.horizontalSlider_SFM_2Dmap_Rescale_image_x.setMaximum(15)
-        self.horizontalSlider_SFM_2Dmap_Rescale_image_x.setValue(1)
-        self.label_SFM_2Dmap_Rescale_image_y = QtWidgets.QLabel(self.tab_2Dmap)
-        self.__create_element(self.label_SFM_2Dmap_Rescale_image_y, [185, 561, 20, 16], "label_SFM_2Dmap_Rescale_image_y", text="y", font=font_ee)
-        self.horizontalSlider_SFM_2Dmap_Rescale_image_y = QtWidgets.QSlider(self.tab_2Dmap)
-        self.__create_element(self.horizontalSlider_SFM_2Dmap_Rescale_image_y, [195, 560, 80, 22], "horizontalSlider_SFM_2Dmap_Rescale_image_y")
-        self.horizontalSlider_SFM_2Dmap_Rescale_image_y.setOrientation(QtCore.Qt.Horizontal)
-        self.horizontalSlider_SFM_2Dmap_Rescale_image_y.setMinimum(1)
-        self.horizontalSlider_SFM_2Dmap_Rescale_image_y.setMaximum(15)
-        self.horizontalSlider_SFM_2Dmap_Rescale_image_y.setValue(1)
+        # I rescale graphicsView_SFM_2Dmap_Qxz_theta to show/hide it
+        self.graphicsView_SFM_2Dmap_Qxz_theta = pg.PlotWidget(self.tab_2Dmap)
+        self.__create_element(self.graphicsView_SFM_2Dmap_Qxz_theta, [0, 0, 0, 0], "graphicsView_SFM_2Dmap_Qxz_theta")
+        self.graphicsView_SFM_2Dmap_Qxz_theta.getAxis("bottom").tickFont = font_graphs
+        self.graphicsView_SFM_2Dmap_Qxz_theta.getAxis("bottom").setStyle(tickTextOffset=10)
+        self.graphicsView_SFM_2Dmap_Qxz_theta.getAxis("left").tickFont = font_graphs
+        self.graphicsView_SFM_2Dmap_Qxz_theta.getAxis("left").setStyle(tickTextOffset=10)
+        self.graphicsView_SFM_2Dmap_Qxz_theta.showAxis("top")
+        self.graphicsView_SFM_2Dmap_Qxz_theta.getAxis("top").setTicks([])
+        self.graphicsView_SFM_2Dmap_Qxz_theta.showAxis("right")
+        self.graphicsView_SFM_2Dmap_Qxz_theta.getAxis("right").setTicks([])
+        self.label_SFM_2Dmap_lowerNumberOfPointsBy = QtWidgets.QLabel(self.tab_2Dmap)
+        self.__create_element(self.label_SFM_2Dmap_lowerNumberOfPointsBy, [5, 561, 211, 16], "label_SFM_2Dmap_lowerNumberOfPointsBy", text="Lower the number of points by factor", font=font_ee, visible=False)
+        self.comboBox_SFM_2Dmap_lowerNumberOfPointsBy = QtWidgets.QComboBox(self.tab_2Dmap)
+        self.__create_element(self.comboBox_SFM_2Dmap_lowerNumberOfPointsBy, [195, 559, 40, 20], "comboBox_SFM_2Dmap_lowerNumberOfPointsBy", font=font_ee, visible=False, combo=[5, 4, 3, 2, 1])
+        self.label_SFM_2Dmap_rescaleImage_x = QtWidgets.QLabel(self.tab_2Dmap)
+        self.__create_element(self.label_SFM_2Dmap_rescaleImage_x, [5, 561, 85, 16], "label_SFM_2Dmap_rescaleImage_x", text="Rescale image: x", font=font_ee)
+        self.horizontalSlider_SFM_2Dmap_rescaleImage_x = QtWidgets.QSlider(self.tab_2Dmap)
+        self.__create_element(self.horizontalSlider_SFM_2Dmap_rescaleImage_x, [95, 560, 80, 22], "horizontalSlider_SFM_2Dmap_rescaleImage_x")
+        self.horizontalSlider_SFM_2Dmap_rescaleImage_x.setOrientation(QtCore.Qt.Horizontal)
+        self.horizontalSlider_SFM_2Dmap_rescaleImage_x.setMinimum(1)
+        self.horizontalSlider_SFM_2Dmap_rescaleImage_x.setMaximum(15)
+        self.horizontalSlider_SFM_2Dmap_rescaleImage_x.setValue(1)
+        self.label_SFM_2Dmap_rescaleImage_y = QtWidgets.QLabel(self.tab_2Dmap)
+        self.__create_element(self.label_SFM_2Dmap_rescaleImage_y, [185, 561, 20, 16], "label_SFM_2Dmap_rescaleImage_y", text="y", font=font_ee)
+        self.horizontalSlider_SFM_2Dmap_rescaleImage_y = QtWidgets.QSlider(self.tab_2Dmap)
+        self.__create_element(self.horizontalSlider_SFM_2Dmap_rescaleImage_y, [195, 560, 80, 22], "horizontalSlider_SFM_2Dmap_rescaleImage_y")
+        self.horizontalSlider_SFM_2Dmap_rescaleImage_y.setOrientation(QtCore.Qt.Horizontal)
+        self.horizontalSlider_SFM_2Dmap_rescaleImage_y.setMinimum(1)
+        self.horizontalSlider_SFM_2Dmap_rescaleImage_y.setMaximum(15)
+        self.horizontalSlider_SFM_2Dmap_rescaleImage_y.setValue(1)
         self.pushButton_SFM_2Dmap_export = QtWidgets.QPushButton(self.tab_2Dmap)
         self.__create_element(self.pushButton_SFM_2Dmap_export, [445, 555, 120, 25], "pushButton_SFM_2Dmap_export", text="Export 2D map", font=font_button)
         self.tabWidget_SFM.addTab(self.tab_2Dmap, "")
@@ -487,25 +487,25 @@ class Ui_MainWindow(QtGui.QMainWindow):
         # MenuBar
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.__create_element(self.menubar, [0, 0, 1000, 21], "menubar")
-        self.menu_Help = QtWidgets.QMenu(self.menubar)
-        self.__create_element(self.menu_Help, [999, 999, 999, 999], "menu_Help", title="Help")
+        self.menu_help = QtWidgets.QMenu(self.menubar)
+        self.__create_element(self.menu_help, [999, 999, 999, 999], "menu_help", title="Help")
         MainWindow.setMenuBar(self.menubar)
-        self.action_Version = QtWidgets.QAction(MainWindow)
-        self.__create_element(self.action_Version, [999, 999, 999, 999], "action_Version", text="V1.5.1")
-        self.menu_Help.addAction(self.action_Version)
-        self.menubar.addAction(self.menu_Help.menuAction())
+        self.action_version = QtWidgets.QAction(MainWindow)
+        self.__create_element(self.action_version, [999, 999, 999, 999], "action_version", text="V1.5.1")
+        self.menu_help.addAction(self.action_version)
+        self.menubar.addAction(self.menu_help.menuAction())
 
-        self.tabWidget_Reductions.setCurrentIndex(0)
+        self.tabWidget_reductions.setCurrentIndex(0)
 
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
     ##<--
 
 class GUI(Ui_MainWindow):
 
-    current_dir = ""
-    if platform.system() == 'Windows': current_dir = os.getcwd().replace("\\", "/") + "/"
+    dir_current = ""
+    if platform.system() == 'Windows': dir_current = os.getcwd().replace("\\", "/") + "/"
     else:
-        for i in sys.argv[0].split("/")[:-4]: current_dir += i + "/"
+        for i in sys.argv[0].split("/")[:-4]: dir_current += i + "/"
 
     def __init__(self):
 
@@ -513,158 +513,158 @@ class GUI(Ui_MainWindow):
         self.setupUi(self)
 
         # Some parameters
-        self.locked_roi = []
-        self.SFM_FILE, self.sfm_file_already_analized, self.sfm_file_2d_calculated_params = "", "", []  # current file in Single File Mode
-        self.psd_uu_sfm, self.psd_du_sfm, self.psd_ud_sfm, self.psd_dd_sfm = [], [], [], []             # 2d arrays of pol detector
-        self.current_th = ""                                                                            # current th point
-        self.overill_coeff_lib = {}                                                                     # write calculated overillumination coefficients into library
-        self.DB_INFO, self.db_already_analized = {}, []                                                 # Write DB info into library
-        self.draw_roi, self.draw_roi_bkg, self.draw_roi_2D_map = [], [], []                             # ROI frames
-        self.old_roi_coord_Y, self.draw_roi_int = [], []                                                # Recalc intens if Y roi is changed
-        self.show_det_int_trigger = True                                                                # Trigger to switch the detector image view
-        self.res_Aif = []                                                                               # Alpha_i vs Alpha_f array
-        self.sample_curvature_last = "0"                                                                # Last sample curvature (lets avoid extra recalcs)
+        self.roiLocked = []
+        self.SFM_FILE, self.SFMFileAlreadyAnalized, self.SFMFile2dCalculatedParams = "", "", []  # current file in Single File Mode
+        self.SFM_psdUU, self.SFM_psdDU, self.SFM_psdUD, self.SFM_psdDD = [], [], [], []             # 2d arrays of pol detector
+        self.th_current = ""                                                                            # current th point
+        self.dict_overillCoeff = {}                                                                     # write calculated overillumination coefficients into library
+        self.DB_INFO, self.dbAlreadyAnalized = {}, []                                                 # Write DB info into library
+        self.roi_draw, self.roi_draw_bkg, self.roi_draw_2Dmap = [], [], []                             # ROI frames
+        self.roi_oldCoord_Y, self.roi_draw_int = [], []                                                # Recalc intens if Y roi is changed
+        self.trigger_showDetInt = True                                                                # Trigger to switch the detector image view
+        self.res_aif = []                                                                               # Alpha_i vs Alpha_f array
+        self.sampleCurvature_last = "0"                                                                # Last sample curvature (lets avoid extra recalcs)
 
         # Triggers
-        self.action_Version.triggered.connect(self.menu_info)
+        self.action_version.triggered.connect(self.f_menu_info)
 
         # Triggers: Buttons
-        self.pushButton_Import_scans.clicked.connect(self.button_import_remove_scans)
-        self.pushButton_Delete_scans.clicked.connect(self.button_import_remove_scans)
-        self.pushButton_Import_DB.clicked.connect(self.button_import_remove_db)
-        self.pushButton_Delete_DB.clicked.connect(self.button_import_remove_db)
-        self.toolButton_Save_at.clicked.connect(self.button_SaveDir)
-        self.pushButton_Reduce_all.clicked.connect(self.button_reduce_all)
-        self.pushButton_Reduce_SFM.clicked.connect(self.button_reduce_sfm)
-        self.pushButton_Clear.clicked.connect(self.button_Clear)
-        self.pushButton_SFM_2Dmap_export.clicked.connect(self.SFM_Map_2D_Export)
-        self.pushButton_SFM_Detector_image_Show_integrated_roi.clicked.connect(self.SFM_Detector_image_Draw)
+        self.pushButton_importScans.clicked.connect(self.f_button_importRemoveScans)
+        self.pushButton_deleteScans.clicked.connect(self.f_button_importRemoveScans)
+        self.pushButton_importDB.clicked.connect(self.f_button_importRemoveDB)
+        self.pushButton_deleteDB.clicked.connect(self.f_button_importRemoveDB)
+        self.toolButton_saveAt.clicked.connect(self.f_button_saveDir)
+        self.pushButton_reduceAll.clicked.connect(self.f_button_reduceAll)
+        self.pushButton_reduceSFM.clicked.connect(self.f_button_reduceSFM)
+        self.pushButton_clear.clicked.connect(self.f_button_clear)
+        self.pushButton_SFM_2Dmap_export.clicked.connect(self.f_SFM_2Dmap_export)
+        self.pushButton_SFM_detectorImage_showIntegratedRoi.clicked.connect(self.f_SFM_detectorImage_draw)
 
         # Triggers: LineEdits
-        self.lineEdit_SFM_Detector_image_Roi_X_Left.editingFinished.connect(self.SFM_Update_ROI)
-        self.lineEdit_SFM_Detector_image_Roi_X_Right.editingFinished.connect(self.SFM_Update_ROI)
-        self.lineEdit_SFM_Detector_image_Roi_Y_Bottom.editingFinished.connect(self.SFM_Update_ROI)
-        self.lineEdit_SFM_Detector_image_Roi_Y_Top.editingFinished.connect(self.SFM_Update_ROI)
-        self.lineEdit_SFM_Detector_image_Roi_bkg_X_Right.editingFinished.connect(self.SFM_Update_ROI)
-        self.lineEdit_Sample_len.editingFinished.connect(self.SFM_Reflectivity_preview_Load)
-        self.lineEdit_Reductions_Attenuator_DB.editingFinished.connect(self.SFM_Reflectivity_preview_Load)
-        self.lineEdit_Reductions_Subtract_bkg_Skip.editingFinished.connect(self.SFM_Reflectivity_preview_Load)
-        self.lineEdit_Instrument_Wavelength.editingFinished.connect(self.SFM_Reflectivity_preview_Load)
-        self.lineEdit_Instrument_Wavelength_resolution.editingFinished.connect(self.SFM_Reflectivity_preview_Load)
-        self.lineEdit_Instrument_Distance_s1_to_sample.editingFinished.connect(self.SFM_Reflectivity_preview_Load)
-        self.lineEdit_Instrument_Distance_s2_to_sample.editingFinished.connect(self.SFM_Reflectivity_preview_Load)
-        self.lineEdit_Instrument_Offset_full.editingFinished.connect(self.SFM_Reflectivity_preview_Load)
-        self.lineEdit_SFM_Reflectivity_preview_Skip_points_Right.editingFinished.connect(self.SFM_Reflectivity_preview_Load)
-        self.lineEdit_SFM_Reflectivity_preview_Skip_points_Left.editingFinished.connect(self.SFM_Reflectivity_preview_Load)
-        self.lineEdit_Instrument_Wavelength.editingFinished.connect(self.SFM_Map_2D_Draw)
-        self.lineEdit_Instrument_Distance_sample_to_detector.editingFinished.connect(self.SFM_Map_2D_Draw)
-        self.lineEdit_Reductions_Scale_factor.editingFinished.connect(self.SFM_Reflectivity_preview_Load)
-        self.lineEdit_Instrument_Sample_curvature.editingFinished.connect(self.SFM_Reflectivity_preview_Load)
-        self.lineEdit_Instrument_Sample_curvature.editingFinished.connect(self.SFM_Map_2D_Draw)
+        self.lineEdit_SFM_detectorImage_roiX_left.editingFinished.connect(self.f_SFM_roi_update)
+        self.lineEdit_SFM_detectorImage_roiX_right.editingFinished.connect(self.f_SFM_roi_update)
+        self.lineEdit_SFM_detectorImage_roiY_bottom.editingFinished.connect(self.f_SFM_roi_update)
+        self.lineEdit_SFM_detectorImage_roiY_top.editingFinished.connect(self.f_SFM_roi_update)
+        self.lineEdit_SFM_detectorImage_roi_bkgX_right.editingFinished.connect(self.f_SFM_roi_update)
+        self.lineEdit_sampleLen.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
+        self.lineEdit_reductions_attenuatorDB.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
+        self.lineEdit_reductions_subtractBkg_Skip.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
+        self.lineEdit_instrument_wavelength.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
+        self.lineEdit_instrument_wavelengthResolution.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
+        self.lineEdit_instrument_distanceS1ToSample.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
+        self.lineEdit_instrument_distanceS2ToSample.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
+        self.lineEdit_instrument_offsetFull.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
+        self.lineEdit_SFM_reflectivityPreview_skipPoints_right.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
+        self.lineEdit_SFM_reflectivityPreview_skipPoints_left.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
+        self.lineEdit_instrument_wavelength.editingFinished.connect(self.f_SFM_2Dmap_draw)
+        self.lineEdit_instrument_distanceSampleToDetector.editingFinished.connect(self.f_SFM_2Dmap_draw)
+        self.lineEdit_reductions_scaleFactor.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
+        self.lineEdit_instrument_sampleCurvature.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
+        self.lineEdit_instrument_sampleCurvature.editingFinished.connect(self.f_SFM_2Dmap_draw)
 
         # Triggers: ComboBoxes
-        self.comboBox_SFM_Detector_image_Incident_angle.currentIndexChanged.connect(self.SFM_Detector_image_Draw)
-        self.comboBox_SFM_Detector_image_Polarisation.currentIndexChanged.connect(self.SFM_Detector_image_Draw)
-        self.comboBox_SFM_Scan.currentIndexChanged.connect(self.SFM_Detector_image_Load)
-        self.comboBox_SFM_Scan.currentIndexChanged.connect(self.SFM_Reflectivity_preview_Load)
-        self.comboBox_SFM_Reflectivity_preview_View_Angle.currentIndexChanged.connect(self.SFM_Reflectivity_preview_Load)
-        self.comboBox_SFM_Reflectivity_preview_View_Reflectivity.currentIndexChanged.connect(self.SFM_Reflectivity_preview_Load)
-        self.comboBox_SFM_2Dmap_Qxz_Threshold.currentIndexChanged.connect(self.SFM_Map_2D_Draw)
-        self.comboBox_SFM_2Dmap_Polarisation.currentIndexChanged.connect(self.SFM_Map_2D_Draw)
-        self.comboBox_SFM_2Dmap_Axes.currentIndexChanged.connect(self.SFM_Map_2D_Draw)
-        self.comboBox_SFM_Scan.currentIndexChanged.connect(self.SFM_Map_2D_Draw)
-        self.comboBox_SFM_2Dmap_Lower_number_of_points_by.currentIndexChanged.connect(self.SFM_Map_2D_Draw)
-        self.comboBox_SFM_Detector_image_Color_scheme.currentIndexChanged.connect(self.SFM_Detector_image_Draw)
-        self.comboBox_Reductions_Divide_by_monitor_or_time.currentIndexChanged.connect(self.db_analaze)
-        self.comboBox_Reductions_Divide_by_monitor_or_time.currentIndexChanged.connect(self.SFM_Reflectivity_preview_Load)
-        self.comboBox_SFM_2Dmap_View_scale.currentIndexChanged.connect(self.SFM_Map_2D_Draw)
-        self.comboBox_Export_Angle.currentIndexChanged.connect(self.SFM_Reflectivity_preview_Load)
-        self.comboBox_SFM_DB.currentIndexChanged.connect(self.SFM_Reflectivity_preview_Load)
+        self.comboBox_SFM_detectorImage_incidentAngle.currentIndexChanged.connect(self.f_SFM_detectorImage_draw)
+        self.comboBox_SFM_detectorImage_polarisation.currentIndexChanged.connect(self.f_SFM_detectorImage_draw)
+        self.comboBox_SFM_scan.currentIndexChanged.connect(self.f_SFM_detectorImage_load)
+        self.comboBox_SFM_scan.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
+        self.comboBox_SFM_reflectivityPreview_view_angle.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
+        self.comboBox_SFM_reflectivityPreview_view_reflectivity.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
+        self.comboBox_SFM_2Dmap_QxzThreshold.currentIndexChanged.connect(self.f_SFM_2Dmap_draw)
+        self.comboBox_SFM_2Dmap_polarisation.currentIndexChanged.connect(self.f_SFM_2Dmap_draw)
+        self.comboBox_SFM_2Dmap_axes.currentIndexChanged.connect(self.f_SFM_2Dmap_draw)
+        self.comboBox_SFM_scan.currentIndexChanged.connect(self.f_SFM_2Dmap_draw)
+        self.comboBox_SFM_2Dmap_lowerNumberOfPointsBy.currentIndexChanged.connect(self.f_SFM_2Dmap_draw)
+        self.comboBox_SFM_detectorImage_colorScheme.currentIndexChanged.connect(self.f_SFM_detectorImage_draw)
+        self.comboBox_reductions_divideByMonitorOrTime.currentIndexChanged.connect(self.f_DB_analaze)
+        self.comboBox_reductions_divideByMonitorOrTime.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
+        self.comboBox_SFM_2Dmap_view_scale.currentIndexChanged.connect(self.f_SFM_2Dmap_draw)
+        self.comboBox_export_angle.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
+        self.comboBox_SFM_DB.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
 
         # Triggers: CheckBoxes
-        self.checkBox_Reductions_Divide_by_monitor_or_time.stateChanged.connect(self.db_analaze)
-        self.checkBox_Reductions_Divide_by_monitor_or_time.stateChanged.connect(self.SFM_Reflectivity_preview_Load)
-        self.checkBox_Reductions_Normalize_by_DB.stateChanged.connect(self.db_analaze)
-        self.checkBox_Reductions_Normalize_by_DB.stateChanged.connect(self.SFM_Reflectivity_preview_Load)
-        self.checkBox_Reductions_Attenuator_DB.stateChanged.connect(self.SFM_Reflectivity_preview_Load)
-        self.checkBox_Reductions_Overillumination_correction.stateChanged.connect(self.SFM_Reflectivity_preview_Load)
-        self.checkBox_Reductions_Subtract_bkg.stateChanged.connect(self.SFM_Reflectivity_preview_Load)
-        self.checkBox_Reductions_Subtract_bkg.stateChanged.connect(self.SFM_Detector_image_Draw)
-        self.checkBox_SFM_Reflectivity_preview_Show_overillumination.stateChanged.connect(self.SFM_Reflectivity_preview_Load)
-        self.checkBox_SFM_Reflectivity_preview_Show_zero_level.stateChanged.connect(self.SFM_Reflectivity_preview_Load)
-        self.checkBox_SFM_Reflectivity_preview_Include_errorbars.stateChanged.connect(self.SFM_Reflectivity_preview_Load)
-        self.checkBox_Rearrange_DB_after.stateChanged.connect(self.SFM_Reflectivity_preview_Load)
-        self.checkBox_Rearrange_DB_after.stateChanged.connect(self.db_assign)
-        self.checkBox_Reductions_Scale_factor.stateChanged.connect(self.SFM_Reflectivity_preview_Load)
-        self.checkBox_Export_Resolution_like_sared.stateChanged.connect(self.SFM_Reflectivity_preview_Load)
-        self.checkBox_Export_Add_resolution_column.stateChanged.connect(self.SFM_Reflectivity_preview_Load)
+        self.checkBox_reductions_divideByMonitorOrTime.stateChanged.connect(self.f_DB_analaze)
+        self.checkBox_reductions_divideByMonitorOrTime.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
+        self.checkBox_reductions_normalizeByDB.stateChanged.connect(self.f_DB_analaze)
+        self.checkBox_reductions_normalizeByDB.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
+        self.checkBox_reductions_attenuatorDB.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
+        self.checkBox_reductions_overilluminationCorr.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
+        self.checkBox_reductions_subtractBkg.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
+        self.checkBox_reductions_subtractBkg.stateChanged.connect(self.f_SFM_detectorImage_draw)
+        self.checkBox_SFM_reflectivityPreview_showOverillumination.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
+        self.checkBox_SFM_reflectivityPreview_showZeroLevel.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
+        self.checkBox_SFM_reflectivityPreview_includeErrorbars.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
+        self.checkBox_rearrangeDbAfter.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
+        self.checkBox_rearrangeDbAfter.stateChanged.connect(self.f_DB_assign)
+        self.checkBox_reductions_scaleFactor.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
+        self.checkBox_export_resolutionLikeSared.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
+        self.checkBox_export_addResolutionColumn.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
 
         # Triggers: Sliders
-        self.horizontalSlider_SFM_2Dmap_Rescale_image_x.valueChanged.connect(self.SFM_Map_2D_Draw)
-        self.horizontalSlider_SFM_2Dmap_Rescale_image_y.valueChanged.connect(self.SFM_Map_2D_Draw)
+        self.horizontalSlider_SFM_2Dmap_rescaleImage_x.valueChanged.connect(self.f_SFM_2Dmap_draw)
+        self.horizontalSlider_SFM_2Dmap_rescaleImage_y.valueChanged.connect(self.f_SFM_2Dmap_draw)
 
     ##--> menu options
-    def menu_info(self):
+    def f_menu_info(self):
         msgBox = QtWidgets.QMessageBox()
         msgBox.setWindowIcon(QtGui.QIcon(self.iconpath))
-        msgBox.setText("pySAred " + self.action_Version.text() + "\n\n"
+        msgBox.setText("pySAred " + self.action_version.text() + "\n\n"
                        "Alexey.Klechikov@gmail.com\n\n"
                        "Check new version at https://github.com/Alexey-Klechikov/pySAred/releases")
         msgBox.exec_()
     ##<--
 
     ##--> Main window buttons
-    def button_import_remove_scans(self):
+    def f_button_importRemoveScans(self):
 
-        if self.sender().objectName() == "pushButton_Import_scans":
+        if self.sender().objectName() == "pushButton_importScans":
 
-            import_files = QtWidgets.QFileDialog().getOpenFileNames(None, "FileNames", self.current_dir, ".h5 (*.h5)")
-            if import_files[0] == []: return
+            files_import = QtWidgets.QFileDialog().getOpenFileNames(None, "FileNames", self.dir_current, ".h5 (*.h5)")
+            if files_import[0] == []: return
             # Next "Import scans" will open last dir
-            self.current_dir = import_files[0][0][:import_files[0][0].rfind("/")]
+            self.dir_current = files_import[0][0][:files_import[0][0].rfind("/")]
 
-            for FILE in import_files[0]:
-                self.tableWidget_Scans.insertRow(self.tableWidget_Scans.rowCount())
-                self.tableWidget_Scans.setRowHeight(self.tableWidget_Scans.rowCount()-1, 10)
+            for FILE in files_import[0]:
+                self.tableWidget_scans.insertRow(self.tableWidget_scans.rowCount())
+                self.tableWidget_scans.setRowHeight(self.tableWidget_scans.rowCount()-1, 10)
                 # File name (row 0) and full path (row 2)
-                for j in range(0, 3): self.tableWidget_Scans.setItem(self.tableWidget_Scans.rowCount()-1, j, QtWidgets.QTableWidgetItem())
-                self.tableWidget_Scans.item(self.tableWidget_Scans.rowCount() - 1, 0).setText(FILE[FILE.rfind("/") + 1:])
-                self.tableWidget_Scans.item(self.tableWidget_Scans.rowCount() - 1, 2).setText(FILE)
+                for j in range(0, 3): self.tableWidget_scans.setItem(self.tableWidget_scans.rowCount()-1, j, QtWidgets.QTableWidgetItem())
+                self.tableWidget_scans.item(self.tableWidget_scans.rowCount() - 1, 0).setText(FILE[FILE.rfind("/") + 1:])
+                self.tableWidget_scans.item(self.tableWidget_scans.rowCount() - 1, 2).setText(FILE)
 
                 # add file into SFM / Scan ComboBox
-                self.comboBox_SFM_Scan.addItem(str(FILE[FILE.rfind("/") + 1:]))
+                self.comboBox_SFM_scan.addItem(str(FILE[FILE.rfind("/") + 1:]))
 
-                self.db_analaze()
-                self.SFM_Reflectivity_preview_Load()
+                self.f_DB_analaze()
+                self.f_SFM_reflectivityPreview_load()
 
-        if self.sender().objectName() == "pushButton_Delete_scans":
+        if self.sender().objectName() == "pushButton_deleteScans":
 
-            remove_files = self.tableWidget_Scans.selectedItems()
-            if not remove_files: return
+            files_remove = self.tableWidget_scans.selectedItems()
+            if not files_remove: return
 
-            for FILE in remove_files:
-                self.tableWidget_Scans.removeRow(self.tableWidget_Scans.row(FILE))
+            for FILE in files_remove:
+                self.tableWidget_scans.removeRow(self.tableWidget_scans.row(FILE))
 
             # update SFM list
-            self.comboBox_SFM_Scan.clear()
-            for i in range(0, self.tableWidget_Scans.rowCount()):
-                self.comboBox_SFM_Scan.addItem(self.tableWidget_Scans.item(i, 2).text()[self.tableWidget_Scans.item(i, 2).text().rfind("/") + 1:])
+            self.comboBox_SFM_scan.clear()
+            for i in range(0, self.tableWidget_scans.rowCount()):
+                self.comboBox_SFM_scan.addItem(self.tableWidget_scans.item(i, 2).text()[self.tableWidget_scans.item(i, 2).text().rfind("/") + 1:])
 
-    def button_import_remove_db(self):
+    def f_button_importRemoveDB(self):
 
-        if self.sender().objectName() == "pushButton_Import_DB":
+        if self.sender().objectName() == "pushButton_importDB":
 
-            import_files = QtWidgets.QFileDialog().getOpenFileNames(None, "FileNames", self.current_dir, ".h5 (*.h5)")
-            if import_files[0] == []: return
+            files_import = QtWidgets.QFileDialog().getOpenFileNames(None, "FileNames", self.dir_current, ".h5 (*.h5)")
+            if files_import[0] == []: return
             # Next "Import scans" will open last dir
-            self.current_dir = import_files[0][0][:import_files[0][0].rfind("/")]
+            self.dir_current = files_import[0][0][:files_import[0][0].rfind("/")]
 
             # I couldnt make tablewidget sorting work when adding files to not empty table, so this is the solution for making the list of DB files sorted
             for i in range(self.tableWidget_DB.rowCount()-1, -1, -1):
-                import_files[0].append(self.tableWidget_DB.item(i, 1).text())
+                files_import[0].append(self.tableWidget_DB.item(i, 1).text())
                 self.tableWidget_DB.removeRow(i)
 
-            for FILE in sorted(import_files[0]):
+            for FILE in sorted(files_import[0]):
                 self.tableWidget_DB.insertRow(self.tableWidget_DB.rowCount())
                 self.tableWidget_DB.setRowHeight(self.tableWidget_DB.rowCount()-1, 10)
                 # File name (row 0) and full path (row 2)
@@ -675,52 +675,52 @@ class GUI(Ui_MainWindow):
                 # add file into SFM / DB ComboBox
                 self.comboBox_SFM_DB.addItem(str(FILE[FILE.rfind("/") + 1:][:5]))
 
-            self.db_analaze()
-            self.SFM_Reflectivity_preview_Load()
+            self.f_DB_analaze()
+            self.f_SFM_reflectivityPreview_load()
 
-        elif self.sender().objectName() == "pushButton_Delete_DB":
+        elif self.sender().objectName() == "pushButton_deleteDB":
 
-            remove_files = self.tableWidget_DB.selectedItems()
-            if not remove_files: return
+            files_remove = self.tableWidget_DB.selectedItems()
+            if not files_remove: return
 
-            for FILE in remove_files: self.tableWidget_DB.removeRow(self.tableWidget_DB.row(FILE))
+            for FILE in files_remove: self.tableWidget_DB.removeRow(self.tableWidget_DB.row(FILE))
 
             # update SFM list
             self.comboBox_SFM_DB.clear()
             for i in range(0, self.tableWidget_DB.rowCount()):
                 self.comboBox_SFM_DB.addItem(self.tableWidget_DB.item(i, 1).text()[self.tableWidget_DB.item(i, 1).text().rfind("/") + 1:][:5])
 
-            self.db_analaze()
+            self.f_DB_analaze()
 
-    def button_SaveDir(self):
+    def f_button_saveDir(self):
         saveAt = QtWidgets.QFileDialog().getExistingDirectory()
         if not saveAt: return
-        self.lineEdit_Save_at.setText(str(saveAt) + ("" if str(saveAt)[-1] == "/" else "/"))
+        self.lineEdit_saveAt.setText(str(saveAt) + ("" if str(saveAt)[-1] == "/" else "/"))
 
-    def button_reduce_all(self):
-        self.listWidget_Recheck_files_in_SFM.clear()
+    def f_button_reduceAll(self):
+        self.listWidget_recheckFilesInSFM.clear()
 
-        skip_bkg = float(self.lineEdit_Reductions_Subtract_bkg_Skip.text()) if self.lineEdit_Reductions_Subtract_bkg_Skip.text() else 0
+        bkg_skip = float(self.lineEdit_reductions_subtractBkg_Skip.text()) if self.lineEdit_reductions_subtractBkg_Skip.text() else 0
 
-        save_file_directory = self.lineEdit_Save_at.text() if self.lineEdit_Save_at.text() else self.current_dir
+        dir_saveFile = self.lineEdit_saveAt.text() if self.lineEdit_saveAt.text() else self.dir_current
 
         if self.statusbar.currentMessage().find("Error") == 0: return
 
-        if self.checkBox_Reductions_Normalize_by_DB.isChecked():
-            self.db_analaze()
+        if self.checkBox_reductions_normalizeByDB.isChecked():
+            self.f_DB_analaze()
 
-            db_atten_factor = 1
-            if self.checkBox_Reductions_Attenuator_DB.isChecked():
-                db_atten_factor = 10 if self.lineEdit_Reductions_Attenuator_DB.text() == "" else float(self.lineEdit_Reductions_Attenuator_DB.text())
+            DB_attenFactor = 1
+            if self.checkBox_reductions_attenuatorDB.isChecked():
+                DB_attenFactor = 10 if self.lineEdit_reductions_attenuatorDB.text() == "" else float(self.lineEdit_reductions_attenuatorDB.text())
 
         # iterate through table with scans
-        for i in range(0, self.tableWidget_Scans.rowCount()):
-            file_name = self.tableWidget_Scans.item(i, 2).text()[self.tableWidget_Scans.item(i, 2).text().rfind("/") + 1: -3]
+        for i in range(0, self.tableWidget_scans.rowCount()):
+            file_name = self.tableWidget_scans.item(i, 2).text()[self.tableWidget_scans.item(i, 2).text().rfind("/") + 1: -3]
 
             # find full name DB file if there are several of them
-            FILE_DB = self.tableWidget_Scans.item(i, 1).text() if self.checkBox_Reductions_Normalize_by_DB.isChecked() else ""
+            FILE_DB = self.tableWidget_scans.item(i, 1).text() if self.checkBox_reductions_normalizeByDB.isChecked() else ""
 
-            with h5py.File(self.tableWidget_Scans.item(i, 2).text(), 'r') as FILE:
+            with h5py.File(self.tableWidget_scans.item(i, 2).text(), 'r') as FILE:
 
                 INSTRUMENT = FILE[list(FILE.keys())[0]].get("instrument")
                 MOTOR_DATA = np.array(INSTRUMENT.get('motors').get('data')).T
@@ -731,7 +731,7 @@ class GUI(Ui_MainWindow):
                     elif "'s1hg'" in str(motor): s1hg_list = MOTOR_DATA[index]
                     elif "'s2hg'" in str(motor): s2hg_list = MOTOR_DATA[index]
 
-                check_this_file = 0
+                checkThisFile = 0
 
                 # check if we have several polarisations
                 for detector in INSTRUMENT.get('detectors'):
@@ -749,131 +749,131 @@ class GUI(Ui_MainWindow):
 
                     scan_intens = INSTRUMENT.get("detectors").get(str(detector)).get('data')[:, int(original_roi_coord[0]): int(original_roi_coord[1]), :].sum(axis=1)
 
-                    new_file = open(save_file_directory + file_name + "_" + str(detector) + " (" + FILE_DB + ")" + ".dat", "w")
+                    new_file = open(dir_saveFile + file_name + "_" + str(detector) + " (" + FILE_DB + ")" + ".dat", "w")
 
                     # iterate through th points
                     for index, th in enumerate(th_list):
 
-                        th = th - float(self.lineEdit_Instrument_Offset_full.text())  # th offset
+                        th = th - float(self.lineEdit_instrument_offsetFull.text())  # th offset
 
                         # analize integrated intensity for ROI
                         Intens = scan_intens[index] if len(scan_intens.shape) == 1 else sum(scan_intens[index][int(original_roi_coord[2]): int(original_roi_coord[3])])
 
-                        if Intens == 0 and self.checkBox_Export_Remove_zeros.isChecked(): continue
+                        if Intens == 0 and self.checkBox_export_removeZeros.isChecked(): continue
 
-                        Intens_err = 1 if Intens == 0 else np.sqrt(Intens)
+                        IntensErr = 1 if Intens == 0 else np.sqrt(Intens)
 
                         # read motors
-                        Qz, s1hg, s2hg = (4 * np.pi / float(self.lineEdit_Instrument_Wavelength.text())) * np.sin(np.radians(th)), s1hg_list[index], s2hg_list[index]
-                        monitor = monitor_list[index] if self.comboBox_Reductions_Divide_by_monitor_or_time.currentText() == "monitor" else time_list[index]
+                        Qz, s1hg, s2hg = (4 * np.pi / float(self.lineEdit_instrument_wavelength.text())) * np.sin(np.radians(th)), s1hg_list[index], s2hg_list[index]
+                        monitor = monitor_list[index] if self.comboBox_reductions_divideByMonitorOrTime.currentText() == "monitor" else time_list[index]
 
                         # check if we are not in a middle of ROI in Qz approx 0.02)
-                        if round(Qz, 3) > 0.015 and round(Qz, 3) < 0.03 and check_this_file == 0:
-                            scan_data_0_015 = scan_intens[index][int(original_roi_coord[2]): int(original_roi_coord[3])]
+                        if round(Qz, 3) > 0.015 and round(Qz, 3) < 0.03 and checkThisFile == 0:
+                            scanData_0_015 = scan_intens[index][int(original_roi_coord[2]): int(original_roi_coord[3])]
 
-                            if not max(scan_data_0_015) == max(scan_data_0_015[round((len(scan_data_0_015) / 3)):-round((len(scan_data_0_015) / 3))]):
-                                self.listWidget_Recheck_files_in_SFM.addItem(file_name)
-                                check_this_file = 1
+                            if not max(scanData_0_015) == max(scanData_0_015[round((len(scanData_0_015) / 3)):-round((len(scanData_0_015) / 3))]):
+                                self.listWidget_recheckFilesInSFM.addItem(file_name)
+                                checkThisFile = 1
 
-                        coeff = self.overillumination_correct_coeff(s1hg, s2hg, round(th, 4))
-                        FWHM_proj,  overill_corr = coeff[1], coeff[0] if self.checkBox_Reductions_Overillumination_correction.isChecked() else 1
+                        coeff = self.f_overilluminationCorrCoeff(s1hg, s2hg, round(th, 4))
+                        FWHM_proj,  overillCorr = coeff[1], coeff[0] if self.checkBox_reductions_overilluminationCorr.isChecked() else 1
 
                         # calculate resolution in Gunnar's Sared way or other (also using overillumination correction)
-                        if self.checkBox_Export_Resolution_like_sared.isChecked():
+                        if self.checkBox_export_resolutionLikeSared.isChecked():
                             Resolution = np.sqrt(
-                                ((2 * np.pi / float(self.lineEdit_Instrument_Wavelength.text())) ** 2) * ((np.cos(np.radians(th))) ** 2) * (0.68 ** 2) * ((s1hg ** 2) + (s2hg ** 2)) / (
-                                            (float(self.lineEdit_Instrument_Distance_s1_to_sample.text()) - float(self.lineEdit_Instrument_Distance_s2_to_sample.text())) ** 2) + (
-                                            (float(self.lineEdit_Instrument_Wavelength_resolution.text()) ** 2) * (Qz ** 2)))
+                                ((2 * np.pi / float(self.lineEdit_instrument_wavelength.text())) ** 2) * ((np.cos(np.radians(th))) ** 2) * (0.68 ** 2) * ((s1hg ** 2) + (s2hg ** 2)) / (
+                                            (float(self.lineEdit_instrument_distanceS1ToSample.text()) - float(self.lineEdit_instrument_distanceS2ToSample.text())) ** 2) + (
+                                            (float(self.lineEdit_instrument_wavelengthResolution.text()) ** 2) * (Qz ** 2)))
                         else:
                             d_alpha = np.arctan((s1hg + [s2hg if FWHM_proj == s2hg else FWHM_proj][0]) / (
-                                    (float(self.lineEdit_Instrument_Distance_s1_to_sample.text()) - float(self.lineEdit_Instrument_Distance_s2_to_sample.text())) * 2))
-                            if self.comboBox_Export_Angle.currentText() == "Qz":
-                                k_0 = 2 * np.pi / float(self.lineEdit_Instrument_Wavelength.text())
+                                    (float(self.lineEdit_instrument_distanceS1ToSample.text()) - float(self.lineEdit_instrument_distanceS2ToSample.text())) * 2))
+                            if self.comboBox_export_angle.currentText() == "Qz":
+                                k_0 = 2 * np.pi / float(self.lineEdit_instrument_wavelength.text())
                                 Resolution = np.sqrt((k_0 ** 2) * (
-                                            (((np.cos(np.radians(th))) ** 2) * d_alpha ** 2) + ((float(self.lineEdit_Instrument_Wavelength_resolution.text()) ** 2) * ((np.sin(np.radians(th))) ** 2))))
-                            else: Resolution = d_alpha if self.comboBox_Export_Angle.currentText() == "Radians" else np.degrees(d_alpha)
+                                            (((np.cos(np.radians(th))) ** 2) * d_alpha ** 2) + ((float(self.lineEdit_instrument_wavelengthResolution.text()) ** 2) * ((np.sin(np.radians(th))) ** 2))))
+                            else: Resolution = d_alpha if self.comboBox_export_angle.currentText() == "Radians" else np.degrees(d_alpha)
 
                         # Save resolution in sigma rather than in FWHM units
                         Resolution = Resolution / (2 * np.sqrt(2 * np.log(2)))
 
                         # minus background, divide by monitor, overillumination correct + calculate errors
-                        if self.checkBox_Reductions_Subtract_bkg.isChecked() and Qz > skip_bkg:
+                        if self.checkBox_reductions_subtractBkg.isChecked() and Qz > bkg_skip:
                             Intens_bkg = sum(scan_intens[index][int(original_roi_coord[2]) - 2 * (int(original_roi_coord[3]) - int(original_roi_coord[2])): int(original_roi_coord[2]) - (int(original_roi_coord[3]) - int(original_roi_coord[2]))])
 
-                            if Intens_bkg > 0: Intens_err, Intens = np.sqrt(Intens + Intens_bkg), Intens - Intens_bkg
+                            if Intens_bkg > 0: IntensErr, Intens = np.sqrt(Intens + Intens_bkg), Intens - Intens_bkg
 
-                        if self.checkBox_Reductions_Divide_by_monitor_or_time.isChecked():
-                            if self.comboBox_Reductions_Divide_by_monitor_or_time.currentText() == "monitor":
-                                monitor, Intens_err = monitor_list[index], Intens_err / monitor if Intens == 0 else (Intens / monitor) * np.sqrt((Intens_err / Intens) ** 2 + (1 / monitor))
-                            elif self.comboBox_Reductions_Divide_by_monitor_or_time.currentText() == "time":
-                                monitor, Intens_err = time_list[index], Intens_err / monitor
+                        if self.checkBox_reductions_divideByMonitorOrTime.isChecked():
+                            if self.comboBox_reductions_divideByMonitorOrTime.currentText() == "monitor":
+                                monitor, IntensErr = monitor_list[index], IntensErr / monitor if Intens == 0 else (Intens / monitor) * np.sqrt((IntensErr / Intens) ** 2 + (1 / monitor))
+                            elif self.comboBox_reductions_divideByMonitorOrTime.currentText() == "time":
+                                monitor, IntensErr = time_list[index], IntensErr / monitor
 
                             Intens = Intens / monitor
 
-                        if self.checkBox_Reductions_Overillumination_correction.isChecked(): Intens_err, Intens = Intens_err / overill_corr, Intens / overill_corr
+                        if self.checkBox_reductions_overilluminationCorr.isChecked(): IntensErr, Intens = IntensErr / overillCorr, Intens / overillCorr
 
-                        if self.checkBox_Reductions_Normalize_by_DB.isChecked():
+                        if self.checkBox_reductions_normalizeByDB.isChecked():
                             try:
-                                db_intens = float(self.DB_INFO[str(FILE_DB) + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[0]) * db_atten_factor
-                                db_err = overill_corr * float(self.DB_INFO[str(FILE_DB) + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[1]) * self.db_atten_factor
+                                DB_intens = float(self.DB_INFO[str(FILE_DB) + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[0]) * DB_attenFactor
+                                DB_err = overillCorr * float(self.DB_INFO[str(FILE_DB) + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[1]) * self.DB_attenFactor
 
-                                Intens_err = Intens_err + db_err if Intens == 0 else (Intens / db_intens) * np.sqrt((db_err / db_intens) ** 2 + (Intens_err / Intens) ** 2)
-                                Intens = Intens / db_intens
+                                IntensErr = IntensErr + DB_err if Intens == 0 else (Intens / DB_intens) * np.sqrt((DB_err / DB_intens) ** 2 + (IntensErr / Intens) ** 2)
+                                Intens = Intens / DB_intens
                             except:
-                                if check_this_file == 0:
-                                    self.listWidget_Recheck_files_in_SFM.addItem(file_name)
-                                    check_this_file = 1
+                                if checkThisFile == 0:
+                                    self.listWidget_recheckFilesInSFM.addItem(file_name)
+                                    checkThisFile = 1
 
-                            self.checkBox_Reductions_Scale_factor.setChecked(False)
+                            self.checkBox_reductions_scaleFactor.setChecked(False)
 
-                        if self.checkBox_Reductions_Scale_factor.isChecked(): Intens_err, Intens = Intens_err / self.scale_factor, Intens / self.scale_factor
+                        if self.checkBox_reductions_scaleFactor.isChecked(): IntensErr, Intens = IntensErr / self.scaleFactor, Intens / self.scaleFactor
 
                         # check desired output angle and do conversion if needed
-                        if self.comboBox_Export_Angle.currentText() == "Qz": angle = round(Qz, 10)
-                        elif self.comboBox_Export_Angle.currentText() == "Degrees": angle = round(np.degrees(np.arcsin(Qz * float(self.lineEdit_Instrument_Wavelength.text()) / (4 * np.pi))), 10)
-                        elif self.comboBox_Export_Angle.currentText() == "Radians": angle = round(np.arcsin(Qz * float(self.lineEdit_Instrument_Wavelength.text()) / (4 * np.pi)), 10)
+                        if self.comboBox_export_angle.currentText() == "Qz": angle = round(Qz, 10)
+                        elif self.comboBox_export_angle.currentText() == "Degrees": angle = round(np.degrees(np.arcsin(Qz * float(self.lineEdit_instrument_wavelength.text()) / (4 * np.pi))), 10)
+                        elif self.comboBox_export_angle.currentText() == "Radians": angle = round(np.arcsin(Qz * float(self.lineEdit_instrument_wavelength.text()) / (4 * np.pi)), 10)
 
                         # skip the first point
-                        if index == 0 or (Intens == 0 and self.checkBox_Export_Remove_zeros.isChecked()): continue
+                        if index == 0 or (Intens == 0 and self.checkBox_export_removeZeros.isChecked()): continue
 
-                        new_file.write(str(angle) + ' ' + str(Intens) + ' ' + str(Intens_err) + ' ')
-                        if self.checkBox_Export_Add_resolution_column.isChecked(): new_file.write(str(Resolution))
+                        new_file.write(str(angle) + ' ' + str(Intens) + ' ' + str(IntensErr) + ' ')
+                        if self.checkBox_export_addResolutionColumn.isChecked(): new_file.write(str(Resolution))
                         new_file.write('\n')
 
                     # close files
                     new_file.close()
 
                     # check if file is empty - then comment inside
-                    if os.stat(save_file_directory + file_name + "_" + str(detector) + " (" + FILE_DB + ")" + ".dat").st_size == 0:
-                        with open(save_file_directory + file_name + "_" + str(detector) + " (" + FILE_DB + ")" + ".dat", "w") as empty_file:
+                    if os.stat(dir_saveFile + file_name + "_" + str(detector) + " (" + FILE_DB + ")" + ".dat").st_size == 0:
+                        with open(dir_saveFile + file_name + "_" + str(detector) + " (" + FILE_DB + ")" + ".dat", "w") as empty_file:
                             empty_file.write("All points are either zeros or negatives.")
 
-        self.statusbar.showMessage(str(self.tableWidget_Scans.rowCount()) + " files reduced, " + str(self.listWidget_Recheck_files_in_SFM.count()) + " file(s) might need extra care.")
+        self.statusbar.showMessage(str(self.tableWidget_scans.rowCount()) + " files reduced, " + str(self.listWidget_recheckFilesInSFM.count()) + " file(s) might need extra care.")
 
-    def button_reduce_sfm(self):
+    def f_button_reduceSFM(self):
 
-        save_file_directory = self.lineEdit_Save_at.text() if self.lineEdit_Save_at.text() else self.current_dir
+        dir_saveFile = self.lineEdit_saveAt.text() if self.lineEdit_saveAt.text() else self.dir_current
 
         # polarisation order - uu, dd, ud, du
         detector = ["uu", "du", "ud", "dd"]
 
-        for i in range(0, len(self.sfm_Export_Qz)):
+        for i in range(0, len(self.SFM_export_Qz)):
 
-            sfm_db_file_export = self.SFM_DB_FILE if self.checkBox_Reductions_Normalize_by_DB.isChecked() else ""
+            SFM_DB_file_export = self.SFM_DB_FILE if self.checkBox_reductions_normalizeByDB.isChecked() else ""
 
-            with open(save_file_directory + self.SFM_FILE[self.SFM_FILE.rfind("/") + 1 : -3] + "_" + str(detector[i]) + " (" + sfm_db_file_export + ")" + " SFM.dat", "w") as new_file:
-                for j in range(0, len(self.sfm_Export_Qz[i])):
-                    if self.sfm_Export_I[i][j] == 0 and self.checkBox_Export_Remove_zeros.isChecked(): continue
+            with open(dir_saveFile + self.SFM_FILE[self.SFM_FILE.rfind("/") + 1 : -3] + "_" + str(detector[i]) + " (" + SFM_DB_file_export + ")" + " SFM.dat", "w") as new_file:
+                for j in range(0, len(self.SFM_export_Qz[i])):
+                    if self.SFM_export_I[i][j] == 0 and self.checkBox_export_removeZeros.isChecked(): continue
 
-                    if self.comboBox_Export_Angle.currentText() == "Qz": angle = round(self.sfm_Export_Qz[i][j], 10)
-                    elif self.comboBox_Export_Angle.currentText() == "Degrees":
-                        angle = round(np.degrees(np.arcsin(self.sfm_Export_Qz[i][j] * float(self.lineEdit_Instrument_Wavelength.text())/ (4* np.pi))), 10)
-                    elif self.comboBox_Export_Angle.currentText() == "Radians":
-                        angle = round(np.arcsin(self.sfm_Export_Qz[i][j] * float(self.lineEdit_Instrument_Wavelength.text()) / (4 * np.pi)), 10)
+                    if self.comboBox_export_angle.currentText() == "Qz": angle = round(self.SFM_export_Qz[i][j], 10)
+                    elif self.comboBox_export_angle.currentText() == "Degrees":
+                        angle = round(np.degrees(np.arcsin(self.SFM_export_Qz[i][j] * float(self.lineEdit_instrument_wavelength.text())/ (4* np.pi))), 10)
+                    elif self.comboBox_export_angle.currentText() == "Radians":
+                        angle = round(np.arcsin(self.SFM_export_Qz[i][j] * float(self.lineEdit_instrument_wavelength.text()) / (4 * np.pi)), 10)
 
-                    new_file.write(str(angle) + ' ' + str(self.sfm_Export_I[i][j]) + ' ' + str(self.sfm_Export_dI[i][j]) + ' ')
+                    new_file.write(str(angle) + ' ' + str(self.SFM_export_I[i][j]) + ' ' + str(self.SFM_export_dI[i][j]) + ' ')
 
-                    if self.checkBox_Export_Add_resolution_column.isChecked(): new_file.write(str(self.sfm_Export_Resolution[i][j]))
+                    if self.checkBox_export_addResolutionColumn.isChecked(): new_file.write(str(self.SFM_export_resolution[i][j]))
                     new_file.write('\n')
 
             # close new file
@@ -881,60 +881,60 @@ class GUI(Ui_MainWindow):
 
         self.statusbar.showMessage(self.SFM_FILE[self.SFM_FILE.rfind("/") + 1:] + " file is reduced in SFM.")
 
-    def button_Clear(self):
+    def f_button_clear(self):
 
-        for item in (self.comboBox_SFM_Scan, self.listWidget_Recheck_files_in_SFM, self.graphicsView_SFM_Detector_image, self.graphicsView_SFM_2Dmap, self.graphicsView_SFM_Reflectivity_preview.getPlotItem(),self.comboBox_SFM_Detector_image_Incident_angle, self.comboBox_SFM_Detector_image_Polarisation, self.comboBox_SFM_2Dmap_Polarisation):
+        for item in (self.comboBox_SFM_scan, self.listWidget_recheckFilesInSFM, self.graphicsView_SFM_detectorImage, self.graphicsView_SFM_2Dmap, self.graphicsView_SFM_reflectivityPreview.getPlotItem(),self.comboBox_SFM_detectorImage_incidentAngle, self.comboBox_SFM_detectorImage_polarisation, self.comboBox_SFM_2Dmap_polarisation):
             item.clear()
 
-        for i in range(self.tableWidget_Scans.rowCount(), -1, -1): self.tableWidget_Scans.removeRow(i)
+        for i in range(self.tableWidget_scans.rowCount(), -1, -1): self.tableWidget_scans.removeRow(i)
         for i in range(self.tableWidget_DB.rowCount(), -1, -1): self.tableWidget_DB.removeRow(i)
     ##<--
 
     ##--> extra functions to shorten the code
-    def overillumination_correct_coeff(self, s1hg, s2hg, th):
+    def f_overilluminationCorrCoeff(self, s1hg, s2hg, th):
 
         # Check for Sample Length input
         try:
-            sample_len = float(self.lineEdit_Sample_len.text())
+            sample_len = float(self.lineEdit_sampleLen.text())
         except: return [1, s2hg]
 
-        config = str(s1hg) + " " + str(s2hg) + " " + str(th) + " " + str(sample_len) + " " + self.lineEdit_Instrument_Distance_s1_to_sample.text() + " " + self.lineEdit_Instrument_Distance_s2_to_sample.text()
+        config = str(s1hg) + " " + str(s2hg) + " " + str(th) + " " + str(sample_len) + " " + self.lineEdit_instrument_distanceS1ToSample.text() + " " + self.lineEdit_instrument_distanceS2ToSample.text()
 
         # check if we already calculated overillumination for current configuration
-        if config in self.overill_coeff_lib: coeff = self.overill_coeff_lib[config]
+        if config in self.dict_overillCoeff: coeff = self.dict_overillCoeff[config]
         else:
             coeff = [0, 0]
 
             # for trapezoid beam - find (half of) widest beam width (OC) and flat region (OB) with max intensity
             if s1hg < s2hg:
-                OB = abs(((float(self.lineEdit_Instrument_Distance_s1_to_sample.text()) * (s2hg - s1hg)) / (2 * (float(self.lineEdit_Instrument_Distance_s1_to_sample.text()) - float(self.lineEdit_Instrument_Distance_s2_to_sample.text())))) + s1hg / 2)
-                OC = ((float(self.lineEdit_Instrument_Distance_s1_to_sample.text()) * (s2hg + s1hg)) / (2 * (float(self.lineEdit_Instrument_Distance_s1_to_sample.text()) - float(self.lineEdit_Instrument_Distance_s2_to_sample.text())))) - s1hg / 2
+                OB = abs(((float(self.lineEdit_instrument_distanceS1ToSample.text()) * (s2hg - s1hg)) / (2 * (float(self.lineEdit_instrument_distanceS1ToSample.text()) - float(self.lineEdit_instrument_distanceS2ToSample.text())))) + s1hg / 2)
+                OC = ((float(self.lineEdit_instrument_distanceS1ToSample.text()) * (s2hg + s1hg)) / (2 * (float(self.lineEdit_instrument_distanceS1ToSample.text()) - float(self.lineEdit_instrument_distanceS2ToSample.text())))) - s1hg / 2
             elif s1hg > s2hg:
-                OB = abs(((s2hg * float(self.lineEdit_Instrument_Distance_s1_to_sample.text())) - (s1hg * float(self.lineEdit_Instrument_Distance_s2_to_sample.text()))) / (2 * (float(self.lineEdit_Instrument_Distance_s1_to_sample.text()) - float(self.lineEdit_Instrument_Distance_s2_to_sample.text()))))
-                OC = (float(self.lineEdit_Instrument_Distance_s1_to_sample.text()) / (float(self.lineEdit_Instrument_Distance_s1_to_sample.text()) - float(self.lineEdit_Instrument_Distance_s2_to_sample.text()))) * (s2hg + s1hg) / 2 - (s1hg / 2)
+                OB = abs(((s2hg * float(self.lineEdit_instrument_distanceS1ToSample.text())) - (s1hg * float(self.lineEdit_instrument_distanceS2ToSample.text()))) / (2 * (float(self.lineEdit_instrument_distanceS1ToSample.text()) - float(self.lineEdit_instrument_distanceS2ToSample.text()))))
+                OC = (float(self.lineEdit_instrument_distanceS1ToSample.text()) / (float(self.lineEdit_instrument_distanceS1ToSample.text()) - float(self.lineEdit_instrument_distanceS2ToSample.text()))) * (s2hg + s1hg) / 2 - (s1hg / 2)
             elif s1hg == s2hg:
                 OB = s1hg / 2
-                OC = s1hg * (float(self.lineEdit_Instrument_Distance_s1_to_sample.text()) / (float(self.lineEdit_Instrument_Distance_s1_to_sample.text()) - float(self.lineEdit_Instrument_Distance_s2_to_sample.text())) - 1 / 2)
+                OC = s1hg * (float(self.lineEdit_instrument_distanceS1ToSample.text()) / (float(self.lineEdit_instrument_distanceS1ToSample.text()) - float(self.lineEdit_instrument_distanceS2ToSample.text())) - 1 / 2)
 
             BC = OC - OB
             AO = 1 / (BC/2 + OB)  # normalized height of trapezoid
             FWHM_beam = BC/2 + OB  # half of the beam FWHM
-            sample_len_relative = float(sample_len) * np.sin(np.radians(np.fabs(th if not th == 0 else 0.00001)))  # projection of sample surface on the beam
+            sampleLen_relative = float(sample_len) * np.sin(np.radians(np.fabs(th if not th == 0 else 0.00001)))  # projection of sample surface on the beam
 
             # "coeff" represents how much of total beam intensity illuminates the sample
-            if sample_len_relative / 2 >= OC: coeff[0] = 1
+            if sampleLen_relative / 2 >= OC: coeff[0] = 1
             else:  # check if we use only middle part of the beam or trapezoid "shoulders" also
-                if sample_len_relative / 2 <= OB: coeff[0] = AO*sample_len_relative/2 # Square part
-                elif sample_len_relative / 2 > OB: coeff[0] = AO * (OB + BC/2 - ((OC-sample_len_relative/2)**2) / (2*BC)) # Square part + triangle - edge of triangle that dont cover the sample
+                if sampleLen_relative / 2 <= OB: coeff[0] = AO*sampleLen_relative/2 # Square part
+                elif sampleLen_relative / 2 > OB: coeff[0] = AO * (OB + BC/2 - ((OC-sampleLen_relative/2)**2) / (2*BC)) # Square part + triangle - edge of triangle that dont cover the sample
 
             # for the beam resolution calcultion we check how much of the beam FHWM we cover by the sample
-            coeff[1] = s2hg if sample_len_relative / 2 >= FWHM_beam else sample_len_relative
+            coeff[1] = s2hg if sampleLen_relative / 2 >= FWHM_beam else sampleLen_relative
 
-            self.overill_coeff_lib[config] = coeff
+            self.dict_overillCoeff[config] = coeff
 
         return coeff
 
-    def db_analaze(self):
+    def f_DB_analaze(self):
 
         self.DB_INFO = {}
 
@@ -954,102 +954,102 @@ class GUI(Ui_MainWindow):
                     elif "'roi'" in str(scaler): intens_list = SCALERS_DATA[index]
                     elif "'sec'" in str(scaler): time_list = SCALERS_DATA[index]
 
-                if self.checkBox_Reductions_Divide_by_monitor_or_time.isChecked(): monitor = monitor_list if self.comboBox_Reductions_Divide_by_monitor_or_time.currentText() == "monitor" else time_list
+                if self.checkBox_reductions_divideByMonitorOrTime.isChecked(): monitor = monitor_list if self.comboBox_reductions_divideByMonitorOrTime.currentText() == "monitor" else time_list
                 else: monitor = np.ones_like(intens_list)
 
                 for j in range(0, len(th_list)):
-                    db_intens = float(intens_list[j]) / float(monitor[j])
-                    if self.checkBox_Reductions_Divide_by_monitor_or_time.isChecked() and self.comboBox_Reductions_Divide_by_monitor_or_time.currentText() == "monitor":
-                        db_err = db_intens * np.sqrt(1/float(intens_list[j]) + 1/float(monitor[j]))
-                    else: db_err = np.sqrt(float(intens_list[j])) / float(monitor[j])
+                    DB_intens = float(intens_list[j]) / float(monitor[j])
+                    if self.checkBox_reductions_divideByMonitorOrTime.isChecked() and self.comboBox_reductions_divideByMonitorOrTime.currentText() == "monitor":
+                        DB_err = DB_intens * np.sqrt(1/float(intens_list[j]) + 1/float(monitor[j]))
+                    else: DB_err = np.sqrt(float(intens_list[j])) / float(monitor[j])
 
-                    scan_slits_monitor = self.tableWidget_DB.item(i, 0).text()[:5] + ";" + str(s1hg_list[j]) + ";" + str(s2hg_list[j])
+                    scan_slitsMonitor = self.tableWidget_DB.item(i, 0).text()[:5] + ";" + str(s1hg_list[j]) + ";" + str(s2hg_list[j])
 
-                    self.DB_INFO[scan_slits_monitor] = str(db_intens) + ";" + str(db_err)
+                    self.DB_INFO[scan_slitsMonitor] = str(DB_intens) + ";" + str(DB_err)
 
         if self.tableWidget_DB.rowCount() == 0: return
-        else: self.db_assign()
+        else: self.f_DB_assign()
 
-    def db_assign(self):
+    def f_DB_assign(self):
 
-        db_list = []
-        for db_scan_number in self.DB_INFO: db_list.append(db_scan_number.split(";")[0])
+        DB_list = []
+        for DB_scan_number in self.DB_INFO: DB_list.append(DB_scan_number.split(";")[0])
 
-        for i in range(self.tableWidget_Scans.rowCount()):
-            scan_number = self.tableWidget_Scans.item(i, 0).text()[:5]
+        for i in range(self.tableWidget_scans.rowCount()):
+            scan_number = self.tableWidget_scans.item(i, 0).text()[:5]
 
             # find nearest DB file if there are several of them
-            if len(db_list) == 0: FILE_DB = ""
-            elif len(db_list) == 1: FILE_DB = db_list[0][:5]
+            if len(DB_list) == 0: FILE_DB = ""
+            elif len(DB_list) == 1: FILE_DB = DB_list[0][:5]
             else:
-                if self.checkBox_Rearrange_DB_after.isChecked():
-                    for j, db_scan in enumerate(db_list):
-                        FILE_DB = db_scan[:5]
-                        if int(db_scan[:5]) > int(scan_number[:5]): break
+                if self.checkBox_rearrangeDbAfter.isChecked():
+                    for j, DB_scan in enumerate(DB_list):
+                        FILE_DB = DB_scan[:5]
+                        if int(DB_scan[:5]) > int(scan_number[:5]): break
                 else:
-                    for j, db_scan in enumerate(reversed(db_list)):
-                        FILE_DB = db_scan[:5]
-                        if int(db_scan[:5]) < int(scan_number[:5]): break
+                    for j, DB_scan in enumerate(reversed(DB_list)):
+                        FILE_DB = DB_scan[:5]
+                        if int(DB_scan[:5]) < int(scan_number[:5]): break
 
-            self.tableWidget_Scans.item(i, 1).setText(FILE_DB)
+            self.tableWidget_scans.item(i, 1).setText(FILE_DB)
 
     ##<--
 
     ##--> SFM
-    def SFM_Detector_image_Load(self):
+    def f_SFM_detectorImage_load(self):
 
-        if self.comboBox_SFM_Scan.currentText() == "": return
+        if self.comboBox_SFM_scan.currentText() == "": return
 
-        self.comboBox_SFM_Detector_image_Incident_angle.clear()
-        self.comboBox_SFM_Detector_image_Polarisation.clear()
-        self.comboBox_SFM_2Dmap_Polarisation.clear()
+        self.comboBox_SFM_detectorImage_incidentAngle.clear()
+        self.comboBox_SFM_detectorImage_polarisation.clear()
+        self.comboBox_SFM_2Dmap_polarisation.clear()
 
         # we need to find full path for the SFM file from the table
-        for i in range(0, self.tableWidget_Scans.rowCount()):
-            self.SFM_FILE = self.tableWidget_Scans.item(i, 2).text() if self.tableWidget_Scans.item(i, 0).text() == self.comboBox_SFM_Scan.currentText() else self.SFM_FILE
+        for i in range(0, self.tableWidget_scans.rowCount()):
+            self.SFM_FILE = self.tableWidget_scans.item(i, 2).text() if self.tableWidget_scans.item(i, 0).text() == self.comboBox_SFM_scan.currentText() else self.SFM_FILE
 
         with h5py.File(self.SFM_FILE, 'r') as FILE:
             SCAN = FILE[list(FILE.keys())[0]]
 
-            if not self.locked_roi == [] and self.checkBox_SFM_Detector_image_Lock_roi.isChecked(): original_roi_coord = np.array(self.locked_roi[0])
+            if not self.roiLocked == [] and self.checkBox_SFM_detectorImage_lockRoi.isChecked(): original_roi_coord = np.array(self.roiLocked[0])
             else: original_roi_coord = np.array(SCAN.get("instrument").get('scalers').get('roi').get("roi"))
 
             roi_width = int(str(original_roi_coord[3])[:-2]) - int(str(original_roi_coord[2])[:-2])
 
             # ROI
-            self.lineEdit_SFM_Detector_image_Roi_X_Left.setText(str(original_roi_coord[2])[:-2])
-            self.lineEdit_SFM_Detector_image_Roi_X_Right.setText(str(original_roi_coord[3])[:-2])
-            self.lineEdit_SFM_Detector_image_Roi_Y_Bottom.setText(str(original_roi_coord[1])[:-2])
-            self.lineEdit_SFM_Detector_image_Roi_Y_Top.setText(str(original_roi_coord[0])[:-2])
+            self.lineEdit_SFM_detectorImage_roiX_left.setText(str(original_roi_coord[2])[:-2])
+            self.lineEdit_SFM_detectorImage_roiX_right.setText(str(original_roi_coord[3])[:-2])
+            self.lineEdit_SFM_detectorImage_roiY_bottom.setText(str(original_roi_coord[1])[:-2])
+            self.lineEdit_SFM_detectorImage_roiY_top.setText(str(original_roi_coord[0])[:-2])
 
             # BKG ROI
-            if not self.locked_roi == [] and self.checkBox_SFM_Detector_image_Lock_roi.isChecked(): self.lineEdit_SFM_Detector_image_Roi_bkg_X_Right.setText(str(self.locked_roi[1]))
-            else: self.lineEdit_SFM_Detector_image_Roi_bkg_X_Right.setText(str(int(self.lineEdit_SFM_Detector_image_Roi_X_Left.text()) - roi_width))
-            self.lineEdit_SFM_Detector_image_Roi_bkg_X_Left.setText(str(int(self.lineEdit_SFM_Detector_image_Roi_bkg_X_Right.text()) - roi_width))
+            if not self.roiLocked == [] and self.checkBox_SFM_detectorImage_lockRoi.isChecked(): self.lineEdit_SFM_detectorImage_roi_bkgX_right.setText(str(self.roiLocked[1]))
+            else: self.lineEdit_SFM_detectorImage_roi_bkgX_right.setText(str(int(self.lineEdit_SFM_detectorImage_roiX_left.text()) - roi_width))
+            self.lineEdit_SFM_detectorImage_roi_bkgX_left.setText(str(int(self.lineEdit_SFM_detectorImage_roi_bkgX_right.text()) - roi_width))
 
             for index, th in enumerate(SCAN.get("instrument").get('motors').get('th').get("value")):
-                self.comboBox_SFM_Detector_image_Incident_angle.addItem(str(round(th, 3)))
+                self.comboBox_SFM_detectorImage_incidentAngle.addItem(str(round(th, 3)))
 
             if len(SCAN.get("ponos").get('data')) == 1:
-                for item in (self.comboBox_SFM_Detector_image_Polarisation, self.comboBox_SFM_2Dmap_Polarisation): item.addItem("uu")
+                for item in (self.comboBox_SFM_detectorImage_polarisation, self.comboBox_SFM_2Dmap_polarisation): item.addItem("uu")
             for polarisation in SCAN.get("ponos").get('data'):
                 if polarisation not in ("data_du", "data_uu", "data_dd", "data_ud"): continue
                 if np.any(np.array(SCAN.get("ponos").get('data').get(polarisation))):
-                    for item in (self.comboBox_SFM_Detector_image_Polarisation, self.comboBox_SFM_2Dmap_Polarisation): item.addItem(str(polarisation)[-2:])
+                    for item in (self.comboBox_SFM_detectorImage_polarisation, self.comboBox_SFM_2Dmap_polarisation): item.addItem(str(polarisation)[-2:])
 
-            self.comboBox_SFM_Detector_image_Polarisation.setCurrentIndex(0)
-            self.comboBox_SFM_2Dmap_Polarisation.setCurrentIndex(0)
+            self.comboBox_SFM_detectorImage_polarisation.setCurrentIndex(0)
+            self.comboBox_SFM_2Dmap_polarisation.setCurrentIndex(0)
 
-    def SFM_Detector_image_Draw(self):
+    def f_SFM_detectorImage_draw(self):
 
-        if self.comboBox_SFM_Detector_image_Polarisation.currentText() == "" or self.comboBox_SFM_Detector_image_Incident_angle.currentText() == "": return
+        if self.comboBox_SFM_detectorImage_polarisation.currentText() == "" or self.comboBox_SFM_detectorImage_incidentAngle.currentText() == "": return
 
-        for item in (self.graphicsView_SFM_Detector_image, self.graphicsView_SFM_Detector_image_Roi): item.clear()
+        for item in (self.graphicsView_SFM_detectorImage, self.graphicsView_SFM_detectorImage_roi): item.clear()
 
         if self.SFM_FILE == "": return
         with h5py.File(self.SFM_FILE, 'r') as FILE:
 
-            self.current_th = self.comboBox_SFM_Detector_image_Incident_angle.currentText()
+            self.th_current = self.comboBox_SFM_detectorImage_incidentAngle.currentText()
 
             INSTRUMENT = FILE[list(FILE.keys())[0]].get("instrument")
             MOTOR_DATA = np.array(INSTRUMENT.get('motors').get('data')).T
@@ -1068,147 +1068,147 @@ class GUI(Ui_MainWindow):
 
             for i in INSTRUMENT.get('detectors'):
                 if i not in ("psd", "psd_uu", "psd_dd", "psd_du", "psd_ud"): continue
-                scan_psd = "psd" if i == "psd" else "psd_" + self.comboBox_SFM_Detector_image_Polarisation.currentText()
+                scan_psd = "psd" if i == "psd" else "psd_" + self.comboBox_SFM_detectorImage_polarisation.currentText()
 
             detector_images = INSTRUMENT.get('detectors').get(scan_psd).get('data')
 
             for index, th in enumerate(self.th_list):
                 # check th
-                if self.current_th == str(round(th, 3)):
-                    self.lineEdit_SFM_Detector_image_Slits_s1hg.setText(str(self.s1hg_list[index]))
-                    self.lineEdit_SFM_Detector_image_Slits_s2hg.setText(str(self.s2hg_list[index]))
-                    self.lineEdit_SFM_Detector_image_Time.setText(str(time_list[index]))
+                if self.th_current == str(round(th, 3)):
+                    self.lineEdit_SFM_detectorImage_slits_s1hg.setText(str(self.s1hg_list[index]))
+                    self.lineEdit_SFM_detectorImage_slits_s2hg.setText(str(self.s2hg_list[index]))
+                    self.lineEdit_SFM_detectorImage_time.setText(str(time_list[index]))
 
                     # seems to be a bug in numpy arrays imported from hdf5 files. Problem is solved after I subtract ZEROs array with the same dimentions.
                     detector_image = np.around(detector_images[index], decimals=0).astype(int)
                     detector_image = np.subtract(detector_image, np.zeros((detector_image.shape[0], detector_image.shape[1])))
                     # integrate detector image with respect to ROI Y coordinates
-                    detector_image_int = detector_image[int(self.lineEdit_SFM_Detector_image_Roi_Y_Top.text()): int(self.lineEdit_SFM_Detector_image_Roi_Y_Bottom.text()), :].sum(axis=0).astype(int)
+                    detector_image_int = detector_image[int(self.lineEdit_SFM_detectorImage_roiY_top.text()): int(self.lineEdit_SFM_detectorImage_roiY_bottom.text()), :].sum(axis=0).astype(int)
 
-                    self.graphicsView_SFM_Detector_image.setImage(detector_image, axes={'x':1, 'y':0}, levels=(0,0.1))
-                    self.graphicsView_SFM_Detector_image_Roi.addItem(pg.PlotCurveItem(y = detector_image_int, pen=pg.mkPen(color=(0, 0, 0), width=2), brush=pg.mkBrush(color=(255, 0, 0), width=3)))
+                    self.graphicsView_SFM_detectorImage.setImage(detector_image, axes={'x':1, 'y':0}, levels=(0,0.1))
+                    self.graphicsView_SFM_detectorImage_roi.addItem(pg.PlotCurveItem(y = detector_image_int, pen=pg.mkPen(color=(0, 0, 0), width=2), brush=pg.mkBrush(color=(255, 0, 0), width=3)))
 
-                    if self.comboBox_SFM_Detector_image_Color_scheme.currentText() == "White / Black":
+                    if self.comboBox_SFM_detectorImage_colorScheme.currentText() == "White / Black":
                         self.color_det_image = np.array([[0, 0, 0, 255], [255, 255, 255, 255], [255, 255, 255, 255]], dtype=np.ubyte)
-                    elif self.comboBox_SFM_Detector_image_Color_scheme.currentText() == "Green / Blue":
+                    elif self.comboBox_SFM_detectorImage_colorScheme.currentText() == "Green / Blue":
                         self.color_det_image = np.array([[0, 0, 255, 255], [255, 0, 0, 255], [0, 255, 0, 255]], dtype=np.ubyte)
                     pos = np.array([0.0, 0.1, 1.0])
 
-                    self.graphicsView_SFM_Detector_image.setColorMap(pg.ColorMap(pos, self.color_det_image))
+                    self.graphicsView_SFM_detectorImage.setColorMap(pg.ColorMap(pos, self.color_det_image))
 
                     # add ROI rectangular
-                    spots_ROI_det_int = []
-                    if self.draw_roi: self.graphicsView_SFM_Detector_image.removeItem(self.draw_roi)
-                    if self.draw_roi_bkg: self.graphicsView_SFM_Detector_image.removeItem(self.draw_roi_bkg)
+                    spots_ROI_detInt = []
+                    if self.roi_draw: self.graphicsView_SFM_detectorImage.removeItem(self.roi_draw)
+                    if self.roi_draw_bkg: self.graphicsView_SFM_detectorImage.removeItem(self.roi_draw_bkg)
 
                     # add ROI rectangular
-                    spots_ROI_det_view = {'x': (int(self.lineEdit_SFM_Detector_image_Roi_X_Left.text()), int(self.lineEdit_SFM_Detector_image_Roi_X_Right.text()), int(self.lineEdit_SFM_Detector_image_Roi_X_Right.text()), int(self.lineEdit_SFM_Detector_image_Roi_X_Left.text()), int(self.lineEdit_SFM_Detector_image_Roi_X_Left.text())),
-                                 'y': (int(self.lineEdit_SFM_Detector_image_Roi_Y_Top.text()), int(self.lineEdit_SFM_Detector_image_Roi_Y_Top.text()), int(self.lineEdit_SFM_Detector_image_Roi_Y_Bottom.text()), int(self.lineEdit_SFM_Detector_image_Roi_Y_Bottom.text()), int(self.lineEdit_SFM_Detector_image_Roi_Y_Top.text()))}
+                    spots_ROI_det_view = {'x': (int(self.lineEdit_SFM_detectorImage_roiX_left.text()), int(self.lineEdit_SFM_detectorImage_roiX_right.text()), int(self.lineEdit_SFM_detectorImage_roiX_right.text()), int(self.lineEdit_SFM_detectorImage_roiX_left.text()), int(self.lineEdit_SFM_detectorImage_roiX_left.text())),
+                                 'y': (int(self.lineEdit_SFM_detectorImage_roiY_top.text()), int(self.lineEdit_SFM_detectorImage_roiY_top.text()), int(self.lineEdit_SFM_detectorImage_roiY_bottom.text()), int(self.lineEdit_SFM_detectorImage_roiY_bottom.text()), int(self.lineEdit_SFM_detectorImage_roiY_top.text()))}
 
-                    self.draw_roi = pg.PlotDataItem(spots_ROI_det_view, pen=pg.mkPen(255, 255, 255), connect="all")
-                    self.graphicsView_SFM_Detector_image.addItem(self.draw_roi)
+                    self.roi_draw = pg.PlotDataItem(spots_ROI_det_view, pen=pg.mkPen(255, 255, 255), connect="all")
+                    self.graphicsView_SFM_detectorImage.addItem(self.roi_draw)
 
                     # add BKG ROI rectangular
-                    if self.checkBox_Reductions_Subtract_bkg.isChecked():
-                        spots_ROI_det_view = {'x': (int(self.lineEdit_SFM_Detector_image_Roi_bkg_X_Left.text()), int(self.lineEdit_SFM_Detector_image_Roi_bkg_X_Right.text()),
-                                                    int(self.lineEdit_SFM_Detector_image_Roi_bkg_X_Right.text()), int(self.lineEdit_SFM_Detector_image_Roi_bkg_X_Left.text()),
-                                                    int(self.lineEdit_SFM_Detector_image_Roi_bkg_X_Left.text())),
-                                              'y': (int(self.lineEdit_SFM_Detector_image_Roi_Y_Top.text()), int(self.lineEdit_SFM_Detector_image_Roi_Y_Top.text()),
-                                                    int(self.lineEdit_SFM_Detector_image_Roi_Y_Bottom.text()), int(self.lineEdit_SFM_Detector_image_Roi_Y_Bottom.text()),
-                                                    int(self.lineEdit_SFM_Detector_image_Roi_Y_Top.text()))}
+                    if self.checkBox_reductions_subtractBkg.isChecked():
+                        spots_ROI_det_view = {'x': (int(self.lineEdit_SFM_detectorImage_roi_bkgX_left.text()), int(self.lineEdit_SFM_detectorImage_roi_bkgX_right.text()),
+                                                    int(self.lineEdit_SFM_detectorImage_roi_bkgX_right.text()), int(self.lineEdit_SFM_detectorImage_roi_bkgX_left.text()),
+                                                    int(self.lineEdit_SFM_detectorImage_roi_bkgX_left.text())),
+                                              'y': (int(self.lineEdit_SFM_detectorImage_roiY_top.text()), int(self.lineEdit_SFM_detectorImage_roiY_top.text()),
+                                                    int(self.lineEdit_SFM_detectorImage_roiY_bottom.text()), int(self.lineEdit_SFM_detectorImage_roiY_bottom.text()),
+                                                    int(self.lineEdit_SFM_detectorImage_roiY_top.text()))}
 
-                        self.draw_roi_bkg = pg.PlotDataItem(spots_ROI_det_view, pen=pg.mkPen(color=(255, 255, 255), style=QtCore.Qt.DashLine), connect="all")
-                        self.graphicsView_SFM_Detector_image.addItem(self.draw_roi_bkg)
+                        self.roi_draw_bkg = pg.PlotDataItem(spots_ROI_det_view, pen=pg.mkPen(color=(255, 255, 255), style=QtCore.Qt.DashLine), connect="all")
+                        self.graphicsView_SFM_detectorImage.addItem(self.roi_draw_bkg)
 
-                    if self.draw_roi_int: self.graphicsView_SFM_Detector_image_Roi.removeItem(self.draw_roi_int)
+                    if self.roi_draw_int: self.graphicsView_SFM_detectorImage_roi.removeItem(self.roi_draw_int)
 
                     for i in range(0, detector_image_int.max()):
-                        spots_ROI_det_int.append({'x': int(self.lineEdit_SFM_Detector_image_Roi_X_Left.text()), 'y': i})
-                        spots_ROI_det_int.append({'x': int(self.lineEdit_SFM_Detector_image_Roi_X_Right.text()), 'y': i})
+                        spots_ROI_detInt.append({'x': int(self.lineEdit_SFM_detectorImage_roiX_left.text()), 'y': i})
+                        spots_ROI_detInt.append({'x': int(self.lineEdit_SFM_detectorImage_roiX_right.text()), 'y': i})
 
-                    self.draw_roi_int = pg.ScatterPlotItem(spots=spots_ROI_det_int, size=1, pen=pg.mkPen(255, 0, 0))
-                    self.graphicsView_SFM_Detector_image_Roi.addItem(self.draw_roi_int)
+                    self.roi_draw_int = pg.ScatterPlotItem(spots=spots_ROI_detInt, size=1, pen=pg.mkPen(255, 0, 0))
+                    self.graphicsView_SFM_detectorImage_roi.addItem(self.roi_draw_int)
 
                     break
 
         # Show "integrated roi" part
-        if self.sender().objectName() == "pushButton_SFM_Detector_image_Show_integrated_roi":
-            (height, trigger) = (420, False) if self.show_det_int_trigger else (510, True)
-            self.graphicsView_SFM_Detector_image.setGeometry(QtCore.QRect(0, 30, 577, height))
-            self.show_det_int_trigger = trigger
+        if self.sender().objectName() == "pushButton_SFM_detectorImage_showIntegratedRoi":
+            (height, trigger) = (420, False) if self.trigger_showDetInt else (510, True)
+            self.graphicsView_SFM_detectorImage.setGeometry(QtCore.QRect(0, 30, 577, height))
+            self.trigger_showDetInt = trigger
 
-    def SFM_Reflectivity_preview_Load(self):
+    def f_SFM_reflectivityPreview_load(self):
 
-        self.graphicsView_SFM_Reflectivity_preview.getPlotItem().clear()
-        skip_bkg = 0
+        self.graphicsView_SFM_reflectivityPreview.getPlotItem().clear()
+        bkg_skip = 0
 
-        self.sfm_Export_Qz, self.sfm_Export_I, self.sfm_Export_dI, self.sfm_Export_Resolution = [], [], [], []
+        self.SFM_export_Qz, self.SFM_export_I, self.SFM_export_dI, self.SFM_export_resolution = [], [], [], []
 
         # change interface (Include ang resolution..., Use original Sared way...)
-        self.checkBox_Export_Resolution_like_sared.setEnabled(True if self.checkBox_Export_Add_resolution_column.isChecked() else False)
+        self.checkBox_export_resolutionLikeSared.setEnabled(True if self.checkBox_export_addResolutionColumn.isChecked() else False)
 
         # change interface (Scale factor, DB correction, DB attenuator)
-        if self.checkBox_Reductions_Normalize_by_DB.isChecked():
+        if self.checkBox_reductions_normalizeByDB.isChecked():
             hidden = [False, False, True, True]
-            self.checkBox_Reductions_Scale_factor.setChecked(False)
+            self.checkBox_reductions_scaleFactor.setChecked(False)
         else: hidden = [True, True, False, False]
 
-        for index, element in enumerate([self.checkBox_Reductions_Attenuator_DB, self.lineEdit_Reductions_Attenuator_DB, self.checkBox_Reductions_Scale_factor, self.lineEdit_Reductions_Scale_factor]):
+        for index, element in enumerate([self.checkBox_reductions_attenuatorDB, self.lineEdit_reductions_attenuatorDB, self.checkBox_reductions_scaleFactor, self.lineEdit_reductions_scaleFactor]):
             element.setHidden(hidden[index])
 
-        if self.comboBox_SFM_Scan.currentText() == "": return
+        if self.comboBox_SFM_scan.currentText() == "": return
 
         # Input checkups
         self.statusbar.clearMessage()
 
-        if self.checkBox_Reductions_Overillumination_correction.isChecked() or self.checkBox_SFM_Reflectivity_preview_Show_overillumination.isChecked():
+        if self.checkBox_reductions_overilluminationCorr.isChecked() or self.checkBox_SFM_reflectivityPreview_showOverillumination.isChecked():
             try:
-                _ = float(self.lineEdit_Sample_len.text())
+                _ = float(self.lineEdit_sampleLen.text())
             except:
                 self.statusbar.showMessage("Error: Recheck 'Sample length' field.")
 
-        if self.checkBox_Reductions_Normalize_by_DB.isChecked() and self.tableWidget_DB.rowCount() == 0:
+        if self.checkBox_reductions_normalizeByDB.isChecked() and self.tableWidget_DB.rowCount() == 0:
             self.statusbar.showMessage("Error: Direct beam file is missing.")
 
-        if int(self.lineEdit_SFM_Detector_image_Roi_X_Left.text()) > int(self.lineEdit_SFM_Detector_image_Roi_X_Right.text()) or int(self.lineEdit_SFM_Detector_image_Roi_Y_Bottom.text()) < int(self.lineEdit_SFM_Detector_image_Roi_Y_Top.text()) or int(self.lineEdit_SFM_Detector_image_Roi_bkg_X_Left.text()) < 0:
+        if int(self.lineEdit_SFM_detectorImage_roiX_left.text()) > int(self.lineEdit_SFM_detectorImage_roiX_right.text()) or int(self.lineEdit_SFM_detectorImage_roiY_bottom.text()) < int(self.lineEdit_SFM_detectorImage_roiY_top.text()) or int(self.lineEdit_SFM_detectorImage_roi_bkgX_left.text()) < 0:
             self.statusbar.showMessage("Error: Recheck your ROI input.")
 
-        self.scale_factor = 1
-        if self.checkBox_Reductions_Scale_factor.isChecked():
+        self.scaleFactor = 1
+        if self.checkBox_reductions_scaleFactor.isChecked():
             try:
-                self.scale_factor = 10 if self.lineEdit_Reductions_Scale_factor.text() == "" else float(self.lineEdit_Reductions_Scale_factor.text())
+                self.scaleFactor = 10 if self.lineEdit_reductions_scaleFactor.text() == "" else float(self.lineEdit_reductions_scaleFactor.text())
             except:
                 self.statusbar.showMessage("Error: Recheck 'Scale Factor' field.")
 
-        self.db_atten_factor = 1
-        if self.checkBox_Reductions_Attenuator_DB.isChecked():
+        self.DB_attenFactor = 1
+        if self.checkBox_reductions_attenuatorDB.isChecked():
             try:
-                self.db_atten_factor = 10 if self.lineEdit_Reductions_Attenuator_DB.text() == "" else float(self.lineEdit_Reductions_Attenuator_DB.text())
+                self.DB_attenFactor = 10 if self.lineEdit_reductions_attenuatorDB.text() == "" else float(self.lineEdit_reductions_attenuatorDB.text())
             except:
                 self.statusbar.showMessage("Error: Recheck 'Direct Beam Attenuator Factor' field.")
 
-        if self.lineEdit_Reductions_Subtract_bkg_Skip.text():
+        if self.lineEdit_reductions_subtractBkg_Skip.text():
             try:
-                skip_bkg = float(self.lineEdit_Reductions_Subtract_bkg_Skip.text())
+                bkg_skip = float(self.lineEdit_reductions_subtractBkg_Skip.text())
             except:
                 self.statusbar.showMessage("Error: Recheck 'Skip background' field.")
 
         try:
-            _ = 1/float(self.lineEdit_Instrument_Wavelength.text())
-            _ = float(self.lineEdit_Instrument_Wavelength_resolution.text())
-            _ = float(self.lineEdit_Instrument_Distance_s1_to_sample.text())
-            _ = float(self.lineEdit_Instrument_Distance_s2_to_sample.text())
-            _ = float(self.lineEdit_Instrument_Distance_sample_to_detector.text())
-            _ = float(self.lineEdit_Instrument_Sample_curvature.text())
-            _ = float(self.lineEdit_Instrument_Offset_full.text())
+            _ = 1/float(self.lineEdit_instrument_wavelength.text())
+            _ = float(self.lineEdit_instrument_wavelengthResolution.text())
+            _ = float(self.lineEdit_instrument_distanceS1ToSample.text())
+            _ = float(self.lineEdit_instrument_distanceS2ToSample.text())
+            _ = float(self.lineEdit_instrument_distanceSampleToDetector.text())
+            _ = float(self.lineEdit_instrument_sampleCurvature.text())
+            _ = float(self.lineEdit_instrument_offsetFull.text())
         except:
             self.statusbar.showMessage("Error: Recheck 'Instrument / Corrections' tab for typos.")
 
         if self.statusbar.currentMessage(): return
 
         # Define analized file and DB
-        for i in range(0, self.tableWidget_Scans.rowCount()):
-            if self.tableWidget_Scans.item(i, 0).text() == self.comboBox_SFM_Scan.currentText(): self.SFM_FILE = self.tableWidget_Scans.item(i, 2).text()
+        for i in range(0, self.tableWidget_scans.rowCount()):
+            if self.tableWidget_scans.item(i, 0).text() == self.comboBox_SFM_scan.currentText(): self.SFM_FILE = self.tableWidget_scans.item(i, 2).text()
         self.SFM_DB_FILE = self.comboBox_SFM_DB.currentText()
 
         # Open analized file
@@ -1217,13 +1217,13 @@ class GUI(Ui_MainWindow):
             PONOS = FILE[list(FILE.keys())[0]].get("ponos")
             SCALERS_DATA = np.array(INSTRUMENT.get('scalers').get('data')).T
 
-            roi_coord_Y = [int(self.lineEdit_SFM_Detector_image_Roi_Y_Top.text()), int(self.lineEdit_SFM_Detector_image_Roi_Y_Bottom.text())]
-            roi_coord_X = [int(self.lineEdit_SFM_Detector_image_Roi_X_Left.text()), int(self.lineEdit_SFM_Detector_image_Roi_X_Right.text())]
-            roi_coord_X_BKG = [int(self.lineEdit_SFM_Detector_image_Roi_bkg_X_Left.text()), int(self.lineEdit_SFM_Detector_image_Roi_bkg_X_Right.text())]
+            roi_coord_Y = [int(self.lineEdit_SFM_detectorImage_roiY_top.text()), int(self.lineEdit_SFM_detectorImage_roiY_bottom.text())]
+            roi_coord_X = [int(self.lineEdit_SFM_detectorImage_roiX_left.text()), int(self.lineEdit_SFM_detectorImage_roiX_right.text())]
+            roi_coord_X_BKG = [int(self.lineEdit_SFM_detectorImage_roi_bkgX_left.text()), int(self.lineEdit_SFM_detectorImage_roi_bkgX_right.text())]
 
             # recalculate if ROI was changed
-            if not roi_coord_Y == self.old_roi_coord_Y: self.sfm_file_already_analized = ""
-            self.old_roi_coord_Y = roi_coord_Y
+            if not roi_coord_Y == self.roi_oldCoord_Y: self.SFMFileAlreadyAnalized = ""
+            self.roi_oldCoord_Y = roi_coord_Y
 
             for index, scaler in enumerate(INSTRUMENT.get('scalers').get('SPEC_counter_mnemonics')):
                 if "'mon0'" in str(scaler): monitor_list = SCALERS_DATA[index]
@@ -1233,365 +1233,365 @@ class GUI(Ui_MainWindow):
                 elif "'m4'" in str(scaler): monitor_ud_list = SCALERS_DATA[index]
                 elif "'sec'" in str(scaler): time_list = SCALERS_DATA[index]
 
-            if not self.SFM_FILE == self.sfm_file_already_analized:
-                self.psd_uu_sfm = self.psd_dd_sfm = self.psd_ud_sfm = self.psd_du_sfm = []
+            if not self.SFM_FILE == self.SFMFileAlreadyAnalized:
+                self.SFM_psdUU = self.SFM_psdDD = self.SFM_psdUD = self.SFM_psdDU = []
 
             # get or create 2-dimentional intensity array for each polarisation
             for scan in PONOS.get('data'):
                 # avoid reSUM of intensity after each action
                 # reSUM if we change SFM file or Sample curvature
-                if self.SFM_FILE == self.sfm_file_already_analized and str(self.sample_curvature_last) == self.lineEdit_Instrument_Sample_curvature.text(): continue
+                if self.SFM_FILE == self.SFMFileAlreadyAnalized and str(self.sampleCurvature_last) == self.lineEdit_instrument_sampleCurvature.text(): continue
 
                 if "pnr" in list(FILE[list(FILE.keys())[0]]):
-                    if str(scan) == "data_du": self.psd_du_sfm = INSTRUMENT.get("detectors").get("psd_du").get('data')[:, int(roi_coord_Y[0]): int(roi_coord_Y[1]), :].sum(axis=1)
-                    elif str(scan) == "data_uu": self.psd_uu_sfm = INSTRUMENT.get("detectors").get("psd_uu").get('data')[:, int(roi_coord_Y[0]): int(roi_coord_Y[1]), :].sum(axis=1)
-                    elif str(scan) == "data_ud": self.psd_ud_sfm = INSTRUMENT.get("detectors").get("psd_ud").get('data')[:, int(roi_coord_Y[0]): int(roi_coord_Y[1]), :].sum(axis=1)
-                    elif str(scan) == "data_dd": self.psd_dd_sfm = INSTRUMENT.get("detectors").get("psd_dd").get('data')[:, int(roi_coord_Y[0]): int(roi_coord_Y[1]), :].sum(axis=1)
+                    if str(scan) == "data_du": self.SFM_psdDU = INSTRUMENT.get("detectors").get("psd_du").get('data')[:, int(roi_coord_Y[0]): int(roi_coord_Y[1]), :].sum(axis=1)
+                    elif str(scan) == "data_uu": self.SFM_psdUU = INSTRUMENT.get("detectors").get("psd_uu").get('data')[:, int(roi_coord_Y[0]): int(roi_coord_Y[1]), :].sum(axis=1)
+                    elif str(scan) == "data_ud": self.SFM_psdUD = INSTRUMENT.get("detectors").get("psd_ud").get('data')[:, int(roi_coord_Y[0]): int(roi_coord_Y[1]), :].sum(axis=1)
+                    elif str(scan) == "data_dd": self.SFM_psdDD = INSTRUMENT.get("detectors").get("psd_dd").get('data')[:, int(roi_coord_Y[0]): int(roi_coord_Y[1]), :].sum(axis=1)
 
-                else: self.psd_uu_sfm = INSTRUMENT.get("detectors").get("psd").get('data')[:, int(roi_coord_Y[0]) : int(roi_coord_Y[1]), :].sum(axis=1)
+                else: self.SFM_psdUU = INSTRUMENT.get("detectors").get("psd").get('data')[:, int(roi_coord_Y[0]) : int(roi_coord_Y[1]), :].sum(axis=1)
 
-            if not self.SFM_FILE == self.sfm_file_already_analized: self.sfm_file_already_analized, self.sample_curvature_last = self.SFM_FILE, "0"
+            if not self.SFM_FILE == self.SFMFileAlreadyAnalized: self.SFMFileAlreadyAnalized, self.sampleCurvature_last = self.SFM_FILE, "0"
 
             # Sample curvature correction - we need to adjust integrated 2D map when we first make it
             # perform correction if it was changed on the form
-            if not str(self.sample_curvature_last) == self.lineEdit_Instrument_Sample_curvature.text():
+            if not str(self.sampleCurvature_last) == self.lineEdit_instrument_sampleCurvature.text():
 
-                for index, psd_sfm_curvature_correction in enumerate([self.psd_uu_sfm, self.psd_du_sfm, self.psd_ud_sfm, self.psd_dd_sfm]):
+                for index, SFM_curvatureCorrection in enumerate([self.SFM_psdUU, self.SFM_psdDU, self.SFM_psdUD, self.SFM_psdDD]):
 
-                    if self.lineEdit_Instrument_Sample_curvature.text() == "0": continue
-                    if psd_sfm_curvature_correction == []: continue
+                    if self.lineEdit_instrument_sampleCurvature.text() == "0": continue
+                    if SFM_curvatureCorrection == []: continue
 
-                    psd_sfm_curvature_correction_slice = psd_sfm_curvature_correction[:, roi_coord_X[0]:roi_coord_X[1]]
+                    SFM_curvatureCorrection_slice = SFM_curvatureCorrection[:, roi_coord_X[0]:roi_coord_X[1]]
 
-                    recalc_det_image = [[],[],[]] # x, y, value
+                    detImage_recalc = [[],[],[]] # x, y, value
 
-                    for x, col in enumerate(np.flipud(np.rot90(psd_sfm_curvature_correction_slice))):
-                        displacement = x * np.tan(float(self.lineEdit_Instrument_Sample_curvature.text()))
+                    for x, col in enumerate(np.flipud(np.rot90(SFM_curvatureCorrection_slice))):
+                        displacement = x * np.tan(float(self.lineEdit_instrument_sampleCurvature.text()))
                         for y, value in enumerate(col):
-                            recalc_det_image[0].append(x)
-                            recalc_det_image[1].append(y + displacement)
-                            recalc_det_image[2].append(value)
-                    np.rot90(psd_sfm_curvature_correction_slice, -1)
+                            detImage_recalc[0].append(x)
+                            detImage_recalc[1].append(y + displacement)
+                            detImage_recalc[2].append(value)
+                    np.rot90(SFM_curvatureCorrection_slice, -1)
 
                     # find middle of roi to define zero level
-                    roi_coord_X_middle = (psd_sfm_curvature_correction_slice.shape[1]) / 2
-                    zero_level = int(round(roi_coord_X_middle * np.tan(float(self.lineEdit_Instrument_Sample_curvature.text())) - min(recalc_det_image[1])))
+                    roi_coord_X_middle = (SFM_curvatureCorrection_slice.shape[1]) / 2
+                    zero_level = int(round(roi_coord_X_middle * np.tan(float(self.lineEdit_instrument_sampleCurvature.text())) - min(detImage_recalc[1])))
 
-                    grid_x, grid_y = np.mgrid[0:psd_sfm_curvature_correction_slice.shape[1]:1, min(recalc_det_image[1]):max(recalc_det_image[1]):1]
-                    psd_sfm_curvature_correction_slice = np.flipud(np.rot90(griddata((recalc_det_image[0], recalc_det_image[1]), recalc_det_image[2], (grid_x, grid_y), method="linear", fill_value=float(0))))[zero_level:zero_level+psd_sfm_curvature_correction_slice.shape[0], :]
+                    grid_x, grid_y = np.mgrid[0:SFM_curvatureCorrection_slice.shape[1]:1, min(detImage_recalc[1]):max(detImage_recalc[1]):1]
+                    SFM_curvatureCorrection_slice = np.flipud(np.rot90(griddata((detImage_recalc[0], detImage_recalc[1]), detImage_recalc[2], (grid_x, grid_y), method="linear", fill_value=float(0))))[zero_level:zero_level+SFM_curvatureCorrection_slice.shape[0], :]
 
-                    psd_sfm_curvature_correction[:, roi_coord_X[0]:roi_coord_X[1]] = psd_sfm_curvature_correction_slice
+                    SFM_curvatureCorrection[:, roi_coord_X[0]:roi_coord_X[1]] = SFM_curvatureCorrection_slice
 
-                    if index == 0: self.psd_uu_sfm = psd_sfm_curvature_correction
-                    elif index == 1: self.psd_du_sfm = psd_sfm_curvature_correction
-                    elif index == 2: self.psd_ud_sfm = psd_sfm_curvature_correction
-                    elif index == 3: self.psd_dd_sfm = psd_sfm_curvature_correction
+                    if index == 0: self.SFM_psdUU = SFM_curvatureCorrection
+                    elif index == 1: self.SFM_psdDU = SFM_curvatureCorrection
+                    elif index == 2: self.SFM_psdUD = SFM_curvatureCorrection
+                    elif index == 3: self.SFM_psdDD = SFM_curvatureCorrection
 
-                self.sample_curvature_last = str(self.lineEdit_Instrument_Sample_curvature.text())
+                self.sampleCurvature_last = str(self.lineEdit_instrument_sampleCurvature.text())
 
-            for color_index, scan_intens_sfm in enumerate([self.psd_uu_sfm, self.psd_du_sfm, self.psd_ud_sfm, self.psd_dd_sfm]):
+            for colorIndex, SFM_scanIntens in enumerate([self.SFM_psdUU, self.SFM_psdDU, self.SFM_psdUD, self.SFM_psdDD]):
 
-                sfm_Export_Qz_one_pol, sfm_Export_I_one_pol, sfm_Export_dI_one_pol, sfm_Export_Resolution_one_pol = [], [], [], []
+                SFM_export_Qz_onePol, SFM_export_I_onePol, SFM_export_dI_onePol, SFM_export_resolution_onePol = [], [], [], []
 
                 plot_I, plot_angle, plot_dI_err_bottom, plot_dI_err_top, plot_overillumination = [], [], [], [], []
 
-                if scan_intens_sfm == []: continue
+                if SFM_scanIntens == []: continue
 
-                if color_index == 0: color, monitor_data = [0, 0, 0], [monitor_list if np.count_nonzero(monitor_uu_list) == 0 else monitor_uu_list][0] # ++
-                elif color_index == 1: color, monitor_data = [0, 0, 255], monitor_du_list # -+
-                elif color_index == 2: color, monitor_data = [0, 255, 0], monitor_ud_list # +-
-                elif color_index == 3: color, monitor_data = [255, 0, 0], monitor_dd_list # --
+                if colorIndex == 0: color, monitorData = [0, 0, 0], [monitor_list if np.count_nonzero(monitor_uu_list) == 0 else monitor_uu_list][0] # ++
+                elif colorIndex == 1: color, monitorData = [0, 0, 255], monitor_du_list # -+
+                elif colorIndex == 2: color, monitorData = [0, 255, 0], monitor_ud_list # +-
+                elif colorIndex == 3: color, monitorData = [255, 0, 0], monitor_dd_list # --
 
                 for index, th in enumerate(self.th_list):
-                    th = th - float(self.lineEdit_Instrument_Offset_full.text()) # th offset
+                    th = th - float(self.lineEdit_instrument_offsetFull.text()) # th offset
 
                     # read motors
-                    Qz = (4 * np.pi / float(self.lineEdit_Instrument_Wavelength.text())) * np.sin(np.radians(th))
-                    s1hg, s2hg, monitor = self.s1hg_list[index], self.s2hg_list[index], monitor_data[index]
+                    Qz = (4 * np.pi / float(self.lineEdit_instrument_wavelength.text())) * np.sin(np.radians(th))
+                    s1hg, s2hg, monitor = self.s1hg_list[index], self.s2hg_list[index], monitorData[index]
 
-                    if not self.checkBox_Reductions_Overillumination_correction.isChecked():
-                        overill_corr, FWHM_proj = 1, s2hg
-                        overill_corr_plot = self.overillumination_correct_coeff(s1hg, s2hg, round(th, 4))[0]
+                    if not self.checkBox_reductions_overilluminationCorr.isChecked():
+                        overillCorr, FWHM_proj = 1, s2hg
+                        overillCorr_plot = self.f_overilluminationCorrCoeff(s1hg, s2hg, round(th, 4))[0]
                     else:
-                        overill_corr, FWHM_proj = self.overillumination_correct_coeff(s1hg, s2hg, round(th, 4))
-                        overill_corr_plot = overill_corr
+                        overillCorr, FWHM_proj = self.f_overilluminationCorrCoeff(s1hg, s2hg, round(th, 4))
+                        overillCorr_plot = overillCorr
 
                     # calculate resolution in Gunnar's Sared way or other (also using overillumination correction)
-                    if self.checkBox_Export_Resolution_like_sared.isChecked():
-                        Resolution = np.sqrt(((2 * np.pi / float(self.lineEdit_Instrument_Wavelength.text())) ** 2) * ((np.cos(np.radians(th))) ** 2) * (0.68 ** 2) * ((s1hg ** 2) + (s2hg ** 2)) / ((float( self.lineEdit_Instrument_Distance_s1_to_sample.text()) - float( self.lineEdit_Instrument_Distance_s2_to_sample.text())) ** 2) + ((float(self.lineEdit_Instrument_Wavelength_resolution.text()) ** 2) * (Qz ** 2)))
+                    if self.checkBox_export_resolutionLikeSared.isChecked():
+                        Resolution = np.sqrt(((2 * np.pi / float(self.lineEdit_instrument_wavelength.text())) ** 2) * ((np.cos(np.radians(th))) ** 2) * (0.68 ** 2) * ((s1hg ** 2) + (s2hg ** 2)) / ((float( self.lineEdit_instrument_distanceS1ToSample.text()) - float( self.lineEdit_instrument_distanceS2ToSample.text())) ** 2) + ((float(self.lineEdit_instrument_wavelengthResolution.text()) ** 2) * (Qz ** 2)))
                     else:
                         d_alpha = np.arctan((s1hg + [s2hg if FWHM_proj == s2hg else FWHM_proj][0]) / (
-                                (float(self.lineEdit_Instrument_Distance_s1_to_sample.text()) - float(self.lineEdit_Instrument_Distance_s2_to_sample.text())) * 2))
-                        if self.comboBox_Export_Angle.currentText() == "Qz":
-                            k_0 = 2 * np.pi / float(self.lineEdit_Instrument_Wavelength.text())
-                            Resolution = np.sqrt((k_0 ** 2) * ( (((np.cos(np.radians(th))) ** 2) * d_alpha ** 2) + ((float(self.lineEdit_Instrument_Wavelength_resolution.text()) ** 2) * ((np.sin(np.radians(th))) ** 2))))
-                        else: Resolution = d_alpha if self.comboBox_Export_Angle.currentText() == "Radians" else np.degrees(d_alpha)
+                                (float(self.lineEdit_instrument_distanceS1ToSample.text()) - float(self.lineEdit_instrument_distanceS2ToSample.text())) * 2))
+                        if self.comboBox_export_angle.currentText() == "Qz":
+                            k_0 = 2 * np.pi / float(self.lineEdit_instrument_wavelength.text())
+                            Resolution = np.sqrt((k_0 ** 2) * ( (((np.cos(np.radians(th))) ** 2) * d_alpha ** 2) + ((float(self.lineEdit_instrument_wavelengthResolution.text()) ** 2) * ((np.sin(np.radians(th))) ** 2))))
+                        else: Resolution = d_alpha if self.comboBox_export_angle.currentText() == "Radians" else np.degrees(d_alpha)
 
                     # Save resolution in sigma rather than in FWHM units
                     Resolution = Resolution / (2 * np.sqrt(2 * np.log(2)))
 
                     # analize integrated intensity for ROI
-                    Intens = sum(scan_intens_sfm[index][roi_coord_X[0]: roi_coord_X[1]])
-                    Intens_bkg = sum(scan_intens_sfm[index][roi_coord_X_BKG[0] : roi_coord_X_BKG[1]])
+                    Intens = sum(SFM_scanIntens[index][roi_coord_X[0]: roi_coord_X[1]])
+                    Intens_bkg = sum(SFM_scanIntens[index][roi_coord_X_BKG[0] : roi_coord_X_BKG[1]])
 
                     # minus background, divide by monitor, overillumination correct + calculate errors
                     if not Intens > 0: Intens = 0
                     # I want to avoid error==0 if intens==0
-                    if Intens == 0: Intens_err = 1
-                    else: Intens_err = np.sqrt(Intens)
+                    if Intens == 0: IntensErr = 1
+                    else: IntensErr = np.sqrt(Intens)
 
-                    if self.checkBox_Reductions_Subtract_bkg.isChecked() and Qz > skip_bkg:
+                    if self.checkBox_reductions_subtractBkg.isChecked() and Qz > bkg_skip:
                         if Intens_bkg > 0:
-                            Intens_err = np.sqrt(Intens + Intens_bkg)
+                            IntensErr = np.sqrt(Intens + Intens_bkg)
                             Intens = Intens - Intens_bkg
 
-                    if self.checkBox_Reductions_Divide_by_monitor_or_time.isChecked():
+                    if self.checkBox_reductions_divideByMonitorOrTime.isChecked():
 
-                        if self.comboBox_Reductions_Divide_by_monitor_or_time.currentText() == "monitor":
+                        if self.comboBox_reductions_divideByMonitorOrTime.currentText() == "monitor":
                             monitor = monitor_list[index]
-                            if Intens == 0: Intens_err = Intens_err / monitor
-                            else: Intens_err = (Intens / monitor) * np.sqrt((Intens_err / Intens) ** 2 + (1 / monitor))
-                        elif self.comboBox_Reductions_Divide_by_monitor_or_time.currentText() == "time":
+                            if Intens == 0: IntensErr = IntensErr / monitor
+                            else: IntensErr = (Intens / monitor) * np.sqrt((IntensErr / Intens) ** 2 + (1 / monitor))
+                        elif self.comboBox_reductions_divideByMonitorOrTime.currentText() == "time":
                             monitor = time_list[index]
-                            Intens_err = Intens_err / monitor
+                            IntensErr = IntensErr / monitor
 
                         Intens = Intens / monitor
 
-                    if self.checkBox_Reductions_Overillumination_correction.isChecked() and overill_corr > 0:
-                        Intens_err = Intens_err / overill_corr
-                        Intens = Intens / overill_corr
+                    if self.checkBox_reductions_overilluminationCorr.isChecked() and overillCorr > 0:
+                        IntensErr = IntensErr / overillCorr
+                        Intens = Intens / overillCorr
 
-                    if self.checkBox_Reductions_Normalize_by_DB.isChecked():
+                    if self.checkBox_reductions_normalizeByDB.isChecked():
                         try:
-                            db_intens = float(self.DB_INFO[self.SFM_DB_FILE + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[0]) * self.db_atten_factor
-                            db_err = overill_corr * float(self.DB_INFO[self.SFM_DB_FILE + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[1]) * self.db_atten_factor
-                            Intens_err = (Intens / db_intens) * np.sqrt((db_err / db_intens) ** 2 + (Intens_err / Intens) ** 2)
-                            Intens = Intens / db_intens
+                            DB_intens = float(self.DB_INFO[self.SFM_DB_FILE + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[0]) * self.DB_attenFactor
+                            DB_err = overillCorr * float(self.DB_INFO[self.SFM_DB_FILE + ";" + str(s1hg) + ";" + str(s2hg)].split(";")[1]) * self.DB_attenFactor
+                            IntensErr = (Intens / DB_intens) * np.sqrt((DB_err / DB_intens) ** 2 + (IntensErr / Intens) ** 2)
+                            Intens = Intens / DB_intens
                             self.statusbar.clearMessage()
                         except:
                             # if we try DB file without neccesary slits combination measured - show error message + redraw reflectivity_preview
                             self.statusbar.showMessage("Error: Choose another DB file for this SFM data file.")
-                            self.checkBox_Reductions_Normalize_by_DB.setCheckState(0)
+                            self.checkBox_reductions_normalizeByDB.setCheckState(0)
 
-                    if self.checkBox_Reductions_Scale_factor.isChecked():
-                        Intens_err = Intens_err / self.scale_factor
-                        Intens = Intens / self.scale_factor
+                    if self.checkBox_reductions_scaleFactor.isChecked():
+                        IntensErr = IntensErr / self.scaleFactor
+                        Intens = Intens / self.scaleFactor
 
                     try:
-                        show_first, show_last = int(self.lineEdit_SFM_Reflectivity_preview_Skip_points_Left.text()), len(self.th_list)-int(self.lineEdit_SFM_Reflectivity_preview_Skip_points_Right.text())
+                        show_first, show_last = int(self.lineEdit_SFM_reflectivityPreview_skipPoints_left.text()), len(self.th_list)-int(self.lineEdit_SFM_reflectivityPreview_skipPoints_right.text())
                     except: show_first, show_last = 0, len(self.th_list)
 
                     if not Intens < 0 and index < show_last and index > show_first:
                         # I need this for "Reduce SFM" option. First - store one pol.
-                        sfm_Export_Qz_one_pol.append(Qz)
-                        sfm_Export_I_one_pol.append(Intens)
-                        sfm_Export_dI_one_pol.append(Intens_err)
-                        sfm_Export_Resolution_one_pol.append(Resolution)
+                        SFM_export_Qz_onePol.append(Qz)
+                        SFM_export_I_onePol.append(Intens)
+                        SFM_export_dI_onePol.append(IntensErr)
+                        SFM_export_resolution_onePol.append(Resolution)
 
                         if Intens > 0:
                             plot_I.append(np.log10(Intens))
                             plot_angle.append(Qz)
-                            plot_dI_err_top.append(abs(np.log10(Intens + Intens_err) - np.log10(Intens)))
+                            plot_dI_err_top.append(abs(np.log10(Intens + IntensErr) - np.log10(Intens)))
 
-                            plot_overillumination.append(overill_corr_plot)
+                            plot_overillumination.append(overillCorr_plot)
 
-                            if Intens > Intens_err: plot_dI_err_bottom.append(np.log10(Intens) - np.log10(Intens - Intens_err))
+                            if Intens > IntensErr: plot_dI_err_bottom.append(np.log10(Intens) - np.log10(Intens - IntensErr))
                             else: plot_dI_err_bottom.append(0)
 
-                        if self.comboBox_SFM_Reflectivity_preview_View_Reflectivity.currentText() == "Lin":
+                        if self.comboBox_SFM_reflectivityPreview_view_reflectivity.currentText() == "Lin":
                             plot_I.pop()
                             plot_I.append(Intens)
                             plot_dI_err_top.pop()
-                            plot_dI_err_top.append(Intens_err)
+                            plot_dI_err_top.append(IntensErr)
                             plot_dI_err_bottom.pop()
-                            plot_dI_err_bottom.append(Intens_err)
+                            plot_dI_err_bottom.append(IntensErr)
 
-                        if self.comboBox_SFM_Reflectivity_preview_View_Angle.currentText() == "Deg":
+                        if self.comboBox_SFM_reflectivityPreview_view_angle.currentText() == "Deg":
                             plot_angle.pop()
                             plot_angle.append(th)
 
                 # I need this for "Reduse SFM" option. Second - combine all shown pol in one list variable.
                 # polarisations are uu, dd, ud, du
-                self.sfm_Export_Qz.append(sfm_Export_Qz_one_pol)
-                self.sfm_Export_I.append(sfm_Export_I_one_pol)
-                self.sfm_Export_dI.append(sfm_Export_dI_one_pol)
-                self.sfm_Export_Resolution.append(sfm_Export_Resolution_one_pol)
+                self.SFM_export_Qz.append(SFM_export_Qz_onePol)
+                self.SFM_export_I.append(SFM_export_I_onePol)
+                self.SFM_export_dI.append(SFM_export_dI_onePol)
+                self.SFM_export_resolution.append(SFM_export_resolution_onePol)
 
-                if self.checkBox_SFM_Reflectivity_preview_Include_errorbars.isChecked():
+                if self.checkBox_SFM_reflectivityPreview_includeErrorbars.isChecked():
                     s1 = pg.ErrorBarItem(x=np.array(plot_angle), y=np.array(plot_I), top=np.array(plot_dI_err_top), bottom=np.array(plot_dI_err_bottom), pen=pg.mkPen(color[0], color[1], color[2]), brush=pg.mkBrush(color[0], color[1], color[2]))
-                    self.graphicsView_SFM_Reflectivity_preview.addItem(s1)
+                    self.graphicsView_SFM_reflectivityPreview.addItem(s1)
 
                 s2 = pg.ScatterPlotItem(x=plot_angle, y=plot_I, symbol="o", size=4, pen=pg.mkPen(color[0], color[1], color[2]), brush=pg.mkBrush(color[0], color[1], color[2]))
-                self.graphicsView_SFM_Reflectivity_preview.addItem(s2)
+                self.graphicsView_SFM_reflectivityPreview.addItem(s2)
 
-                if self.checkBox_SFM_Reflectivity_preview_Show_overillumination.isChecked():
+                if self.checkBox_SFM_reflectivityPreview_showOverillumination.isChecked():
                     s3 = pg.PlotCurveItem(x=plot_angle, y=plot_overillumination, pen=pg.mkPen(color=(255, 0, 0), width=1), brush=pg.mkBrush(color=(255, 0, 0), width=1) )
-                    self.graphicsView_SFM_Reflectivity_preview.addItem(s3)
+                    self.graphicsView_SFM_reflectivityPreview.addItem(s3)
 
-                if self.checkBox_SFM_Reflectivity_preview_Show_zero_level.isChecked():
-                    if self.comboBox_SFM_Reflectivity_preview_View_Reflectivity.currentText() == "Lin": level = np.array([1, 1])
+                if self.checkBox_SFM_reflectivityPreview_showZeroLevel.isChecked():
+                    if self.comboBox_SFM_reflectivityPreview_view_reflectivity.currentText() == "Lin": level = np.array([1, 1])
                     else: level = np.array([0, 0])
                     s4 = pg.PlotCurveItem(x=np.array([min(plot_angle), max(plot_angle)]), y=level, pen=pg.mkPen(color=(0, 0, 255), width=1), brush=pg.mkBrush(color=(255, 0, 0), width=1) )
-                    self.graphicsView_SFM_Reflectivity_preview.addItem(s4)
+                    self.graphicsView_SFM_reflectivityPreview.addItem(s4)
 
-    def SFM_Map_2D_Draw(self):
+    def f_SFM_2Dmap_draw(self):
 
-        self.int_SFM_Detector_image = []
+        self.SFM_intDetectorImage = []
 
-        for item in (self.graphicsView_SFM_2Dmap_Qxz_Theta, self.graphicsView_SFM_2Dmap): item.clear()
+        for item in (self.graphicsView_SFM_2Dmap_Qxz_theta, self.graphicsView_SFM_2Dmap): item.clear()
 
         # change interface if for different views
-        ELEMENTS = [self.label_SFM_2Dmap_Rescale_image_x, self.label_SFM_2Dmap_Rescale_image_y, self.horizontalSlider_SFM_2Dmap_Rescale_image_x, self.horizontalSlider_SFM_2Dmap_Rescale_image_y, self.label_SFM_2Dmap_Lower_number_of_points_by, self.comboBox_SFM_2Dmap_Lower_number_of_points_by, self.label_SFM_2Dmap_Qxz_Threshold, self.comboBox_SFM_2Dmap_Qxz_Threshold, self.label_SFM_2Dmap_View_scale, self.comboBox_SFM_2Dmap_View_scale]
+        ELEMENTS = [self.label_SFM_2Dmap_rescaleImage_x, self.label_SFM_2Dmap_rescaleImage_y, self.horizontalSlider_SFM_2Dmap_rescaleImage_x, self.horizontalSlider_SFM_2Dmap_rescaleImage_y, self.label_SFM_2Dmap_lowerNumberOfPointsBy, self.comboBox_SFM_2Dmap_lowerNumberOfPointsBy, self.label_SFM_2Dmap_QxzThreshold, self.comboBox_SFM_2Dmap_QxzThreshold, self.label_SFM_2Dmap_view_scale, self.comboBox_SFM_2Dmap_view_scale]
 
-        if self.comboBox_SFM_2Dmap_Axes.currentText() == "Pixel vs. Point": visible, geometry = [True, True, True, True, False, False, False, False, True, True], [0, 0, 0, 0]
-        elif self.comboBox_SFM_2Dmap_Axes.currentText() == "Qx vs. Qz": visible, geometry = [False, False, False, False, True, True, True, True, False, False], [0, 30, 577, 522]
-        elif self.comboBox_SFM_2Dmap_Axes.currentText() == "Alpha_i vs. Alpha_f": visible, geometry = [False, False, False, False, True, True, False, False, True, True], [0, 0, 0, 0]
+        if self.comboBox_SFM_2Dmap_axes.currentText() == "Pixel vs. Point": visible, geometry = [True, True, True, True, False, False, False, False, True, True], [0, 0, 0, 0]
+        elif self.comboBox_SFM_2Dmap_axes.currentText() == "Qx vs. Qz": visible, geometry = [False, False, False, False, True, True, True, True, False, False], [0, 30, 577, 522]
+        elif self.comboBox_SFM_2Dmap_axes.currentText() == "Alpha_i vs. Alpha_f": visible, geometry = [False, False, False, False, True, True, False, False, True, True], [0, 0, 0, 0]
 
-        self.graphicsView_SFM_2Dmap_Qxz_Theta.setGeometry(QtCore.QRect(geometry[0], geometry[1], geometry[2], geometry[3]))
+        self.graphicsView_SFM_2Dmap_Qxz_theta.setGeometry(QtCore.QRect(geometry[0], geometry[1], geometry[2], geometry[3]))
         for index, index_visible in enumerate(visible): ELEMENTS[index].setVisible(index_visible)
 
         if self.SFM_FILE == "": return
 
         # start over if we selected nes SFM scan
-        if not self.sfm_file_2d_calculated_params == [] and not self.sfm_file_2d_calculated_params[0] == self.SFM_FILE:
-            self.comboBox_SFM_2Dmap_Axes.setCurrentIndex(0)
-            self.sfm_file_2d_calculated_params, self.res_Aif = [], []
+        if not self.SFMFile2dCalculatedParams == [] and not self.SFMFile2dCalculatedParams[0] == self.SFM_FILE:
+            self.comboBox_SFM_2Dmap_axes.setCurrentIndex(0)
+            self.SFMFile2dCalculatedParams, self.res_aif = [], []
 
         try:
-            self.graphicsView_SFM_2Dmap.removeItem(self.draw_roi_2D_map)
+            self.graphicsView_SFM_2Dmap.removeItem(self.roi_draw_2Dmap)
         except: True
 
         # load selected integrated detector image
-        if self.comboBox_SFM_2Dmap_Polarisation.count() == 1: self.int_SFM_Detector_image = self.psd_uu_sfm
+        if self.comboBox_SFM_2Dmap_polarisation.count() == 1: self.SFM_intDetectorImage = self.SFM_psdUU
         else:
-            if self.comboBox_SFM_2Dmap_Polarisation.currentText() == "uu": self.int_SFM_Detector_image = self.psd_uu_sfm
-            elif self.comboBox_SFM_2Dmap_Polarisation.currentText() == "du": self.int_SFM_Detector_image = self.psd_du_sfm
-            elif self.comboBox_SFM_2Dmap_Polarisation.currentText() == "ud": self.int_SFM_Detector_image = self.psd_ud_sfm
-            elif self.comboBox_SFM_2Dmap_Polarisation.currentText() == "dd": self.int_SFM_Detector_image = self.psd_dd_sfm
+            if self.comboBox_SFM_2Dmap_polarisation.currentText() == "uu": self.SFM_intDetectorImage = self.SFM_psdUU
+            elif self.comboBox_SFM_2Dmap_polarisation.currentText() == "du": self.SFM_intDetectorImage = self.SFM_psdDU
+            elif self.comboBox_SFM_2Dmap_polarisation.currentText() == "ud": self.SFM_intDetectorImage = self.SFM_psdUD
+            elif self.comboBox_SFM_2Dmap_polarisation.currentText() == "dd": self.SFM_intDetectorImage = self.SFM_psdDD
 
-        if self.int_SFM_Detector_image == []: return
+        if self.SFM_intDetectorImage == []: return
 
         # create log array for log view
-        self.int_SFM_Detector_image_log = np.log10(np.where(self.int_SFM_Detector_image < 1, 0.1, self.int_SFM_Detector_image))
+        self.SFM_intDetectorImage_log = np.log10(np.where(self.SFM_intDetectorImage < 1, 0.1, self.SFM_intDetectorImage))
 
         # Pixel to Angle conversion for "Qx vs Qz" and "alpha_i vs alpha_f" 2d maps
-        if self.comboBox_SFM_2Dmap_Axes.currentText() in ["Qx vs. Qz", "Alpha_i vs. Alpha_f"]:
+        if self.comboBox_SFM_2Dmap_axes.currentText() in ["Qx vs. Qz", "Alpha_i vs. Alpha_f"]:
             # recalculate only if something was changed
-            if self.res_Aif == [] or not self.sfm_file_2d_calculated_params == [self.SFM_FILE, self.comboBox_SFM_2Dmap_Polarisation.currentText(),
-                                              self.lineEdit_SFM_Detector_image_Roi_X_Left.text(), self.lineEdit_SFM_Detector_image_Roi_X_Right.text(),
-                                              self.lineEdit_Instrument_Wavelength.text(), self.lineEdit_Instrument_Distance_sample_to_detector.text(),
-                                              self.comboBox_SFM_2Dmap_Lower_number_of_points_by.currentText(), self.comboBox_SFM_2Dmap_Qxz_Threshold.currentText(),
-                                                                                self.lineEdit_Instrument_Sample_curvature.text()]:
-                self.spots_Qxz, self.int_SFM_Detector_image_Qxz, self.int_SFM_Detector_image_Aif, self.int_SFM_Detector_image_values_array = [], [], [[],[]], []
+            if self.res_aif == [] or not self.SFMFile2dCalculatedParams == [self.SFM_FILE, self.comboBox_SFM_2Dmap_polarisation.currentText(),
+                                              self.lineEdit_SFM_detectorImage_roiX_left.text(), self.lineEdit_SFM_detectorImage_roiX_right.text(),
+                                              self.lineEdit_instrument_wavelength.text(), self.lineEdit_instrument_distanceSampleToDetector.text(),
+                                              self.comboBox_SFM_2Dmap_lowerNumberOfPointsBy.currentText(), self.comboBox_SFM_2Dmap_QxzThreshold.currentText(),
+                                                                                self.lineEdit_instrument_sampleCurvature.text()]:
+                self.spots_Qxz, self.SFM_intDetectorImage_Qxz, self.SFM_intDetectorImage_aif, self.SFM_intDetectorImage_values_array = [], [], [[],[]], []
 
-                roi_middle = round((self.int_SFM_Detector_image.shape[1] - float(self.lineEdit_SFM_Detector_image_Roi_X_Left.text()) +
-                                    self.int_SFM_Detector_image.shape[1] - float(self.lineEdit_SFM_Detector_image_Roi_X_Right.text())) / 2)
-                mm_per_pix = 300 / self.int_SFM_Detector_image.shape[1]
+                roi_middle = round((self.SFM_intDetectorImage.shape[1] - float(self.lineEdit_SFM_detectorImage_roiX_left.text()) +
+                                    self.SFM_intDetectorImage.shape[1] - float(self.lineEdit_SFM_detectorImage_roiX_right.text())) / 2)
+                mm_per_pix = 300 / self.SFM_intDetectorImage.shape[1]
 
                 # we need to flip the detector (X) for correct calculation
-                for theta_i, tth_i, det_image_i in zip(self.th_list, self.tth_list, np.flip(self.int_SFM_Detector_image, 1)):
+                for theta_i, tth_i, det_image_i in zip(self.th_list, self.tth_list, np.flip(self.SFM_intDetectorImage, 1)):
                     for pixel_num, value in enumerate(det_image_i):
                         # Reduce number of points to draw (to save RAM)
-                        if pixel_num % int(self.comboBox_SFM_2Dmap_Lower_number_of_points_by.currentText()) == 0:
+                        if pixel_num % int(self.comboBox_SFM_2Dmap_lowerNumberOfPointsBy.currentText()) == 0:
                             theta_f = tth_i - theta_i # theta F in deg
                             delta_theta_F_mm = (pixel_num - roi_middle) * mm_per_pix
-                            delta_theta_F_deg = np.degrees(np.arctan(delta_theta_F_mm / float(self.lineEdit_Instrument_Distance_sample_to_detector.text()))) # calculate delta theta F in deg
+                            delta_theta_F_deg = np.degrees(np.arctan(delta_theta_F_mm / float(self.lineEdit_instrument_distanceSampleToDetector.text()))) # calculate delta theta F in deg
                             theta_f += delta_theta_F_deg # final theta F in deg for the point
                             # convert to Q
-                            Qx = (2 * np.pi / float(self.lineEdit_Instrument_Wavelength.text())) * (np.cos(np.radians(theta_f)) - np.cos(np.radians(theta_i)))
-                            Qz = (2 * np.pi / float(self.lineEdit_Instrument_Wavelength.text())) * (np.sin(np.radians(theta_f)) + np.sin(np.radians(theta_i)))
+                            Qx = (2 * np.pi / float(self.lineEdit_instrument_wavelength.text())) * (np.cos(np.radians(theta_f)) - np.cos(np.radians(theta_i)))
+                            Qz = (2 * np.pi / float(self.lineEdit_instrument_wavelength.text())) * (np.sin(np.radians(theta_f)) + np.sin(np.radians(theta_i)))
 
-                            for arr, val in zip((self.int_SFM_Detector_image_Qxz, self.int_SFM_Detector_image_Aif[0], self.int_SFM_Detector_image_Aif[1], self.int_SFM_Detector_image_values_array), ([Qx, Qz, value], theta_i, theta_f, value)): arr.append(val)
+                            for arr, val in zip((self.SFM_intDetectorImage_Qxz, self.SFM_intDetectorImage_aif[0], self.SFM_intDetectorImage_aif[1], self.SFM_intDetectorImage_values_array), ([Qx, Qz, value], theta_i, theta_f, value)): arr.append(val)
 
                             # define colors - 2 count+ -> green, [0,1] - blue
-                            color = [0, 0, 255] if value < int(self.comboBox_SFM_2Dmap_Qxz_Threshold.currentText()) else [0, 255, 0]
+                            color = [0, 0, 255] if value < int(self.comboBox_SFM_2Dmap_QxzThreshold.currentText()) else [0, 255, 0]
 
                             self.spots_Qxz.append({'pos': (-Qx, Qz), 'pen': pg.mkPen(color[0], color[1], color[2])})
 
-                if self.comboBox_SFM_2Dmap_Axes.currentText() == "Alpha_i vs. Alpha_f":
+                if self.comboBox_SFM_2Dmap_axes.currentText() == "Alpha_i vs. Alpha_f":
                     # calculate required number of pixels in Y axis
-                    self.resolution_x_pix_deg = self.int_SFM_Detector_image.shape[0] / (max(self.int_SFM_Detector_image_Aif[0]) - min(self.int_SFM_Detector_image_Aif[0]))
-                    self.resolution_y_pix = int(round((max(self.int_SFM_Detector_image_Aif[1]) - min(self.int_SFM_Detector_image_Aif[1])) * self.resolution_x_pix_deg))
+                    self.resolution_x_pix_deg = self.SFM_intDetectorImage.shape[0] / (max(self.SFM_intDetectorImage_aif[0]) - min(self.SFM_intDetectorImage_aif[0]))
+                    self.resolution_y_pix = int(round((max(self.SFM_intDetectorImage_aif[1]) - min(self.SFM_intDetectorImage_aif[1])) * self.resolution_x_pix_deg))
 
-                    grid_x, grid_y = np.mgrid[min(self.int_SFM_Detector_image_Aif[0]):max(self.int_SFM_Detector_image_Aif[0]):((max(self.int_SFM_Detector_image_Aif[0]) - min(self.int_SFM_Detector_image_Aif[0]))/len(self.th_list)), min(self.int_SFM_Detector_image_Aif[1]):max(self.int_SFM_Detector_image_Aif[1]):(max(self.int_SFM_Detector_image_Aif[1]) - min(self.int_SFM_Detector_image_Aif[1]))/self.resolution_y_pix]
-                    self.res_Aif = griddata((self.int_SFM_Detector_image_Aif[0], self.int_SFM_Detector_image_Aif[1]), self.int_SFM_Detector_image_values_array, (grid_x, grid_y), method="linear", fill_value=float(0))
+                    grid_x, grid_y = np.mgrid[min(self.SFM_intDetectorImage_aif[0]):max(self.SFM_intDetectorImage_aif[0]):((max(self.SFM_intDetectorImage_aif[0]) - min(self.SFM_intDetectorImage_aif[0]))/len(self.th_list)), min(self.SFM_intDetectorImage_aif[1]):max(self.SFM_intDetectorImage_aif[1]):(max(self.SFM_intDetectorImage_aif[1]) - min(self.SFM_intDetectorImage_aif[1]))/self.resolution_y_pix]
+                    self.res_aif = griddata((self.SFM_intDetectorImage_aif[0], self.SFM_intDetectorImage_aif[1]), self.SFM_intDetectorImage_values_array, (grid_x, grid_y), method="linear", fill_value=float(0))
                     # create log array for log view
-                    self.res_Aif_log = np.log10(np.where(self.res_Aif < 1, 0.1, self.res_Aif))
+                    self.res_aif_log = np.log10(np.where(self.res_aif < 1, 0.1, self.res_aif))
 
                 # record params that we used for 2D maps calculation
-                self.sfm_file_2d_calculated_params = [self.SFM_FILE, self.comboBox_SFM_2Dmap_Polarisation.currentText(), self.lineEdit_SFM_Detector_image_Roi_X_Left.text(), self.lineEdit_SFM_Detector_image_Roi_X_Right.text(), self.lineEdit_Instrument_Wavelength.text(), self.lineEdit_Instrument_Distance_sample_to_detector.text(), self.comboBox_SFM_2Dmap_Lower_number_of_points_by.currentText(), self.comboBox_SFM_2Dmap_Qxz_Threshold.currentText(), self.lineEdit_Instrument_Sample_curvature.text()]
+                self.SFMFile2dCalculatedParams = [self.SFM_FILE, self.comboBox_SFM_2Dmap_polarisation.currentText(), self.lineEdit_SFM_detectorImage_roiX_left.text(), self.lineEdit_SFM_detectorImage_roiX_right.text(), self.lineEdit_instrument_wavelength.text(), self.lineEdit_instrument_distanceSampleToDetector.text(), self.comboBox_SFM_2Dmap_lowerNumberOfPointsBy.currentText(), self.comboBox_SFM_2Dmap_QxzThreshold.currentText(), self.lineEdit_instrument_sampleCurvature.text()]
 
         # plot
-        if self.comboBox_SFM_2Dmap_Axes.currentText() == "Pixel vs. Point":
+        if self.comboBox_SFM_2Dmap_axes.currentText() == "Pixel vs. Point":
 
-            image = self.int_SFM_Detector_image_log if self.comboBox_SFM_2Dmap_View_scale.currentText() == "Log" else self.int_SFM_Detector_image
+            image = self.SFM_intDetectorImage_log if self.comboBox_SFM_2Dmap_view_scale.currentText() == "Log" else self.SFM_intDetectorImage
 
-            self.graphicsView_SFM_2Dmap.setImage(image, axes={'x': 1, 'y': 0}, levels=(0, np.max(image)), scale=(int(self.horizontalSlider_SFM_2Dmap_Rescale_image_x.value()), int(self.horizontalSlider_SFM_2Dmap_Rescale_image_y.value())))
+            self.graphicsView_SFM_2Dmap.setImage(image, axes={'x': 1, 'y': 0}, levels=(0, np.max(image)), scale=(int(self.horizontalSlider_SFM_2Dmap_rescaleImage_x.value()), int(self.horizontalSlider_SFM_2Dmap_rescaleImage_y.value())))
             # add ROI rectangular
-            spots_ROI = {'x':(int(self.lineEdit_SFM_Detector_image_Roi_X_Left.text()) * int(self.horizontalSlider_SFM_2Dmap_Rescale_image_x.value()), int(self.lineEdit_SFM_Detector_image_Roi_X_Right.text()) * int(self.horizontalSlider_SFM_2Dmap_Rescale_image_x.value()), int(self.lineEdit_SFM_Detector_image_Roi_X_Right.text()) * int(self.horizontalSlider_SFM_2Dmap_Rescale_image_x.value()), int(self.lineEdit_SFM_Detector_image_Roi_X_Left.text()) * int(self.horizontalSlider_SFM_2Dmap_Rescale_image_x.value()), int(self.lineEdit_SFM_Detector_image_Roi_X_Left.text()) * int(self.horizontalSlider_SFM_2Dmap_Rescale_image_x.value())), 'y':(0,0,self.int_SFM_Detector_image.shape[0] * int(self.horizontalSlider_SFM_2Dmap_Rescale_image_y.value()),self.int_SFM_Detector_image.shape[0] * int(self.horizontalSlider_SFM_2Dmap_Rescale_image_y.value()),0)}
+            spots_ROI = {'x':(int(self.lineEdit_SFM_detectorImage_roiX_left.text()) * int(self.horizontalSlider_SFM_2Dmap_rescaleImage_x.value()), int(self.lineEdit_SFM_detectorImage_roiX_right.text()) * int(self.horizontalSlider_SFM_2Dmap_rescaleImage_x.value()), int(self.lineEdit_SFM_detectorImage_roiX_right.text()) * int(self.horizontalSlider_SFM_2Dmap_rescaleImage_x.value()), int(self.lineEdit_SFM_detectorImage_roiX_left.text()) * int(self.horizontalSlider_SFM_2Dmap_rescaleImage_x.value()), int(self.lineEdit_SFM_detectorImage_roiX_left.text()) * int(self.horizontalSlider_SFM_2Dmap_rescaleImage_x.value())), 'y':(0,0,self.SFM_intDetectorImage.shape[0] * int(self.horizontalSlider_SFM_2Dmap_rescaleImage_y.value()),self.SFM_intDetectorImage.shape[0] * int(self.horizontalSlider_SFM_2Dmap_rescaleImage_y.value()),0)}
 
-            self.draw_roi_2D_map = pg.PlotDataItem(spots_ROI, pen=pg.mkPen(255, 255, 255), connect="all")
-            self.graphicsView_SFM_2Dmap.addItem(self.draw_roi_2D_map)
+            self.roi_draw_2Dmap = pg.PlotDataItem(spots_ROI, pen=pg.mkPen(255, 255, 255), connect="all")
+            self.graphicsView_SFM_2Dmap.addItem(self.roi_draw_2Dmap)
 
-        elif self.comboBox_SFM_2Dmap_Axes.currentText() == "Alpha_i vs. Alpha_f":
-            image = self.res_Aif_log if self.comboBox_SFM_2Dmap_View_scale.currentText() == "Log" else self.res_Aif
+        elif self.comboBox_SFM_2Dmap_axes.currentText() == "Alpha_i vs. Alpha_f":
+            image = self.res_aif_log if self.comboBox_SFM_2Dmap_view_scale.currentText() == "Log" else self.res_aif
 
             self.graphicsView_SFM_2Dmap.setImage(image, axes={'x': 0, 'y': 1}, levels=(0, np.max(image)))
-            self.graphicsView_SFM_2Dmap.getImageItem().setRect(QtCore.QRectF(min(self.int_SFM_Detector_image_Aif[0]), min(self.int_SFM_Detector_image_Aif[1]), max(self.int_SFM_Detector_image_Aif[0]) - min(self.int_SFM_Detector_image_Aif[0]), max(self.int_SFM_Detector_image_Aif[1]) - min(self.int_SFM_Detector_image_Aif[1])))
+            self.graphicsView_SFM_2Dmap.getImageItem().setRect(QtCore.QRectF(min(self.SFM_intDetectorImage_aif[0]), min(self.SFM_intDetectorImage_aif[1]), max(self.SFM_intDetectorImage_aif[0]) - min(self.SFM_intDetectorImage_aif[0]), max(self.SFM_intDetectorImage_aif[1]) - min(self.SFM_intDetectorImage_aif[1])))
             self.graphicsView_SFM_2Dmap.getView().enableAutoScale()
 
-        elif self.comboBox_SFM_2Dmap_Axes.currentText() == "Qx vs. Qz":
+        elif self.comboBox_SFM_2Dmap_axes.currentText() == "Qx vs. Qz":
             s0 = pg.ScatterPlotItem(spots=self.spots_Qxz, size=1)
-            self.graphicsView_SFM_2Dmap_Qxz_Theta.addItem(s0)
+            self.graphicsView_SFM_2Dmap_Qxz_theta.addItem(s0)
 
         # hide Y axis in 2D map if "rescale image" is used. Reason - misleading scale
         for item in (self.graphicsView_SFM_2Dmap.view.getAxis("left"), self.graphicsView_SFM_2Dmap.view.getAxis("bottom")): item.setTicks(None)
-        if self.horizontalSlider_SFM_2Dmap_Rescale_image_x.value() > 1: self.graphicsView_SFM_2Dmap.view.getAxis("bottom").setTicks([])
-        if self.horizontalSlider_SFM_2Dmap_Rescale_image_y.value() > 1: self.graphicsView_SFM_2Dmap.view.getAxis("left").setTicks([])
+        if self.horizontalSlider_SFM_2Dmap_rescaleImage_x.value() > 1: self.graphicsView_SFM_2Dmap.view.getAxis("bottom").setTicks([])
+        if self.horizontalSlider_SFM_2Dmap_rescaleImage_y.value() > 1: self.graphicsView_SFM_2Dmap.view.getAxis("left").setTicks([])
 
-    def SFM_Map_2D_Export(self):
-        save_file_directory = self.lineEdit_Save_at.text() if self.lineEdit_Save_at.text() else self.current_dir
+    def f_SFM_2Dmap_export(self):
+        dir_saveFile = self.lineEdit_saveAt.text() if self.lineEdit_saveAt.text() else self.dir_current
 
-        if self.comboBox_SFM_2Dmap_Axes.currentText() == "Pixel vs. Point":
-            with open(save_file_directory + self.SFM_FILE[self.SFM_FILE.rfind("/") + 1 : -3] + "_" + self.comboBox_SFM_2Dmap_Polarisation.currentText() + " 2D_map(Pixel vs. Point).dat", "w") as new_file_2d_map:
-                for line in self.int_SFM_Detector_image:
-                    for row in line: new_file_2d_map.write(str(row) + " ")
-                    new_file_2d_map.write("\n")
+        if self.comboBox_SFM_2Dmap_axes.currentText() == "Pixel vs. Point":
+            with open(dir_saveFile + self.SFM_FILE[self.SFM_FILE.rfind("/") + 1 : -3] + "_" + self.comboBox_SFM_2Dmap_polarisation.currentText() + " 2Dmap(Pixel vs. Point).dat", "w") as newFile_2Dmap:
+                for line in self.SFM_intDetectorImage:
+                    for row in line: newFile_2Dmap.write(str(row) + " ")
+                    newFile_2Dmap.write("\n")
 
-        elif self.comboBox_SFM_2Dmap_Axes.currentText() == "Alpha_i vs. Alpha_f":
+        elif self.comboBox_SFM_2Dmap_axes.currentText() == "Alpha_i vs. Alpha_f":
             # Matrix
-            with open(save_file_directory + self.SFM_FILE[self.SFM_FILE.rfind("/") + 1 : -3] + "_" + self.comboBox_SFM_2Dmap_Polarisation.currentText() + " 2D_map_(Alpha_i vs. Alpha_f)).dat", "w") as new_file_2d_map_Aif:
+            with open(dir_saveFile + self.SFM_FILE[self.SFM_FILE.rfind("/") + 1 : -3] + "_" + self.comboBox_SFM_2Dmap_polarisation.currentText() + " 2Dmap_(Alpha_i vs. Alpha_f)).dat", "w") as newFile_2Dmap_aif:
                 # header
-                new_file_2d_map_Aif.write("Alpha_i limits: " + str(min(self.int_SFM_Detector_image_Aif[0])) + " : " + str(max(self.int_SFM_Detector_image_Aif[0])) +
-                                        "   Alpha_f limits: " + str(min(self.int_SFM_Detector_image_Aif[1])) + " : " + str(max(self.int_SFM_Detector_image_Aif[1])) + " degrees\n")
-                for line in np.rot90(self.res_Aif):
-                    for row in line: new_file_2d_map_Aif.write(str(row) + " ")
-                    new_file_2d_map_Aif.write("\n")
+                newFile_2Dmap_aif.write("Alpha_i limits: " + str(min(self.SFM_intDetectorImage_aif[0])) + " : " + str(max(self.SFM_intDetectorImage_aif[0])) +
+                                        "   Alpha_f limits: " + str(min(self.SFM_intDetectorImage_aif[1])) + " : " + str(max(self.SFM_intDetectorImage_aif[1])) + " degrees\n")
+                for line in np.rot90(self.res_aif):
+                    for row in line: newFile_2Dmap_aif.write(str(row) + " ")
+                    newFile_2Dmap_aif.write("\n")
 
             # Points
-            with open(save_file_directory + self.SFM_FILE[self.SFM_FILE.rfind("/") + 1: -3] + "_" + self.comboBox_SFM_2Dmap_Polarisation.currentText() + " 2D_map_(Alpha_i vs. Alpha_f))_Points.dat", "w") as new_file_2d_map_Aif_points:
-                for index in range(len(self.int_SFM_Detector_image_values_array)):
-                    new_file_2d_map_Aif_points.write(f"{str(self.int_SFM_Detector_image_Aif[0][index])} {str(self.int_SFM_Detector_image_Aif[1][index])} {str(self.int_SFM_Detector_image_values_array[index])} \n")
+            with open(dir_saveFile + self.SFM_FILE[self.SFM_FILE.rfind("/") + 1: -3] + "_" + self.comboBox_SFM_2Dmap_polarisation.currentText() + " 2Dmap_(Alpha_i vs. Alpha_f))_Points.dat", "w") as newFile_2Dmap_aifPoints:
+                for index in range(len(self.SFM_intDetectorImage_values_array)):
+                    newFile_2Dmap_aifPoints.write(f"{str(self.SFM_intDetectorImage_aif[0][index])} {str(self.SFM_intDetectorImage_aif[1][index])} {str(self.SFM_intDetectorImage_values_array[index])} \n")
 
-        elif self.comboBox_SFM_2Dmap_Axes.currentText() in ["Qx vs. Qz"]:
-            with open(save_file_directory + self.SFM_FILE[self.SFM_FILE.rfind("/") + 1 : -3] + "_" + self.comboBox_SFM_2Dmap_Polarisation.currentText() + " points_(Qx, Qz, intens).dat", "w") as new_file_2d_map_Qxz:
-                for line in self.int_SFM_Detector_image_Qxz: new_file_2d_map_Qxz.write(str(line[0]) + " " + str(line[1]) + " " + str(line[2]) + "\n")
+        elif self.comboBox_SFM_2Dmap_axes.currentText() in ["Qx vs. Qz"]:
+            with open(dir_saveFile + self.SFM_FILE[self.SFM_FILE.rfind("/") + 1 : -3] + "_" + self.comboBox_SFM_2Dmap_polarisation.currentText() + " points_(Qx, Qz, intens).dat", "w") as newFile_2Dmap_Qxz:
+                for line in self.SFM_intDetectorImage_Qxz: newFile_2Dmap_Qxz.write(str(line[0]) + " " + str(line[1]) + " " + str(line[2]) + "\n")
 
-    def SFM_Update_ROI(self):
+    def f_SFM_roi_update(self):
 
-        roi_width = int(self.lineEdit_SFM_Detector_image_Roi_X_Right.text()) - int(self.lineEdit_SFM_Detector_image_Roi_X_Left.text())
+        roi_width = int(self.lineEdit_SFM_detectorImage_roiX_right.text()) - int(self.lineEdit_SFM_detectorImage_roiX_left.text())
 
-        if not self.sender().objectName() == "lineEdit_SFM_Detector_image_Roi_bkg_X_Right":
-            self.lineEdit_SFM_Detector_image_Roi_bkg_X_Left.setText(str(int(self.lineEdit_SFM_Detector_image_Roi_X_Left.text()) - 2 * roi_width))
-            self.lineEdit_SFM_Detector_image_Roi_bkg_X_Right.setText(str(int(self.lineEdit_SFM_Detector_image_Roi_X_Left.text()) - roi_width))
-        else: self.lineEdit_SFM_Detector_image_Roi_bkg_X_Left.setText(str(int(self.lineEdit_SFM_Detector_image_Roi_bkg_X_Right.text()) - roi_width))
+        if not self.sender().objectName() == "lineEdit_SFM_detectorImage_roi_bkgX_right":
+            self.lineEdit_SFM_detectorImage_roi_bkgX_left.setText(str(int(self.lineEdit_SFM_detectorImage_roiX_left.text()) - 2 * roi_width))
+            self.lineEdit_SFM_detectorImage_roi_bkgX_right.setText(str(int(self.lineEdit_SFM_detectorImage_roiX_left.text()) - roi_width))
+        else: self.lineEdit_SFM_detectorImage_roi_bkgX_left.setText(str(int(self.lineEdit_SFM_detectorImage_roi_bkgX_right.text()) - roi_width))
 
         # record ROI coord for "Lock ROI" checkbox
-        self.locked_roi = [[self.lineEdit_SFM_Detector_image_Roi_Y_Top.text() + ". ", self.lineEdit_SFM_Detector_image_Roi_Y_Bottom.text() + ". ", self.lineEdit_SFM_Detector_image_Roi_X_Left.text() + ". ", self.lineEdit_SFM_Detector_image_Roi_X_Right.text() + ". "], self.lineEdit_SFM_Detector_image_Roi_bkg_X_Right.text()]
+        self.roiLocked = [[self.lineEdit_SFM_detectorImage_roiY_top.text() + ". ", self.lineEdit_SFM_detectorImage_roiY_bottom.text() + ". ", self.lineEdit_SFM_detectorImage_roiX_left.text() + ". ", self.lineEdit_SFM_detectorImage_roiX_right.text() + ". "], self.lineEdit_SFM_detectorImage_roi_bkgX_right.text()]
 
-        self.SFM_Detector_image_Draw()
-        self.SFM_Reflectivity_preview_Load()
-        self.SFM_Map_2D_Draw()
+        self.f_SFM_detectorImage_draw()
+        self.f_SFM_reflectivityPreview_load()
+        self.f_SFM_2Dmap_draw()
 
     ##<--
 
