@@ -550,46 +550,26 @@ class GUI(Ui_MainWindow):
         [i.editingFinished.connect(self.f_SFM_2Dmap_draw) for i in arr_LE_instr + arr_LE_roi]
 
         # Triggers: ComboBoxes
-        self.comboBox_SFM_detectorImage_incidentAngle.currentIndexChanged.connect(self.f_SFM_detectorImage_draw)
-        self.comboBox_SFM_detectorImage_polarisation.currentIndexChanged.connect(self.f_SFM_detectorImage_draw)
-        self.comboBox_SFM_detectorImage_colorScheme.currentIndexChanged.connect(self.f_SFM_detectorImage_draw)
+        arr_CoB_detectorImage = [self.comboBox_SFM_detectorImage_incidentAngle, self.comboBox_SFM_detectorImage_polarisation, self.comboBox_SFM_detectorImage_colorScheme]
+        arr_CoB_reflectivityPreview = [self.comboBox_reductions_divideByMonitorOrTime, self.comboBox_export_angle, self.comboBox_SFM_DB, self.comboBox_SFM_scan, self.comboBox_SFM_reflectivityPreview_view_angle, self.comboBox_SFM_reflectivityPreview_view_reflectivity]
+        arr_CoB_2dmap = [self.comboBox_SFM_2Dmap_QxzThreshold, self.comboBox_SFM_2Dmap_polarisation, self.comboBox_SFM_2Dmap_axes, self.comboBox_SFM_scan,
+                        self.comboBox_SFM_2Dmap_lowerNumberOfPointsBy, self.comboBox_SFM_2Dmap_view_scale]
 
         self.comboBox_SFM_scan.currentIndexChanged.connect(self.f_SFM_detectorImage_load)
-
-        self.comboBox_reductions_divideByMonitorOrTime.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
-        self.comboBox_export_angle.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
-        self.comboBox_SFM_DB.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
-        self.comboBox_SFM_scan.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
-        self.comboBox_SFM_reflectivityPreview_view_angle.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
-        self.comboBox_SFM_reflectivityPreview_view_reflectivity.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
-
-        self.comboBox_SFM_2Dmap_QxzThreshold.currentIndexChanged.connect(self.f_SFM_2Dmap_draw)
-        self.comboBox_SFM_2Dmap_polarisation.currentIndexChanged.connect(self.f_SFM_2Dmap_draw)
-        self.comboBox_SFM_2Dmap_axes.currentIndexChanged.connect(self.f_SFM_2Dmap_draw)
-        self.comboBox_SFM_scan.currentIndexChanged.connect(self.f_SFM_2Dmap_draw)
-        self.comboBox_SFM_2Dmap_lowerNumberOfPointsBy.currentIndexChanged.connect(self.f_SFM_2Dmap_draw)
-        self.comboBox_SFM_2Dmap_view_scale.currentIndexChanged.connect(self.f_SFM_2Dmap_draw)
-
         self.comboBox_reductions_divideByMonitorOrTime.currentIndexChanged.connect(self.f_DB_analaze)
-
+        [i.currentIndexChanged.connect(self.f_SFM_detectorImage_draw) for i in arr_CoB_detectorImage]
+        [i.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load) for i in arr_CoB_reflectivityPreview]
+        [i.currentIndexChanged.connect(self.f_SFM_2Dmap_draw) for i in arr_CoB_2dmap]
 
         # Triggers: CheckBoxes
         self.checkBox_reductions_divideByMonitorOrTime.stateChanged.connect(self.f_DB_analaze)
-        self.checkBox_reductions_divideByMonitorOrTime.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
         self.checkBox_reductions_normalizeByDB.stateChanged.connect(self.f_DB_analaze)
-        self.checkBox_reductions_normalizeByDB.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
-        self.checkBox_reductions_attenuatorDB.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
-        self.checkBox_reductions_overilluminationCorr.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
-        self.checkBox_reductions_subtractBkg.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
-        self.checkBox_reductions_subtractBkg.stateChanged.connect(self.f_SFM_detectorImage_draw)
-        self.checkBox_SFM_reflectivityPreview_showOverillumination.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
-        self.checkBox_SFM_reflectivityPreview_showZeroLevel.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
-        self.checkBox_SFM_reflectivityPreview_includeErrorbars.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
-        self.checkBox_rearrangeDbAfter.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
+
+        arr_ChB_reflectivityPreview = [self.checkBox_reductions_divideByMonitorOrTime, self.checkBox_reductions_normalizeByDB, self.checkBox_reductions_attenuatorDB, self.checkBox_reductions_overilluminationCorr, self.checkBox_reductions_subtractBkg, self.checkBox_SFM_reflectivityPreview_showOverillumination, self.checkBox_SFM_reflectivityPreview_showZeroLevel, self.checkBox_SFM_reflectivityPreview_includeErrorbars, self.checkBox_rearrangeDbAfter, self.checkBox_reductions_scaleFactor, self.checkBox_export_resolutionLikeSared, self.checkBox_export_addResolutionColumn]
+        [i.stateChanged.connect(self.f_SFM_reflectivityPreview_load) for i in arr_ChB_reflectivityPreview]
+
         self.checkBox_rearrangeDbAfter.stateChanged.connect(self.f_DB_assign)
-        self.checkBox_reductions_scaleFactor.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
-        self.checkBox_export_resolutionLikeSared.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
-        self.checkBox_export_addResolutionColumn.stateChanged.connect(self.f_SFM_reflectivityPreview_load)
+        self.checkBox_reductions_subtractBkg.stateChanged.connect(self.f_SFM_detectorImage_draw)
 
         # Triggers: Sliders
         self.horizontalSlider_SFM_2Dmap_rescaleImage_x.valueChanged.connect(self.f_SFM_2Dmap_draw)
