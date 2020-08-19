@@ -523,7 +523,7 @@ class GUI(Ui_MainWindow):
         self.roi_oldCoord_Y, self.roi_draw_int = [], []                                                # Recalc intens if Y roi is changed
         self.trigger_showDetInt = True                                                                # Trigger to switch the detector image view
         self.res_aif = []                                                                               # Alpha_i vs Alpha_f array
-        self.sampleCurvature_last = "0"                                                                # Last sample curvature (lets avoid extra recalcs)
+        self.sampleCurvature_last = []                                                               # Last sample curvature (lets avoid extra recalcs)
 
         # Triggers
         self.action_version.triggered.connect(self.f_menu_info)
@@ -541,45 +541,37 @@ class GUI(Ui_MainWindow):
         self.pushButton_SFM_detectorImage_showIntegratedRoi.clicked.connect(self.f_SFM_detectorImage_draw)
 
         # Triggers: LineEdits
-        self.lineEdit_SFM_detectorImage_roiX_left.editingFinished.connect(self.f_SFM_roi_update)
-        self.lineEdit_SFM_detectorImage_roiX_right.editingFinished.connect(self.f_SFM_roi_update)
-        self.lineEdit_SFM_detectorImage_roiY_bottom.editingFinished.connect(self.f_SFM_roi_update)
-        self.lineEdit_SFM_detectorImage_roiY_top.editingFinished.connect(self.f_SFM_roi_update)
-        self.lineEdit_SFM_detectorImage_roi_bkgX_right.editingFinished.connect(self.f_SFM_roi_update)
-        self.lineEdit_sampleLen.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
-        self.lineEdit_reductions_attenuatorDB.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
-        self.lineEdit_reductions_subtractBkg_Skip.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
-        self.lineEdit_instrument_wavelength.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
-        self.lineEdit_instrument_wavelengthResolution.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
-        self.lineEdit_instrument_distanceS1ToSample.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
-        self.lineEdit_instrument_distanceS2ToSample.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
-        self.lineEdit_instrument_offsetFull.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
-        self.lineEdit_SFM_reflectivityPreview_skipPoints_right.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
-        self.lineEdit_SFM_reflectivityPreview_skipPoints_left.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
-        self.lineEdit_instrument_wavelength.editingFinished.connect(self.f_SFM_2Dmap_draw)
-        self.lineEdit_instrument_distanceSampleToDetector.editingFinished.connect(self.f_SFM_2Dmap_draw)
-        self.lineEdit_reductions_scaleFactor.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
-        self.lineEdit_instrument_sampleCurvature.editingFinished.connect(self.f_SFM_reflectivityPreview_load)
-        self.lineEdit_instrument_sampleCurvature.editingFinished.connect(self.f_SFM_2Dmap_draw)
+        arr_LE_roi = [self.lineEdit_SFM_detectorImage_roiX_left, self.lineEdit_SFM_detectorImage_roiX_right, self.lineEdit_SFM_detectorImage_roiY_bottom, self.lineEdit_SFM_detectorImage_roiY_top, self.lineEdit_SFM_detectorImage_roi_bkgX_right]
+        arr_LE_instr = [self.lineEdit_instrument_wavelength, self.lineEdit_instrument_distanceSampleToDetector, self.lineEdit_instrument_sampleCurvature]
+        arr_LE_otherParam = [self.lineEdit_sampleLen, self.lineEdit_reductions_attenuatorDB, self.lineEdit_reductions_scaleFactor, self.lineEdit_reductions_subtractBkg_Skip,  self.lineEdit_instrument_wavelengthResolution, self.lineEdit_instrument_distanceS1ToSample, self.lineEdit_instrument_distanceS2ToSample, self.lineEdit_instrument_offsetFull, self.lineEdit_SFM_reflectivityPreview_skipPoints_right, self.lineEdit_SFM_reflectivityPreview_skipPoints_left]
+
+        [i.editingFinished.connect(self.f_SFM_roi_update) for i in arr_LE_roi]
+        [i.editingFinished.connect(self.f_SFM_reflectivityPreview_load) for i in arr_LE_otherParam + arr_LE_instr]
+        [i.editingFinished.connect(self.f_SFM_2Dmap_draw) for i in arr_LE_instr + arr_LE_roi]
 
         # Triggers: ComboBoxes
         self.comboBox_SFM_detectorImage_incidentAngle.currentIndexChanged.connect(self.f_SFM_detectorImage_draw)
         self.comboBox_SFM_detectorImage_polarisation.currentIndexChanged.connect(self.f_SFM_detectorImage_draw)
+        self.comboBox_SFM_detectorImage_colorScheme.currentIndexChanged.connect(self.f_SFM_detectorImage_draw)
+
         self.comboBox_SFM_scan.currentIndexChanged.connect(self.f_SFM_detectorImage_load)
+
+        self.comboBox_reductions_divideByMonitorOrTime.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
+        self.comboBox_export_angle.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
+        self.comboBox_SFM_DB.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
         self.comboBox_SFM_scan.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
         self.comboBox_SFM_reflectivityPreview_view_angle.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
         self.comboBox_SFM_reflectivityPreview_view_reflectivity.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
+
         self.comboBox_SFM_2Dmap_QxzThreshold.currentIndexChanged.connect(self.f_SFM_2Dmap_draw)
         self.comboBox_SFM_2Dmap_polarisation.currentIndexChanged.connect(self.f_SFM_2Dmap_draw)
         self.comboBox_SFM_2Dmap_axes.currentIndexChanged.connect(self.f_SFM_2Dmap_draw)
         self.comboBox_SFM_scan.currentIndexChanged.connect(self.f_SFM_2Dmap_draw)
         self.comboBox_SFM_2Dmap_lowerNumberOfPointsBy.currentIndexChanged.connect(self.f_SFM_2Dmap_draw)
-        self.comboBox_SFM_detectorImage_colorScheme.currentIndexChanged.connect(self.f_SFM_detectorImage_draw)
-        self.comboBox_reductions_divideByMonitorOrTime.currentIndexChanged.connect(self.f_DB_analaze)
-        self.comboBox_reductions_divideByMonitorOrTime.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
         self.comboBox_SFM_2Dmap_view_scale.currentIndexChanged.connect(self.f_SFM_2Dmap_draw)
-        self.comboBox_export_angle.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
-        self.comboBox_SFM_DB.currentIndexChanged.connect(self.f_SFM_reflectivityPreview_load)
+
+        self.comboBox_reductions_divideByMonitorOrTime.currentIndexChanged.connect(self.f_DB_analaze)
+
 
         # Triggers: CheckBoxes
         self.checkBox_reductions_divideByMonitorOrTime.stateChanged.connect(self.f_DB_analaze)
@@ -1170,7 +1162,7 @@ class GUI(Ui_MainWindow):
         if self.checkBox_reductions_normalizeByDB.isChecked() and self.tableWidget_DB.rowCount() == 0:
             self.statusbar.showMessage("Error: Direct beam file is missing.")
 
-        if int(self.lineEdit_SFM_detectorImage_roiX_left.text()) > int(self.lineEdit_SFM_detectorImage_roiX_right.text()) or int(self.lineEdit_SFM_detectorImage_roiY_bottom.text()) < int(self.lineEdit_SFM_detectorImage_roiY_top.text()) or int(self.lineEdit_SFM_detectorImage_roi_bkgX_left.text()) < 0:
+        if int(self.lineEdit_SFM_detectorImage_roiX_left.text()) > int(self.lineEdit_SFM_detectorImage_roiX_right.text()) or int(self.lineEdit_SFM_detectorImage_roiY_bottom.text()) < int(self.lineEdit_SFM_detectorImage_roiY_top.text()) or (self.checkBox_reductions_subtractBkg.checkState() and int(self.lineEdit_SFM_detectorImage_roi_bkgX_left.text()) < 0):
             self.statusbar.showMessage("Error: Recheck your ROI input.")
 
         self.scaleFactor = 1
@@ -1237,10 +1229,12 @@ class GUI(Ui_MainWindow):
                 self.SFM_psdUU = self.SFM_psdDD = self.SFM_psdUD = self.SFM_psdDU = []
 
             # get or create 2-dimentional intensity array for each polarisation
+
+            sampleCurvature_recalc = True if self.sampleCurvature_last == [i.text() for i in [self.lineEdit_instrument_sampleCurvature, self.lineEdit_SFM_detectorImage_roiX_left, self.lineEdit_SFM_detectorImage_roiX_right, self.lineEdit_SFM_detectorImage_roiY_bottom, self.lineEdit_SFM_detectorImage_roiY_top]] else False
             for scan in PONOS.get('data'):
                 # avoid reSUM of intensity after each action
                 # reSUM if we change SFM file or Sample curvature
-                if self.SFM_FILE == self.SFMFileAlreadyAnalized and str(self.sampleCurvature_last) == self.lineEdit_instrument_sampleCurvature.text(): continue
+                if self.SFM_FILE == self.SFMFileAlreadyAnalized and sampleCurvature_recalc: continue
 
                 if "pnr" in list(FILE[list(FILE.keys())[0]]):
                     if str(scan) == "data_du": self.SFM_psdDU = INSTRUMENT.get("detectors").get("psd_du").get('data')[:, int(roi_coord_Y[0]): int(roi_coord_Y[1]), :].sum(axis=1)
@@ -1254,7 +1248,7 @@ class GUI(Ui_MainWindow):
 
             # Sample curvature correction - we need to adjust integrated 2D map when we first make it
             # perform correction if it was changed on the form
-            if not str(self.sampleCurvature_last) == self.lineEdit_instrument_sampleCurvature.text():
+            if not sampleCurvature_recalc:
 
                 for index, SFM_curvatureCorrection in enumerate([self.SFM_psdUU, self.SFM_psdDU, self.SFM_psdUD, self.SFM_psdDD]):
 
@@ -1287,7 +1281,7 @@ class GUI(Ui_MainWindow):
                     elif index == 2: self.SFM_psdUD = SFM_curvatureCorrection
                     elif index == 3: self.SFM_psdDD = SFM_curvatureCorrection
 
-                self.sampleCurvature_last = str(self.lineEdit_instrument_sampleCurvature.text())
+                self.sampleCurvature_last = [i.text() for i in [self.lineEdit_instrument_sampleCurvature, self.lineEdit_SFM_detectorImage_roiX_left, self.lineEdit_SFM_detectorImage_roiX_right, self.lineEdit_SFM_detectorImage_roiY_bottom, self.lineEdit_SFM_detectorImage_roiY_top]]
 
             for colorIndex, SFM_scanIntens in enumerate([self.SFM_psdUU, self.SFM_psdDU, self.SFM_psdUD, self.SFM_psdDD]):
 
