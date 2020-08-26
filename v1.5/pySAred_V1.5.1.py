@@ -407,6 +407,8 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.tab_2Dmap.setObjectName("tab_2Dmap")
         # scaling options are different for different views
         # "scale" for "Qx vs Qz"
+        self.checkBox_SFM_2Dmap_flip = QtWidgets.QCheckBox(self.tab_2Dmap)
+        self.__create_element(self.checkBox_SFM_2Dmap_flip, [10, 6, 160, 18], "checkBox_SFM_2Dmap_flip", text="Flip (when Analyzer used)", font=font_ee, visible=False)
         self.label_SFM_2Dmap_QxzThreshold = QtWidgets.QLabel(self.tab_2Dmap)
         self.__create_element(self.label_SFM_2Dmap_QxzThreshold, [5, 7, 220, 16], "label_SFM_2Dmap_QxzThreshold", text="Threshold for the view (number of neutrons):", font=font_ee, visible=False)
         self.comboBox_SFM_2Dmap_QxzThreshold = QtWidgets.QComboBox(self.tab_2Dmap)
@@ -564,6 +566,7 @@ class GUI(Ui_MainWindow):
         # Triggers: CheckBoxes
         self.checkBox_reductions_divideByMonitorOrTime.stateChanged.connect(self.f_DB_analaze)
         self.checkBox_reductions_normalizeByDB.stateChanged.connect(self.f_DB_analaze)
+        self.checkBox_SFM_2Dmap_flip.stateChanged.connect(self.f_SFM_2Dmap_draw)
 
         arr_ChB_reflectivityPreview = [self.checkBox_reductions_divideByMonitorOrTime, self.checkBox_reductions_normalizeByDB, self.checkBox_reductions_attenuatorDB, self.checkBox_reductions_overilluminationCorr, self.checkBox_reductions_subtractBkg, self.checkBox_SFM_reflectivityPreview_showOverillumination, self.checkBox_SFM_reflectivityPreview_showZeroLevel, self.checkBox_SFM_reflectivityPreview_includeErrorbars, self.checkBox_rearrangeDbAfter, self.checkBox_reductions_scaleFactor, self.checkBox_export_resolutionLikeSared, self.checkBox_export_addResolutionColumn]
         [i.stateChanged.connect(self.f_SFM_reflectivityPreview_load) for i in arr_ChB_reflectivityPreview]
@@ -1415,11 +1418,11 @@ class GUI(Ui_MainWindow):
         for item in (self.graphicsView_SFM_2Dmap_Qxz_theta, self.graphicsView_SFM_2Dmap): item.clear()
 
         # change interface if for different views
-        ELEMENTS = [self.label_SFM_2Dmap_rescaleImage_x, self.label_SFM_2Dmap_rescaleImage_y, self.horizontalSlider_SFM_2Dmap_rescaleImage_x, self.horizontalSlider_SFM_2Dmap_rescaleImage_y, self.label_SFM_2Dmap_lowerNumberOfPointsBy, self.comboBox_SFM_2Dmap_lowerNumberOfPointsBy, self.label_SFM_2Dmap_QxzThreshold, self.comboBox_SFM_2Dmap_QxzThreshold, self.label_SFM_2Dmap_view_scale, self.comboBox_SFM_2Dmap_view_scale]
+        ELEMENTS = [self.label_SFM_2Dmap_rescaleImage_x, self.label_SFM_2Dmap_rescaleImage_y, self.horizontalSlider_SFM_2Dmap_rescaleImage_x, self.horizontalSlider_SFM_2Dmap_rescaleImage_y, self.label_SFM_2Dmap_lowerNumberOfPointsBy, self.comboBox_SFM_2Dmap_lowerNumberOfPointsBy, self.label_SFM_2Dmap_QxzThreshold, self.comboBox_SFM_2Dmap_QxzThreshold, self.label_SFM_2Dmap_view_scale, self.comboBox_SFM_2Dmap_view_scale, self.checkBox_SFM_2Dmap_flip]
 
-        if self.comboBox_SFM_2Dmap_axes.currentText() == "Pixel vs. Point": visible, geometry = [True, True, True, True, False, False, False, False, True, True], [0, 0, 0, 0]
-        elif self.comboBox_SFM_2Dmap_axes.currentText() == "Qx vs. Qz": visible, geometry = [False, False, False, False, True, True, True, True, False, False], [0, 30, 577, 522]
-        elif self.comboBox_SFM_2Dmap_axes.currentText() == "Alpha_i vs. Alpha_f": visible, geometry = [False, False, False, False, True, True, False, False, True, True], [0, 0, 0, 0]
+        if self.comboBox_SFM_2Dmap_axes.currentText() == "Pixel vs. Point": visible, geometry = [True, True, True, True, False, False, False, False, True, True, False], [0, 0, 0, 0]
+        elif self.comboBox_SFM_2Dmap_axes.currentText() == "Qx vs. Qz": visible, geometry = [False, False, False, False, True, True, True, True, False, False, False], [0, 30, 577, 522]
+        elif self.comboBox_SFM_2Dmap_axes.currentText() == "Alpha_i vs. Alpha_f": visible, geometry = [False, False, False, False, True, True, False, False, True, True, True], [0, 0, 0, 0]
 
         self.graphicsView_SFM_2Dmap_Qxz_theta.setGeometry(QtCore.QRect(geometry[0], geometry[1], geometry[2], geometry[3]))
         for index, index_visible in enumerate(visible): ELEMENTS[index].setVisible(index_visible)
@@ -1451,26 +1454,27 @@ class GUI(Ui_MainWindow):
         # Pixel to Angle conversion for "Qx vs Qz" and "alpha_i vs alpha_f" 2d maps
         if self.comboBox_SFM_2Dmap_axes.currentText() in ["Qx vs. Qz", "Alpha_i vs. Alpha_f"]:
             # recalculate only if something was changed
-            if self.res_aif == [] or not self.SFMFile2dCalculatedParams == [self.SFM_FILE, self.comboBox_SFM_2Dmap_polarisation.currentText(),
-                                              self.lineEdit_SFM_detectorImage_roiX_left.text(), self.lineEdit_SFM_detectorImage_roiX_right.text(),
-                                              self.lineEdit_instrument_wavelength.text(), self.lineEdit_instrument_distanceSampleToDetector.text(),
-                                              self.comboBox_SFM_2Dmap_lowerNumberOfPointsBy.currentText(), self.comboBox_SFM_2Dmap_QxzThreshold.currentText(),
-                                                                                self.lineEdit_instrument_sampleCurvature.text()]:
+            if self.res_aif == [] or not self.SFMFile2dCalculatedParams == [self.SFM_FILE, self.comboBox_SFM_2Dmap_polarisation.currentText(), self.lineEdit_SFM_detectorImage_roiX_left.text(), self.lineEdit_SFM_detectorImage_roiX_right.text(), self.lineEdit_instrument_wavelength.text(), self.lineEdit_instrument_distanceSampleToDetector.text(), self.comboBox_SFM_2Dmap_lowerNumberOfPointsBy.currentText(), self.comboBox_SFM_2Dmap_QxzThreshold.currentText(), self.lineEdit_instrument_sampleCurvature.text(), self.checkBox_SFM_2Dmap_flip.checkState()]:
                 self.spots_Qxz, self.SFM_intDetectorImage_Qxz, self.SFM_intDetectorImage_aif, self.SFM_intDetectorImage_values_array = [], [], [[],[]], []
 
-                roi_middle = round((self.SFM_intDetectorImage.shape[1] - float(self.lineEdit_SFM_detectorImage_roiX_left.text()) +
-                                    self.SFM_intDetectorImage.shape[1] - float(self.lineEdit_SFM_detectorImage_roiX_right.text())) / 2)
+                # flip image in Aif mode (checkbox) -- this requires another ROI
+                if self.comboBox_SFM_2Dmap_axes.currentText() == "Alpha_i vs. Alpha_f":
+                    self.SFM_intDetectorImage = np.flip(self.SFM_intDetectorImage, 1)
+                    roi_middle = round((self.SFM_intDetectorImage.shape[1] - float(self.lineEdit_SFM_detectorImage_roiX_left.text()) +
+                                            self.SFM_intDetectorImage.shape[1] - float(self.lineEdit_SFM_detectorImage_roiX_right.text())) / 2)
+
                 mm_per_pix = 300 / self.SFM_intDetectorImage.shape[1]
 
                 # we need to flip the detector (X) for correct calculation
-                for theta_i, tth_i, det_image_i in zip(self.th_list, self.tth_list, np.flip(self.SFM_intDetectorImage, 1)):
+                for theta_i, tth_i, det_image_i in zip(self.th_list, self.tth_list, self.SFM_intDetectorImage):
                     for pixel_num, value in enumerate(det_image_i):
                         # Reduce number of points to draw (to save RAM)
                         if pixel_num % int(self.comboBox_SFM_2Dmap_lowerNumberOfPointsBy.currentText()) == 0:
                             theta_f = tth_i - theta_i # theta F in deg
                             delta_theta_F_mm = (pixel_num - roi_middle) * mm_per_pix
                             delta_theta_F_deg = np.degrees(np.arctan(delta_theta_F_mm / float(self.lineEdit_instrument_distanceSampleToDetector.text()))) # calculate delta theta F in deg
-                            theta_f += delta_theta_F_deg # final theta F in deg for the point
+                            theta_f = theta_f + delta_theta_F_deg * (-1 if self.checkBox_SFM_2Dmap_flip.isChecked() else 1) # final theta F in deg for the point
+
                             # convert to Q
                             Qx = (2 * np.pi / float(self.lineEdit_instrument_wavelength.text())) * (np.cos(np.radians(theta_f)) - np.cos(np.radians(theta_i)))
                             Qz = (2 * np.pi / float(self.lineEdit_instrument_wavelength.text())) * (np.sin(np.radians(theta_f)) + np.sin(np.radians(theta_i)))
@@ -1493,7 +1497,7 @@ class GUI(Ui_MainWindow):
                     self.res_aif_log = np.log10(np.where(self.res_aif < 1, 0.1, self.res_aif))
 
                 # record params that we used for 2D maps calculation
-                self.SFMFile2dCalculatedParams = [self.SFM_FILE, self.comboBox_SFM_2Dmap_polarisation.currentText(), self.lineEdit_SFM_detectorImage_roiX_left.text(), self.lineEdit_SFM_detectorImage_roiX_right.text(), self.lineEdit_instrument_wavelength.text(), self.lineEdit_instrument_distanceSampleToDetector.text(), self.comboBox_SFM_2Dmap_lowerNumberOfPointsBy.currentText(), self.comboBox_SFM_2Dmap_QxzThreshold.currentText(), self.lineEdit_instrument_sampleCurvature.text()]
+                self.SFMFile2dCalculatedParams = [self.SFM_FILE, self.comboBox_SFM_2Dmap_polarisation.currentText(), self.lineEdit_SFM_detectorImage_roiX_left.text(), self.lineEdit_SFM_detectorImage_roiX_right.text(), self.lineEdit_instrument_wavelength.text(), self.lineEdit_instrument_distanceSampleToDetector.text(), self.comboBox_SFM_2Dmap_lowerNumberOfPointsBy.currentText(), self.comboBox_SFM_2Dmap_QxzThreshold.currentText(), self.lineEdit_instrument_sampleCurvature.text(),self.checkBox_SFM_2Dmap_flip.checkState()]
 
         # plot
         if self.comboBox_SFM_2Dmap_axes.currentText() == "Pixel vs. Point":
@@ -1513,6 +1517,10 @@ class GUI(Ui_MainWindow):
             self.graphicsView_SFM_2Dmap.setImage(image, axes={'x': 0, 'y': 1}, levels=(0, np.max(image)))
             self.graphicsView_SFM_2Dmap.getImageItem().setRect(QtCore.QRectF(min(self.SFM_intDetectorImage_aif[0]), min(self.SFM_intDetectorImage_aif[1]), max(self.SFM_intDetectorImage_aif[0]) - min(self.SFM_intDetectorImage_aif[0]), max(self.SFM_intDetectorImage_aif[1]) - min(self.SFM_intDetectorImage_aif[1])))
             self.graphicsView_SFM_2Dmap.getView().enableAutoScale()
+
+            # add line at 45 degrees at alfa_f==0
+            spots_45 = {'x': (min(self.SFM_intDetectorImage_aif[0]), max(self.SFM_intDetectorImage_aif[0]) - min(self.SFM_intDetectorImage_aif[0])), 'y': (min(self.SFM_intDetectorImage_aif[0]), max(self.SFM_intDetectorImage_aif[0]) - min(self.SFM_intDetectorImage_aif[0])) }
+            self.graphicsView_SFM_2Dmap.addItem(pg.PlotDataItem(spots_45, pen=pg.mkPen(255, 255, 255), connect = "all"))
 
         elif self.comboBox_SFM_2Dmap_axes.currentText() == "Qx vs. Qz":
             s0 = pg.ScatterPlotItem(spots=self.spots_Qxz, size=1)
