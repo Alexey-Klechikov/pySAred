@@ -1459,17 +1459,18 @@ class GUI(Ui_MainWindow):
 
                 # flip image in Aif mode (checkbox) -- this requires another ROI
                 if self.comboBox_SFM_2Dmap_axes.currentText() == "Alpha_i vs. Alpha_f":
+                    # we need to flip the detector (X) for correct calculation
                     self.SFM_intDetectorImage = np.flip(self.SFM_intDetectorImage, 1)
                     roi_middle = round((self.SFM_intDetectorImage.shape[1] - float(self.lineEdit_SFM_detectorImage_roiX_left.text()) +
                                             self.SFM_intDetectorImage.shape[1] - float(self.lineEdit_SFM_detectorImage_roiX_right.text())) / 2)
 
                 mm_per_pix = 300 / self.SFM_intDetectorImage.shape[1]
 
-                # we need to flip the detector (X) for correct calculation
                 for theta_i, tth_i, det_image_i in zip(self.th_list, self.tth_list, self.SFM_intDetectorImage):
                     for pixel_num, value in enumerate(det_image_i):
                         # Reduce number of points to draw (to save RAM)
                         if pixel_num % int(self.comboBox_SFM_2Dmap_lowerNumberOfPointsBy.currentText()) == 0:
+
                             theta_f = tth_i - theta_i # theta F in deg
                             delta_theta_F_mm = (pixel_num - roi_middle) * mm_per_pix
                             delta_theta_F_deg = np.degrees(np.arctan(delta_theta_F_mm / float(self.lineEdit_instrument_distanceSampleToDetector.text()))) # calculate delta theta F in deg
@@ -1492,7 +1493,9 @@ class GUI(Ui_MainWindow):
                     self.resolution_y_pix = int(round((max(self.SFM_intDetectorImage_aif[1]) - min(self.SFM_intDetectorImage_aif[1])) * self.resolution_x_pix_deg))
 
                     grid_x, grid_y = np.mgrid[min(self.SFM_intDetectorImage_aif[0]):max(self.SFM_intDetectorImage_aif[0]):((max(self.SFM_intDetectorImage_aif[0]) - min(self.SFM_intDetectorImage_aif[0]))/len(self.th_list)), min(self.SFM_intDetectorImage_aif[1]):max(self.SFM_intDetectorImage_aif[1]):(max(self.SFM_intDetectorImage_aif[1]) - min(self.SFM_intDetectorImage_aif[1]))/self.resolution_y_pix]
-                    self.res_aif = griddata((self.SFM_intDetectorImage_aif[0], self.SFM_intDetectorImage_aif[1]), self.SFM_intDetectorImage_values_array, (grid_x, grid_y), method="linear", fill_value=float(0))
+
+                    self.res_aif = griddata((np.array(self.SFM_intDetectorImage_aif[0]), np.array(self.SFM_intDetectorImage_aif[1])), np.array(self.SFM_intDetectorImage_values_array), (grid_x, grid_y), method="linear", fill_value=float(0))
+
                     # create log array for log view
                     self.res_aif_log = np.log10(np.where(self.res_aif < 1, 0.1, self.res_aif))
 
@@ -1512,6 +1515,7 @@ class GUI(Ui_MainWindow):
             self.graphicsView_SFM_2Dmap.addItem(self.roi_draw_2Dmap)
 
         elif self.comboBox_SFM_2Dmap_axes.currentText() == "Alpha_i vs. Alpha_f":
+
             image = self.res_aif_log if self.comboBox_SFM_2Dmap_view_scale.currentText() == "Log" else self.res_aif
 
             self.graphicsView_SFM_2Dmap.setImage(image, axes={'x': 0, 'y': 1}, levels=(0, np.max(image)))
@@ -1550,9 +1554,25 @@ class GUI(Ui_MainWindow):
                     for row in line: newFile_2Dmap_aif.write(str(row) + " ")
                     newFile_2Dmap_aif.write("\n")
 
-            # Points
+            # Points (full)
             with open(dir_saveFile + self.SFM_FILE[self.SFM_FILE.rfind("/") + 1: -3] + "_" + self.comboBox_SFM_2Dmap_polarisation.currentText() + " 2Dmap_(Alpha_i vs. Alpha_f))_Points.dat", "w") as newFile_2Dmap_aifPoints:
-                for index in range(len(self.SFM_intDetectorImage_values_array)):
+
+                self.SFM_intDetectorImage_values_array, self.SFM_intDetectorImage_aif = [], [[], []]
+                roi_middle = round((self.SFM_intDetectorImage.shape[1] - float(self.lineEdit_SFM_detectorImage_roiX_left.text()) +
+                                    self.SFM_intDetectorImage.shape[1] - float(self.lineEdit_SFM_detectorImage_roiX_right.text())) / 2)
+
+                mm_per_pix = 300 / self.SFM_intDetectorImage.shape[1]
+
+                for theta_i, tth_i, det_image_i in zip(self.th_list, self.tth_list, self.SFM_intDetectorImage):
+                    for pixel_num, value in enumerate(det_image_i):
+                        theta_f = tth_i - theta_i # theta F in deg
+                        delta_theta_F_mm = (pixel_num - roi_middle) * mm_per_pix
+                        delta_theta_F_deg = np.degrees(np.arctan(delta_theta_F_mm / float(self.lineEdit_instrument_distanceSampleToDetector.text()))) # calculate delta theta F in deg
+                        theta_f = theta_f + delta_theta_F_deg * (-1 if self.checkBox_SFM_2Dmap_flip.isChecked() else 1) # final theta F in deg for the point
+
+                        for arr, val in zip((self.SFM_intDetectorImage_aif[0], self.SFM_intDetectorImage_aif[1], self.SFM_intDetectorImage_values_array), (theta_i, theta_f, value)): arr.append(val)
+
+                for index in range(len(self.SFM_intDetectorImage_values_array)-1):
                     newFile_2Dmap_aifPoints.write(f"{str(self.SFM_intDetectorImage_aif[0][index])} {str(self.SFM_intDetectorImage_aif[1][index])} {str(self.SFM_intDetectorImage_values_array[index])} \n")
 
         elif self.comboBox_SFM_2Dmap_axes.currentText() in ["Qx vs. Qz"]:
