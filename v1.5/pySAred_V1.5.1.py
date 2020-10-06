@@ -189,7 +189,7 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.label_instrument_wavelength = QtWidgets.QLabel(self.tab_instrumentSettings)
         self.__create_element(self.label_instrument_wavelength, [10, 10, 111, 16], "label_instrument_wavelength", text="Wavelength (A)", font=font_ee)
         self.lineEdit_instrument_wavelength = QtWidgets.QLineEdit(self.tab_instrumentSettings)
-        self.__create_element(self.lineEdit_instrument_wavelength, [225, 10, 41, 18], "lineEdit_instrument_wavelength", font=font_ee, text="5.2")
+        self.__create_element(self.lineEdit_instrument_wavelength, [225, 10, 41, 18], "lineEdit_instrument_wavelength", font=font_ee, text="5.183")
         self.label_instrument_wavelengthResolution = QtWidgets.QLabel(self.tab_instrumentSettings)
         self.__create_element(self.label_instrument_wavelengthResolution, [10, 33, 271, 16], "label_instrument_wavelengthResolution", text="Wavelength resolution (d_lambda/lambda)", font=font_ee)
         self.lineEdit_instrument_wavelengthResolution = QtWidgets.QLineEdit(self.tab_instrumentSettings)
